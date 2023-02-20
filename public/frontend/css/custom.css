@@ -1,0 +1,64 @@
+[class*=sidebar-dark] .brand-link, [class*=sidebar-dark] .brand-link .pushmenu {
+    color: rgb(255 255 255);
+    text-decoration: none;
+    font-weight: bold;
+}
+.main-sidebar, .main-sidebar::before {
+    width: 255px;
+}
+.navbar-dark .btn-navbar, .navbar-dark .form-control-navbar,
+body:not(.layout-fixed) .main-sidebar ,[class*=sidebar-dark-], .navbar-dark {
+    background-color: #3b1261 !important;
+    border: 1px solid #3b1261;
+}
+.dropdown-menu-dark {
+    color: #dee2e6;
+    background-color: #3b1261;
+    border-color: rgba(0,0,0,.15);
+}
+[class*=sidebar-dark] .brand-link {
+    border-bottom: 1px solid #c270ff;
+}
+[class*=sidebar-dark] .btn-sidebar, [class*=sidebar-dark] .form-control-sidebar {
+    background-color: #c2a9d6 !important;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,.85);
+}
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active, .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #693d8b;
+    color: #fff;
+}
+/*[class*=sidebar-dark-] .nav-sidebar>.nav-item.menu-open>.nav-link, [class*=sidebar-dark-] .nav-sidebar>.nav-item:hover>.nav-link, [class*=sidebar-dark-] .nav-sidebar>.nav-item>.nav-link:focus {
+    background-color: rgba(130,56,186,.1);
+    color: #fff;
+}*/
+.navbar-dark .navbar-brand, .navbar-dark .navbar-nav .nav-link {
+    color: #fff !important;
+}
+.btn-outline-primary, a, .text-primary {
+    color: #3b1261;
+    border-color: #3b1261 !important;
+}
+.btn-primary, .bg-primary {
+    color: #fff !important;
+    background-color: #3b1261 !important;
+    border-color: #3b1261 !important;
+}
+.nav-pills .nav-link:not(.active):hover {
+    color: #dee2e6;
+}
+.table-dark {
+    --bs-table-bg: #3b1261;
+    --bs-table-striped-bg: #3b1261;
+    --bs-table-striped-color: #fff;
+    --bs-table-active-bg: #3b1261;
+    --bs-table-active-color: #fff;
+    --bs-table-hover-bg: #3b1261;
+    --bs-table-hover-color: #fff;
+    color: #fff;
+    border-color: #3b1261;
+}
+.btn-success {
+    background-color: #3b1261;
+  }
