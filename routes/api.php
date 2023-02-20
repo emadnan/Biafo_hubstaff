@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ScreenShotsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +57,6 @@ Route::post('/delete-company',[CompanyController::class,'delete_company']);
 
 //Get company API
 Route::get('/getcompany',[CompanyController::class,'get_company']);
+
+//Add screen_shots API
+Route::post('/screen_shot',[ScreenShotsController::class,'add_screen_shots']);
