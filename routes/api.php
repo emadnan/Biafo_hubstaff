@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,15 @@ Route::post('/delete-permission',[PermissionController::class,'delete_permission
 
 //update user API
 Route::post('/update-permission',[PermissionController::class,'updatepermission']);
+
+//Add company API
+Route::post('/addcompany',[CompanyController::class,'add_company']);
+
+//update company API
+Route::post('/update-company',[CompanyController::class,'update_company']);
+
+//delete company API
+Route::post('/delete-company',[CompanyController::class,'delete_company']);
+
+//Get company API
+Route::get('/getcompany',[CompanyController::class,'get_company']);
