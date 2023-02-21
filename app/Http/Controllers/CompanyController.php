@@ -19,7 +19,7 @@ class CompanyController extends Controller
 
     function update_company(){
         $id = \Request::input('id');
-        $project = Company::where('id',$id)
+        $company = Company::where('id',$id)
         ->update([
             'company_name' => \Request::input('company_name'),
             'address' => \Request::input('address'),

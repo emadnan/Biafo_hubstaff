@@ -6,6 +6,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ScreenShotsController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +61,15 @@ Route::get('/getcompany',[CompanyController::class,'get_company']);
 
 //Add screen_shots API
 Route::post('/screen_shot',[ScreenShotsController::class,'add_screen_shots']);
+
+//Add department API
+Route::post('/add_department',[DepartmentController::class,'add_department']);
+
+//update department API
+Route::post('/update-department',[DepartmentController::class,'update_department']);
+
+//delete department API
+Route::post('/delete-department',[DepartmentController::class,'delete_department']);
+
+//Get department API
+Route::get('/getdepartment',[DepartmentController::class,'get_department']);
