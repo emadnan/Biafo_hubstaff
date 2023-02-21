@@ -7,6 +7,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ScreenShotsController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +74,15 @@ Route::post('/delete-department',[DepartmentController::class,'delete_department
 
 //Get department API
 Route::get('/getdepartment',[DepartmentController::class,'get_department']);
+
+//Get project API
+Route::get('/getproject',[projectController::class,'get_projects']);
+
+//Add project API
+Route::post('/add_project',[projectController::class,'add_project']);
+
+//update project API
+Route::post('/update-project',[projectController::class,'update_project']);
+
+//delete project API
+Route::post('/delete-project',[projectController::class,'delete_project']);
