@@ -32,7 +32,9 @@ Route::post('login', [UserController::class, 'authenticate']);
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', [UserController::class, 'getAuthenticatedUser']);
     Route::post('logout', [UserController::class, 'logout']);
+    //change password
 });
+Route::post('/changepassword',[UserController::class,'change_password']);
 
 //Add Roles API
 Route::post('/addrole',[RoleController::class,'add_roles']);
@@ -72,6 +74,15 @@ Route::get('/getcompany',[CompanyController::class,'get_company']);
 
 //Add screen_shots API
 Route::post('/screen_shot',[ScreenShotsController::class,'add_screen_shots']);
+
+//Add screen_shots API
+Route::post('/update_screen_shots',[ScreenShotsController::class,'update_screen_shots']);
+
+//Add screen_shots API
+Route::get('/get_ScreenShot',[ScreenShotsController::class,'get_ScreenShot']);
+
+//Add screen_shots API
+Route::post('/delete_ScreenShot',[ScreenShotsController::class,'delete_ScreenShot']);
 
 //Add department API
 Route::post('/add_department',[DepartmentController::class,'add_department']);
