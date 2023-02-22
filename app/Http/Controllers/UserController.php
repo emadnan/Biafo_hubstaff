@@ -1,164 +1,87 @@
 <?php
 
 namespace App\Http\Controllers;
-// use Mail;
+
 use Illuminate\Http\Request;
-use App\Models\ApplicantProfile;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use App\Models\User;
-use App\Http\Traits\SmsTrait;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\SignupMail;
-use Illuminate\Support\Facades\Password;
-use App\Models\RoleHasPermission;
-
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 
 class UserController extends Controller
 {
-    use SmsTrait;
+    public function authenticate(Request $request) {
+        $credentials = $request->only('email', 'password');
+        $user= User::where('email',$credentials)->get();
 
-    function applicantLogin(Request $request)
-    {
-        
-        $profile = ApplicantProfile::join('prospect_registration','prospect_registration.applicant_profile_id','=','applicant_profile.profile_id')
-        ->where('profile_email', $request->email)->first();
-        
-        if (!$profile || !Hash::check($request->password, $profile->profile_password)) {
-            return response([ 'error' => 'Invalid email or password.'],422);
+        try {
+            if (! $token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'invalid_credentials'], 400);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        $token = $profile->createToken('token')->plainTextToken;
-        
-        $response = [
-            'profile' => $profile,
-            'token' => $token
-        ];
-        
-         return response($response,200);
-           
+        return response()->json(compact('user','token'));
     }
-    function signup()
-    {
-        
-        $validator = Validator::make(\Request::all(), [
-            'email' => 'required|unique:applicant_profile,profile_email',
-            'name'  => 'required',
-            'campus' => 'required',
-            'mobile' => 'required'
+
+    public function register(Request $request) {
+        // dd($request->toArray());
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'role_id' => 'required',
         ]);
-        
-        if ($validator->fails()) {
-            return response()->json($validator->errors(),422);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
         }
 
-        $profile = new ApplicantProfile();
-
-        $profile->profile_email = \Request::input('email');
-        $profile->profile_fname = \Request::input('name');
-        $profile->applied_campus = \Request::input('campus');
-        $profile->profile_mobile = \Request::input('mobile');
-        
-        $radnom_password  = Str::random(8);
-        
-        $profile->profile_password = Hash::make($radnom_password);
-
-        $subject = 'BiafoTech - Applicant Registration';
-
-
-        $sms_message = "Dear ".strtoupper($profile->profile_fname).",\n";
-        $sms_message .= "Thank you for registering as an applicant for admissions with Iqra University.\n";
-        $sms_message .= "Email: ".$profile->profile_email."\n";
-        $sms_message .= "Password: ".$radnom_password."\n";
-        
-        $result = $this->sendSms($profile->profile_mobile,$sms_message);
-
-        $profile->sms_result = $result;
-        
-        if($profile->save()){
-
-            $data = ['name' => $profile->profile_fname,'profile_id' => $profile->id,'to_email' => $profile->profile_email,'radnom_password' => $radnom_password];
-            
-            $this->send_mail($profile->profile_email,$profile->profile_fname,$radnom_password,$profile->profile_id);
-            app('App\Http\Controllers\AdmissionForm')->prospect_addmission($profile->profile_id);
-
-            return response()->json(['profile_id' => $profile->profile_id],200);
-        }else{
-            return response()->json(['message' => 'error'],422);
-        }
-    }
-
-    function resetPassword(Request $request)
-    {
-         $validator = Validator::make(\Request::all(), [
-            'email' => 'required',
-            'old_password' => 'required',
-            'new_password' => 'required'
+        $user = User::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
+            'role_id' => $request->get('role_id'),
         ]);
-        
-        if ($validator->fails()) {
-            return response()->json($validator->errors(),422);
-        }
 
-        
-        $old_pass = \Request::input('old_password');
-        $new_pass = \Request::input('new_password');
-        
+        $token = JWTAuth::fromUser($user, [
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'role_id' => $request->get('role_id'),
+        ]);
 
-        $user = ApplicantProfile::where('profile_email',$request->email)->first();
-        $user_email = $user->profile_email;
-        $old_password = $user->profile_password;
-      
-        if(Hash::check($old_pass,$old_password)){
-            $user->profile_password = Hash::make($new_pass);
-            $user->save();
-            return response()->json(["Message" => 'Password updated successfully']);
-      
-        } 
-
-        else
-        {
-            return response()->json(['message' => 'error'],422);
-        }
- 
-    }
-    function adminLogin(Request $request){
-
-        $user = User::where('email', $request->email)->first();
-        
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response([ 'error' => 'Invalid email or password.'],422);
-        }
-
-        $token = $user->createToken('token')->plainTextToken;
-        //$user = $user->role_id;
-        $role_id=$user->role_id;
-        $permissions=RoleHasPermission::join('permissions','permissions.id','=','role_has_permissions.permission_id')->where('role_has_permissions.role_id',$role_id)->get();
-        
-        $response = [
-            'profile' => $user,
-            'token' => $token,
-            'permissions' => $permissions
-        ];
-        return response($response,200);
+        return response()->json(['message'=>'SignUp successfully']);
     }
 
-    function send_mail($email,$name,$password,$id){
+    public function getAuthenticatedUser() {
+        try {
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['token_expired'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['token_invalid'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['token_absent'], $e->getStatusCode());
+        }
 
-        // print_r($data1);
-        // exit();
+        return response()->json(compact('user'));
+    }
 
-        $data = array('fname'=>$name,'pass'=>$password,'id'=>$id,'email'=>$email);
-        $user['to'] =  $email;
-        
-        Mail::send('emails.signup', $data, function($message) use ($user){
-            $message->to($user['to']);
-            $message->subject(env('MAIL_FROM_ADDRESS','BiafoTech'));
-            
-        });
-        // return response()->json(['email sent']);
-    
+    public function logout(Request $request) {
+        try {
+            JWTAuth::invalidate(JWTAuth::parseToken());
+            return response()->json(['message' => 'Logout successful']);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Logout failed'], 500);
+        }
+    }
+
+    public function forgetpassword(){
+
     }
 }
