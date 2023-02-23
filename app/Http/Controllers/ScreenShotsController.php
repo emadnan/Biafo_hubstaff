@@ -49,4 +49,21 @@ class ScreenShotsController extends Controller
         
         return response()->json(['message'=>'delete ScreenShot successfully']);
     }
+
+    function take_screenshort(Request $request ){
+
+        if ($request->screenshot != "no_image") {
+            $image = $request->screenshot;
+            // $extension = explode('/', explode(":", substr($image, 0, strpos($image, ";")))[1])[1];
+            $extension = "png";
+            $replace = substr($image, 0, strpos($image, ',') + 1);
+            $image = str_replace($replace, "", $image);
+            $image = str_replace('', '+', $image);
+            $image_path = time() . '.' . $extension;
+            $image_decode = base64_decode($image);
+            file_put_contents(public_path() . '/screenshorts/' . $image_path, $image_decode);
+
+            return response()->json(['message'=>'Add ScreenShort successfully']);
+        }
+    }
 }

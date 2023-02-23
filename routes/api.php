@@ -75,6 +75,9 @@ Route::get('/getcompany',[CompanyController::class,'get_company']);
 //Add screen_shots API
 Route::post('/screen_shot',[ScreenShotsController::class,'add_screen_shots']);
 
+// take a screenshort
+Route::post('/take_screen_shot',[ScreenShotsController::class,'take_screenshort']);
+
 //Add screen_shots API
 Route::post('/update_screen_shots',[ScreenShotsController::class,'update_screen_shots']);
 
