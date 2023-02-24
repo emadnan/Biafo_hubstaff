@@ -110,3 +110,6 @@ Route::post('/update-project',[projectController::class,'update_project']);
 
 //delete project API
 Route::post('/delete-project',[projectController::class,'delete_project']);
+
+//Get project API
+Route::get('/get-project-by-user/{id}',[projectController::class,'get_project_by_user_id']);

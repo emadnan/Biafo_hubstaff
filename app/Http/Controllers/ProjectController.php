@@ -45,4 +45,10 @@ class ProjectController extends Controller
 
         return response()->json(['message'=>'delete Project successfully']);
     }
+
+    public function get_project_by_user_id($id){
+        
+        $project = Project::where('user_id',$id)->get();
+        return response()->json(['projects' => $project]);
+    }
 }
