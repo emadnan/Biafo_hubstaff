@@ -79,13 +79,21 @@ class UserController extends Controller
     public function logout(Request $request) {
         try {
             JWTAuth::invalidate(JWTAuth::parseToken());
-            return response()->json(['message' => 'Logout successful']);
+            return response()->json(['message' => 'Logout successfully']);
         } catch (JWTException $e) {
             return response()->json(['error' => 'Logout failed'], 500);
         }
     }
 
-    public function forgetpassword(){
+    public function change_password(Request $request){
+        
+        $user = \Request::input('id');
+        $user = User::where('id',$user)
+        ->update([
+            'password' => Hash::make($request->get('password')),
+        ]);
 
+        
+        return response()->json(['Message' => 'Password Update successfully']);
     }
 }
