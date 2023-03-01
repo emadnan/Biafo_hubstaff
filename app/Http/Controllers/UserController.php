@@ -28,29 +28,33 @@ class UserController extends Controller
     }
 
     public function register(Request $request) {
-        // dd($request->toArray());
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'role_id' => 'required',
-        ]);
 
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
+        // print_r($request->all());
+        // exit;
+        // dd($request->toArray());
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'password' => 'required|string|min:6|confirmed',
+        //     // 'role_id' => 'required',
+        // ]);
+
+        // if($validator->fails()){
+        //     return response()->json($validator->errors()->toJson(), 400);
+        // }
 
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
-            'role_id' => $request->get('role_id'),
+            // 'role_id' => $request->get('role_id'),
         ]);
 
         $token = JWTAuth::fromUser($user, [
             'name' => $request->get('name'),
             'email' => $request->get('email'),
-            'role_id' => $request->get('role_id'),
+            // 'role_id' => $request->get('role_id'),
+            
         ]);
 
         return response()->json(['message'=>'SignUp successfully']);
