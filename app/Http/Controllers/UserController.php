@@ -93,7 +93,51 @@ class UserController extends Controller
             'password' => Hash::make($request->get('password')),
         ]);
 
-        
         return response()->json(['Message' => 'Password Update successfully']);
     }
+
+    //ADD USERS CRUD
+    function add_user(){
+        $user = new User();
+        $user->name = \Request::input('name');
+        $user->email = \Request::input('email');
+        $user->password = Hash::make('password');
+        $user->role_id = \Request::input('role_id');
+        $user->save();
+        
+        return response()->json(['message'=>'Add User successfully']);
+    }
+
+    function update_user(Request $request){
+        $id = \Request::input('id');
+        $user = User::where('id',$id)
+        ->update([
+            'name' => \Request::input('name'),
+            'email' => \Request::input('email'),
+            'password' => Hash::make($request->get('password')),
+            'role_id' => \Request::input('role_id')
+        ]);
+
+        return response()->json(['Message' => 'User Updated']);
+    }
+
+    public function get_users()
+    {
+        $user = User::get();
+        return response()->json(['Users' => $user]);
+    }
+    
+    function delete_user(){
+        $id = \Request::input('id');
+        $user = User::where('id',$id)->delete();
+
+        return response()->json(['message'=>'delete User successfully']);
+    }
+
+    public function get_user($id)
+    {
+        $user = User::where('id',$id)->get();
+        return response()->json(['User' => $user]);
+    }
+
 }

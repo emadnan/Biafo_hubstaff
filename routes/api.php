@@ -113,3 +113,18 @@ Route::post('/delete-project',[projectController::class,'delete_project']);
 
 //Get project API
 Route::get('/get-project-by-user/{id}',[projectController::class,'get_project_by_user_id']);
+
+//Add User API
+Route::post('/add_user',[UserController::class,'add_user']);
+
+//Update User API
+Route::post('/update_user',[UserController::class,'update_user']);
+
+//Delete User API
+Route::post('/delete_user',[UserController::class,'delete_user']);
+
+//Get All Users
+Route::get('/get_users',[UserController::class,'get_users']);
+
+//Get User By Id
+Route::get('/get_user/{id}',[UserController::class,'get_user']);
