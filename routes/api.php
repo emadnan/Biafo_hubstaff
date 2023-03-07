@@ -10,6 +10,7 @@ use App\Http\Controllers\ScreenShotsController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,3 +142,6 @@ Route::post('/delete_team',[TeamController::class,'delete_team']);
 
 //Get All Teams
 Route::get('/get_teams',[TeamController::class,'get_teams']);
+
+//Get All Country API
+Route::get('/get_country',[CountryController::class,'get_country']);
