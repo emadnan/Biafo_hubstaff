@@ -17,7 +17,7 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->string('team_name');
             $table->integer('members');
-            $table->string('projects');
+            $table->integer('projects');
             $table->timestamps();
         });
     }
