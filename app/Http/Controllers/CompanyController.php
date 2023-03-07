@@ -10,6 +10,7 @@ class CompanyController extends Controller
         $company = new Company();
         $company->company_name = \Request::input('company_name');
         $company->address = \Request::input('address');
+        $company->company_email = \Request::input('company_email');
         $company->contact_no = \Request::input('contact_no');
         $company->city = \Request::input('city');
         $company->country = \Request::input('country');
@@ -23,6 +24,7 @@ class CompanyController extends Controller
         ->update([
             'company_name' => \Request::input('company_name'),
             'address' => \Request::input('address'),
+            'company_email' => \Request::input('company_email'),
             'contact_no' => \Request::input('contact_no'),
             'city' => \Request::input('city'),
             'country' => \Request::input('country'),
