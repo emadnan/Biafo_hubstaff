@@ -11,6 +11,8 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CityController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -145,3 +147,6 @@ Route::get('/get_teams',[TeamController::class,'get_teams']);
 
 //Get All Country API
 Route::get('/get_country',[CountryController::class,'get_country']);
+
+//Get All Cities API
+Route::get('/get_cities/{country_id}',[CityController::class,'get_cities']);
