@@ -14,7 +14,7 @@ class AddCountryIdIntoCitiesTable extends Migration
     public function up()
     {
         Schema::table('cities', function (Blueprint $table) {
-            $table->integer('country_id');
+            $table->integer('country_id')->after('state_code');
         });
     }
 
