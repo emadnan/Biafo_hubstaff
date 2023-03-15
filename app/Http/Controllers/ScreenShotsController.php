@@ -57,7 +57,7 @@ class ScreenShotsController extends Controller
                 $data = array(
                     $imageData = base64_decode($value),
                     $filename = uniqid() . '.png',
-                    $path = public_path('screenshorts/' . $filename),
+                    $path = public_path('screenshots/' . $filename),
                     file_put_contents($path, $imageData),
                 );
             }
