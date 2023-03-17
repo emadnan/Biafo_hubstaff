@@ -12,7 +12,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CityController;
-
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -150,3 +150,15 @@ Route::get('/get_country',[CountryController::class,'get_country']);
 
 //Get All Cities API
 Route::get('/get_cities/{country_id}',[CityController::class,'get_cities']);
+
+//Add Client API
+Route::post('/add_client',[ClientController::class,'add_client']);
+
+//Update Client API
+Route::post('/update_client',[ClientController::class,'update_client']);
+
+//Delete Client API
+Route::GET('/get_client',[ClientController::class,'get_client']);
+
+//Get All Client
+Route::post('/delete_client',[ClientController::class,'delete_client']);
