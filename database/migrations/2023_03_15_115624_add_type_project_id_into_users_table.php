@@ -14,7 +14,7 @@ class AddTypeProjectIdIntoUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('project_id')->after('id');
+            $table->integer('project_id')->after('id')->nullable();
         });
     }
 
