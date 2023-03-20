@@ -102,7 +102,7 @@ class UserController extends Controller
         $user->name = \Request::input('name');
         $user->email = \Request::input('email');
         $user->password = Hash::make('password');
-        $user->role_id = \Request::input('role_id');
+        $user->role = \Request::input('role');
         $user->save();
         
         return response()->json(['message'=>'Add User successfully']);
@@ -115,7 +115,7 @@ class UserController extends Controller
             'name' => \Request::input('name'),
             'email' => \Request::input('email'),
             'password' => Hash::make($request->get('password')),
-            'role_id' => \Request::input('role_id')
+            'role' => \Request::input('role')
         ]);
 
         return response()->json(['Message' => 'User Updated']);
