@@ -13,6 +13,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\PermissionsRoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,9 @@ Route::post('/delete-permission',[PermissionController::class,'delete_permission
 
 //update user API
 Route::post('/update-permission',[PermissionController::class,'updatepermission']);
+
+//role_has_permissions
+Route::post('/role-permissions',[PermissionsRoleController::class,'add_Role_Permissions']);
 
 //Add company API
 Route::post('/addcompany',[CompanyController::class,'add_company']);
@@ -162,3 +166,4 @@ Route::GET('/get_client',[ClientController::class,'get_client']);
 
 //Get All Client
 Route::post('/delete_client',[ClientController::class,'delete_client']);
+
