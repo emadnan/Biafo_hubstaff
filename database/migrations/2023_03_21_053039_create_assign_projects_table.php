@@ -17,8 +17,6 @@ class CreateAssignProjectsTable extends Migration
             $table->id();
             $table->integer('project_id');
             $table->integer('user_id');
-            $table->dateTime('start_date');
-            $table->dateTime('dead_line');
             $table->timestamps();
         });
     }
