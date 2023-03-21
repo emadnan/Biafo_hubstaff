@@ -25,7 +25,10 @@ class AssignProjectController extends Controller
 
     public function get_assign_projects()
     {
-        $assign = AssignProject::get();
+        $assign = AssignProject::select('users.*','users.id as user_id','projects.*','projects.id as project_id')
+        ->join('users','users.id','=','assign_projects.user_id')
+        ->join('projects','projects.id','=','assign_projects.project_id')
+        ->get();
         return response()->json(['Project_Assigns' => $assign]);
     }
 
