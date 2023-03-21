@@ -11,6 +11,7 @@ class ProjectController extends Controller
         $project->department_id = \Request::input('department_id');
         $project->company_id = \Request::input('company_id');
         $project->project_name = \Request::input('project_name');
+        $project->description = \Request::input('description');
         $project->start_date = \Request::input('start_date');
         $project->dead_line = \Request::input('dead_line');
         $project->team_id = \Request::input('team_id');
@@ -27,6 +28,7 @@ class ProjectController extends Controller
             'department_id' => \Request::input('department_id'),
             'company_id' => \Request::input('company_id'),
             'project_name' => \Request::input('project_name'),
+            'description' => \Request::input('description'),
             'budget' => \Request::input('budget'),
             'team_id' => \Request::input('team_id'),
             'to_dos' => \Request::input('to_dos'),
