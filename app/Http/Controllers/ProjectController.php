@@ -41,7 +41,7 @@ class ProjectController extends Controller
 
     public function get_projects()
     {
-        $project = Project::select('projects.*','projects.id as project_id','company.*','departments.*')->
+        $project = Project::select('projects.*','projects.id as project_id','company.*','departments.*','departments.description as department_description')->
         join('company','company.id','=','projects.company_id')
         ->join('departments','departments.id','=','projects.department_id')
         ->get();
