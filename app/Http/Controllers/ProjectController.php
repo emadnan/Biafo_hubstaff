@@ -8,7 +8,6 @@ class ProjectController extends Controller
 {
     function add_project(){
         $project = new Project();
-        $project->user_id = \Request::input('user_id');
         $project->department_id = \Request::input('department_id');
         $project->company_id = \Request::input('company_id');
         $project->project_name = \Request::input('project_name');
@@ -25,7 +24,6 @@ class ProjectController extends Controller
         $id = \Request::input('id');
         $project = Project::where('id',$id)
         ->update([
-            'user_id' => \Request::input('user_id'),
             'department_id' => \Request::input('department_id'),
             'company_id' => \Request::input('company_id'),
             'project_name' => \Request::input('project_name'),
@@ -43,7 +41,6 @@ class ProjectController extends Controller
     {
         $project = Project::join('company','company.id','=','projects.company_id')
         ->join('departments','departments.id','=','projects.department_id')
-        ->join('users','users.project_id','=','projects.id')
         ->get();
         return response()->json(['projects' => $project]);
     }
