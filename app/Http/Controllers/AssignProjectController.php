@@ -26,7 +26,7 @@ class AssignProjectController extends Controller
     public function get_assign_projects()
     {
         $assign = AssignProject::get();
-        return response()->json(['Project Assigns' => $assign]);
+        return response()->json(['Project_Assigns' => $assign]);
     }
 
     function delete_assign_projects(){
