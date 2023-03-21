@@ -30,7 +30,7 @@ class DepartmentController extends Controller
 
     public function get_department()
     {
-        $department = Department::select('company.*', 'company.id as company_id')
+        $department = Department::select('company.*', 'company.id as company_id','departments.*')
         ->join('company','company.id','=','departments.company_id')
         ->get();
         return response()->json(['Departments' => $department]);
