@@ -14,6 +14,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PermissionsRoleController;
+use App\Http\Controllers\AssignProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -164,6 +165,18 @@ Route::post('/update_client',[ClientController::class,'update_client']);
 //Delete Client API
 Route::GET('/get_client',[ClientController::class,'get_client']);
 
-//Get All Client
+//Delete Client
 Route::post('/delete_client',[ClientController::class,'delete_client']);
 
+//Assign Projects API
+Route::post('/assign_projects',[AssignProjectController::class,'assign_projects']);
+
+//Get Assign Projects API
+Route::get('/get_assign_projects',[AssignProjectController::class,'get_assign_projects']);
+
+//Deloete Assign Projects API
+Route::post('/delete_assign_projects',[AssignProjectController::class,'delete_assign_projects']);
+
+
+//Update Assign Projects API
+Route::post('/update_assign_projects',[AssignProjectController::class,'update_assign_projects']);
