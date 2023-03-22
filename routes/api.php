@@ -66,6 +66,9 @@ Route::post('/delete-permission',[PermissionController::class,'delete_permission
 //update user API
 Route::post('/update-permission',[PermissionController::class,'updatepermission']);
 
+//get permission by id
+Route::get('/get-permission-by-id/{id}',[PermissionController::class,'get_permission_by_id']);
+
 //role_has_permissions
 Route::post('/role-permissions',[PermissionsRoleController::class,'add_Role_Permissions']);
 

@@ -37,4 +37,12 @@ class PermissionController extends Controller
 
         return response()->json(['message'=>'delete permission successfully']);
     }
+
+    public function get_permission_by_id($id){
+
+        $permission = Permission::where('id',$id)->get();
+
+        return response()->json(['Permission' => $permission]);
+    }
+
 }
