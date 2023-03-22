@@ -183,3 +183,6 @@ Route::post('/delete_assign_projects',[AssignProjectController::class,'delete_as
 
 //Update Assign Projects API
 Route::post('/update_assign_projects',[AssignProjectController::class,'update_assign_projects']);
+
+//Get Assign Projects API
+Route::get('/get_assign_project_by_id/{id}',[AssignProjectController::class,'get_assign_project_by_id']);

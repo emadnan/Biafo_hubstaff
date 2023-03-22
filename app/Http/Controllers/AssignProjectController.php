@@ -51,4 +51,11 @@ class AssignProjectController extends Controller
 
         return response()->json(['message'=>'Update Assign Projects Successfully']);
     }
+
+    public function get_assign_project_by_id($id){
+        
+        $assign = AssignProject::where('project_id',$id)->get();
+
+        return response()->json(['Assigns' => $assign]);
+    }
 }
