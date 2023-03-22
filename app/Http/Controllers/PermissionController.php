@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Permission;
+
+use App\Models\PermissionsRole;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -38,9 +40,9 @@ class PermissionController extends Controller
         return response()->json(['message'=>'delete permission successfully']);
     }
 
-    public function get_permission_by_id($id){
+    public function get_permission_by_id($role){
 
-        $permission = Permission::where('id',$id)->get();
+        $permission = PermissionsRole::where('role_id',$role)->get();
 
         return response()->json(['Permission' => $permission]);
     }
