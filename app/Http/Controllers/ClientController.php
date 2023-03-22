@@ -42,4 +42,10 @@ class ClientController extends Controller
         return response()->json(['message'=>'delete Client successfully']);
     }
 
+    public function get_cliente_by_id($id){
+
+        $client = Client::where('id',$id)->get();
+        
+        return response()->json(['Client' => $client]);
+    }
 }

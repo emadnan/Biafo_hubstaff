@@ -165,8 +165,11 @@ Route::post('/add_client',[ClientController::class,'add_client']);
 //Update Client API
 Route::post('/update_client',[ClientController::class,'update_client']);
 
-//Delete Client API
+//get Client API
 Route::GET('/get_client',[ClientController::class,'get_client']);
+
+//get Client by id API
+Route::GET('/get_client_by_id/{id}',[ClientController::class,'get_cliente_by_id']);
 
 //Delete Client
 Route::post('/delete_client',[ClientController::class,'delete_client']);
