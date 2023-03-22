@@ -45,4 +45,11 @@ class CompanyController extends Controller
 
         return response()->json(['message'=>'delete company successfully']);
     }
+
+    public function get_company_by_id($id){
+        
+        $company = Company::where('id',$id)->get();
+        
+        return response()->json(['company' => $company]);
+    }
 }

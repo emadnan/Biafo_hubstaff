@@ -84,6 +84,9 @@ Route::post('/delete-company',[CompanyController::class,'delete_company']);
 //Get company API
 Route::get('/getcompany',[CompanyController::class,'get_company']);
 
+//Get company by id API
+Route::get('/get_company_by_id/{id}',[CompanyController::class,'get_company_by_id']);
+
 //Add screen_shots API
 Route::post('/screen_shot',[ScreenShotsController::class,'add_screen_shots']);
 
