@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Project;
+use App\Models\AssignProject;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -66,8 +67,9 @@ class ProjectController extends Controller
         return response()->json(['projects' => $project]);
     }
 
-    public function get_project_by_user_id(){
-        $project = Project::join('users','users.project_id','=','projects.id')
+    public function get_project_by_user_id($user_id){
+        $project = AssignProject::join('projects','projects.id','=','assign_projects.project_id')
+        ->where('user_id',$user_id)
         ->get();
         
         return response()->json(['projects' => $project]);
