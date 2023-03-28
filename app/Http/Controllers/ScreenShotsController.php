@@ -51,18 +51,16 @@ class ScreenShotsController extends Controller
     }
 
     function take_screenshort(Request $request ){
-        $image = $request->screenshot;
-        if (!empty($image)) {
-            foreach ($image as $key => $value) {
-                $data = array(
-                    $imageData = base64_decode($value),
-                    $filename = uniqid() . '.png',
-                    $path = public_path('screenshots/' . $filename),
-                    file_put_contents($path, $imageData),
-                );
-            }
+        //store array of 64 base image
+        $images = $request->input('screenshot');
+        foreach($images as $image)
+        {
+            $image = str_replace('data:image/png;base64,', '', $image);
+            $image = str_replace(' ', '+', $image);
+            $imageName = uniqid().'.'.'png';
+            \File::put(public_path(). '/screenshots/' . $imageName, base64_decode($image));
         }
-        return response()->json(['message'=>"added"]);
+        return response()->json(['message'=>'Add screen shot successfully']);
     }
 }
     
