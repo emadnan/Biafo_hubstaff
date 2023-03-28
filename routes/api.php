@@ -192,3 +192,6 @@ Route::post('/update_assign_projects',[AssignProjectController::class,'update_as
 
 //Get Assign Projects API
 Route::get('/get_assign_project_by_id/{id}',[AssignProjectController::class,'get_assign_project_by_id']);
+
+//get project by users 
+Route::get('/get-project-by-user-id/{id}',[projectController::class,'get_project_by_user_id']);

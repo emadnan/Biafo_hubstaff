@@ -55,9 +55,21 @@ class ProjectController extends Controller
         return response()->json(['message'=>'delete Project successfully']);
     }
 
-    public function get_project_by_project_id($id){
+    public function get_project_by_project_id($project_id){
         
-        $project = Project::where('id',$id)->get();
+        $project = Project::select('projects.*','projects.id as project_id','projects.description as project_description','company.*','departments.*')
+        ->join('company','company.id','=','projects.company_id')
+        ->join('departments','departments.id','=','projects.department_id')
+        ->where('id',$project_id)
+        ->get();
+        
+        return response()->json(['projects' => $project]);
+    }
+
+    public function get_project_by_user_id(){
+        $project = Project::join('users','users.project_id','=','projects.id')
+        ->get();
+        
         return response()->json(['projects' => $project]);
     }
 }
