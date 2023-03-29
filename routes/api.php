@@ -114,6 +114,9 @@ Route::post('/delete-department',[DepartmentController::class,'delete_department
 //Get department API
 Route::get('/getdepartment',[DepartmentController::class,'get_department']);
 
+//Get department API
+Route::get('/getdepartment-by-id/{id}',[DepartmentController::class,'get_department_by_id']);
+
 //Get project API
 Route::get('/getproject',[projectController::class,'get_projects']);
 
