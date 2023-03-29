@@ -51,6 +51,9 @@ Route::post('/update-role',[RoleController::class,'updateRole']);
 //Get roles API
 Route::get('/getroles',[RoleController::class,'get_roles']);
 
+//Get role by id API
+Route::get('/get_roles_by_id/{id}',[RoleController::class,'get_roles_by_id']);
+
 //delete role API
 Route::post('/delete-role',[RoleController::class,'delete_role']);
 

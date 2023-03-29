@@ -38,4 +38,11 @@ class RoleController extends Controller
         return response()->json(['message'=>'delete role successfully']);
     }
 
+    public function get_roles_by_id($id)
+    {
+        $role = Role::where('id',$id)
+        ->get();
+        return response()->json(['roles' => $role]);
+    }
+
 }
