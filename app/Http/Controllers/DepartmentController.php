@@ -45,7 +45,9 @@ class DepartmentController extends Controller
 
     public function get_department_by_id($id)
     {
-        $department = Department::where('id',$id)
+        $department = Department::select('company.*', 'company.id as company_id','departments.*','departments.id as department_id')
+        ->join('company','company.id','=','departments.company_id')
+        ->where('departments.id',$id)
         ->get();
         return response()->json(['Departments' => $department]);
     }
