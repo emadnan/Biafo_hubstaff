@@ -8,12 +8,14 @@ class AssignProjectController extends Controller
 {
     public function assign_projects(Request $request){
         $project_id = $request->project_id;
+        $stream_id = $request->stream_id;
         $user_ids = $request->user_ids;
         foreach($user_ids as $user_id)
         {
             $assign = new AssignProject;
             $assign->project_id = $project_id;
             $assign->user_id = $user_id;
+            $assign->stream_id = $stream_id;
             $assign->save();
         }
         return response()->json(['message'=>'Assign Projects Successfully']);

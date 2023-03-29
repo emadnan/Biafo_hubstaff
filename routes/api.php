@@ -16,6 +16,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PermissionsRoleController;
 use App\Http\Controllers\AssignProjectController;
 use App\Http\Controllers\StreamsController;
+use App\Http\Controllers\ProjectScreenshotsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -206,3 +207,6 @@ Route::get('/get-project-by-user-id/{id}',[projectController::class,'get_project
 
 //get all streams 
 Route::get('/get-streams',[StreamsController::class,'get_streams']);
+
+// Add screenshots API\
+Route::post('/Add_project_screenshots',[ProjectScreenshotsController::class,'Add_project_screenshots']);
