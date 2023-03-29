@@ -61,14 +61,14 @@ class ProjectController extends Controller
         $project = Project::select('projects.*','projects.id as project_id','projects.description as project_description','company.*','departments.*')
         ->join('company','company.id','=','projects.company_id')
         ->join('departments','departments.id','=','projects.department_id')
-        ->where('id',$project_id)
+        ->where('projects.id',$project_id)
         ->get();
         
         return response()->json(['projects' => $project]);
     }
 
     public function get_project_by_user_id($user_id){
-        $project = AssignProject::join('projects','projects.id','=','assign_projects.project_id')
+        $project = AssignProject::join('projects','projects.id','=','assign_projects.project_id') 
         ->where('user_id',$user_id)
         ->get();
         
