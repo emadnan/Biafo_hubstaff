@@ -15,6 +15,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PermissionsRoleController;
 use App\Http\Controllers\AssignProjectController;
+use App\Http\Controllers\StreamsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,7 @@ Route::post('/update-role',[RoleController::class,'updateRole']);
 Route::get('/getroles',[RoleController::class,'get_roles']);
 
 //Get role by id API
+
 Route::get('/get_roles_by_id/{id}',[RoleController::class,'get_roles_by_id']);
 
 //delete role API
@@ -201,3 +203,6 @@ Route::get('/get_assign_project_by_id/{id}',[AssignProjectController::class,'get
 
 //get project by users 
 Route::get('/get-project-by-user-id/{id}',[projectController::class,'get_project_by_user_id']);
+
+//get all streams 
+Route::get('/get-streams',[StreamsController::class,'get_streams']);
