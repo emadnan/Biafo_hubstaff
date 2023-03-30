@@ -14,8 +14,8 @@ class AssignProjectController extends Controller
         {
             $assign = new AssignProject;
             $assign->project_id = $project_id;
-            $assign->user_id = $user_id;
             $assign->stream_id = $stream_id;
+            $assign->user_id = $user_id;
             $assign->save();
         }
         return response()->json(['message'=>'Assign Projects Successfully']);
