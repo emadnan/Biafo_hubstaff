@@ -209,4 +209,4 @@ Route::get('/get-project-by-user-id/{id}',[projectController::class,'get_project
 Route::get('/get-streams',[StreamsController::class,'get_streams']);
 
 // Add screenshots API\
-Route::post('/Add_project_screenshots',[ProjectScreenshotsController::class,'Add_project_screenshots']);
+Route::post('/Add_project_screenshots',[ProjectScreenshotsController::class,'addProjectScreenshot']);

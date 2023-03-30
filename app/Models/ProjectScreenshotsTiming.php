@@ -10,4 +10,9 @@ class ProjectScreenshotsTiming extends Model
     use HasFactory;
     protected $table="project_screenshots_timings";
     protected $primaryKey="id";
+
+    protected $fillable = [
+        'start_time',
+        'end_time'
+    ];
 }
