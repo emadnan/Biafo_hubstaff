@@ -11,6 +11,6 @@ class ProjectScreenshots extends Model
     protected $table="project_screenshots";
     protected $primaryKey="id";
 
-    protected $fillable = ['user_id', 'stream_name','longitude', 'latitude', 'date'];
+    protected $fillable = ['user_id', 'stream_name','longitude', 'latitude', 'project_id','date', 'hours', 'minutes', 'seconds'];
 
 }

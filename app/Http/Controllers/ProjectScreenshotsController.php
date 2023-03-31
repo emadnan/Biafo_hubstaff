@@ -19,7 +19,7 @@ class ProjectScreenshotsController extends Controller
         $latitude = $request->latitude;
         $hours= $request->hours;
         $minutes= $request->minutes;
-        $seconds=$request->secunds;
+        $seconds=$request->seconds;
         $start_time = $request->start_time;
         $end_time = $request->end_time;
         $path_url = $request->path_url;
@@ -44,12 +44,12 @@ class ProjectScreenshotsController extends Controller
         );
         // print_r($screenshots->id);
         // exit();
-        $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time);
+        $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds);
         $this->addProjectScreenshotAttechment($screenshots->id);
         
         return response()->json(['Message' => 'Add project screenshots successfully']);
     }
-    public function addProjectScreenshotTimings($id, $isStart, $start_time, $end_time){
+    public function addProjectScreenshotTimings($id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds){
 
         $timings = new ProjectScreenshotsTiming();
         if($isStart == 1){     
@@ -62,9 +62,17 @@ class ProjectScreenshotsController extends Controller
         }
         else{
             
-            $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->where('end_time', null)->orderBy('id','DESC')->first();
+            $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
             $update = ProjectScreenshotsTiming::where('id', $result->id)
             ->update(['end_time' => $end_time]);
+
+            $result1 = ProjectScreenshots::where('user_id',$user_id)->where('project_id',$project_id)->where('date',date('Y-m-d'))->first();
+            $update1 = ProjectScreenshots::where('id',$result1->id)
+            ->update([
+                'hours'=>$hours,
+                'minutes'=>$minutes,
+                'seconds'=>$seconds
+            ]);
             
         }
     }
