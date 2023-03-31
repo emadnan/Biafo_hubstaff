@@ -200,7 +200,7 @@ Route::post('/delete_assign_projects',[AssignProjectController::class,'delete_as
 Route::post('/update_assign_projects',[AssignProjectController::class,'update_assign_projects']);
 
 //Get Assign Projects API
-Route::get('/get_assign_project_by_id/{id}',[AssignProjectController::class,'get_assign_project_by_id']);
+Route::get('/get_assign_project_by_project_id/{id}',[AssignProjectController::class,'get_assign_project_by_project_id']);
 
 //get project by users 
 Route::get('/get-project-by-user-id/{id}',[projectController::class,'get_project_by_user_id']);
