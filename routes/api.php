@@ -210,3 +210,6 @@ Route::get('/get-streams',[StreamsController::class,'get_streams']);
 
 // Add screenshots API\
 Route::post('/Add_project_screenshots',[ProjectScreenshotsController::class,'addProjectScreenshot']);
+
+// Add screenshots API\
+Route::get('/get_Project_Screenshots',[ProjectScreenshotsController::class,'getProjectScreenshots']);

@@ -61,6 +61,10 @@ class ProjectScreenshotsController extends Controller
 
         }
         else{
+
+            $result1 = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
+            $update1 = ProjectScreenshotsTiming::where('id', $result1->id-1)
+            ->update(['end_time' => $start_time]);
             
             $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
             $update = ProjectScreenshotsTiming::where('id', $result->id)
@@ -96,4 +100,15 @@ class ProjectScreenshotsController extends Controller
             }
         }
     }
+
+    public function getProjectScreenshots(){
+        $projectscreenshot= ProjectScreenshots::join('project_screenshots_timings','project_screenshots_timings.project_screenshorts_id','=','project_screenshots.id')
+        ->join('project_screenshots_attachments','project_screenshots_attachments.project_screenshorts_id','=','project_screenshots.id')
+        ->where('date',date('Y-m-d'))
+        ->get();
+
+        
+        return response()->json(['ProjectScreenshot' => $projectscreenshot]);
+    }
+
 }
