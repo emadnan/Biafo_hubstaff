@@ -45,7 +45,6 @@ class ProjectScreenshotsController extends Controller
         // print_r($screenshots->id);
         // exit();
         $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds);
-        $this->addProjectScreenshotAttechment($screenshots->id);
         
         return response()->json(['Message' => 'Add project screenshots successfully']);
     }
@@ -79,6 +78,8 @@ class ProjectScreenshotsController extends Controller
             ]);
             
         }
+        
+        $this->addProjectScreenshotAttechment($timings->id);
     }
 
     public function addProjectScreenshotAttechment($id)    {
