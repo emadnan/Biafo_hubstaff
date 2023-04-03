@@ -95,7 +95,7 @@ class ProjectScreenshotsController extends Controller
                 $imageName = uniqid().'.'.'png';
                 \File::put(public_path(). '/screenshots/' . $imageName, base64_decode($image));
                 $path_url = new ProjectScreenshotsAttechments();
-                $path_url->project_screenshorts_id = $id;
+                $path_url->project_screenshorts_attechment_id = $id;
                 $path_url->path_url =asset('screenshots').'/'.$imageName;
                 $path_url->save();
             }
@@ -104,7 +104,7 @@ class ProjectScreenshotsController extends Controller
 
     public function getProjectScreenshots(){
         $projectscreenshot= ProjectScreenshots::join('project_screenshots_timings','project_screenshots_timings.project_screenshorts_id','=','project_screenshots.id')
-        ->join('project_screenshots_attachments','project_screenshots_attachments.project_screenshorts_id','=','project_screenshots.id')
+        ->join('project_screenshots_attachments','project_screenshots_attachments.project_screenshorts_attechment_id','=','project_screenshots_timings.id')
         ->where('date',date('Y-m-d'))
         ->get();
 
