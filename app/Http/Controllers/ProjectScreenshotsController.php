@@ -103,7 +103,7 @@ class ProjectScreenshotsController extends Controller
     }
 
     public function getProjectScreenshots(){
-        $projectscreenshot= ProjectScreenshots::select('projects.*','projects.id as projects_id','project_screenshots_attachments.*','project_screenshots_attachments.id as project_screenshots_attachments_id')
+        $projectscreenshot= ProjectScreenshots::select('project_screenshots.*','projects.*','projects.id as projects_id','project_screenshots_attachments.*','project_screenshots_attachments.id as project_screenshots_attachments_id')
         ->join('project_screenshots_timings','project_screenshots_timings.project_screenshorts_id','=','project_screenshots.id')
         ->join('project_screenshots_attachments','project_screenshots_attachments.project_screenshorts_timing_id','=','project_screenshots_timings.id')
         ->join('projects','projects.id','=','project_screenshots.project_id')
