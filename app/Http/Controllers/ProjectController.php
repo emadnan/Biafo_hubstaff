@@ -68,8 +68,10 @@ class ProjectController extends Controller
     }
 
     public function get_project_by_user_id($user_id){
-        $project = AssignProject::join('projects','projects.id','=','assign_projects.project_id') 
-        ->where('user_id',$user_id)
+        $project = AssignProject::select('streams.*','streams.user_id as streams_user_id','projects.*')
+        ->join('projects','projects.id','=','assign_projects.project_id')
+        ->join('streams','streams.id','=','assign_projects.stream_id') 
+        ->where('assign_projects.user_id',$user_id)
         ->get();
         
         return response()->json(['projects' => $project]);
