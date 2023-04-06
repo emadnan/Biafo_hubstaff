@@ -10,6 +10,8 @@ class PermissionsRoleController extends Controller
 {
     public function add_Role_Permissions(Request $request){
         $rolePermisson= PermissionsRole::where('role_id',$request->role_id)->get();
+        print_r($rolePermisson);
+        exit;
         if($rolePermisson)   {
             foreach($rolePermisson as $value)
             {
