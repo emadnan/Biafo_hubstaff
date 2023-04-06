@@ -9,10 +9,12 @@ use Illuminate\Http\Request;
 class PermissionsRoleController extends Controller
 {
     public function add_Role_Permissions(Request $request){
-        $rolePermisson= PermissionsRole::where('role_id',$request->role_id);
+        $rolePermisson= PermissionsRole::where('role_id',$request->role_id)->get();
         if($rolePermisson)   {
-
-            $rolePermisson->delete();
+            foreach($rolePermisson as $value)
+            {
+                $value->delete();
+            }
 
         }
 
