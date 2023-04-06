@@ -15,4 +15,8 @@ class ProjectScreenshotsTiming extends Model
         'start_time',
         'end_time'
     ];
+
+    function getattechments(){
+        return $this->hasMany('App\Models\ProjectScreenshotsAttechments', 'project_screenshorts_timing_id', 'id');
+    }
 }

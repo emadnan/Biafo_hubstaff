@@ -103,14 +103,17 @@ class ProjectScreenshotsController extends Controller
     }
 
     public function getProjectScreenshots(){
-        $projectscreenshot= ProjectScreenshots::
-        // select('project_screenshots.*','project_screenshots.*','project_screenshots_timings.*','projects.*','projects.id as projects_id','project_screenshots_attachments.*','project_screenshots_attachments.id as project_screenshots_attachments_id','users.*')
+        $projectscreenshot= ProjectScreenshots::select('project_screenshots.*','projects.project_name as project_name','users.name as user_name')
+        ->join('users','users.id','=','project_screenshots.user_id')
+        ->join('projects','projects.id','=','project_screenshots.project_id')
+        // select('projects.*','projects.id as projects_id','users.name as user_name')
         // ->join('project_screenshots_timings','project_screenshots_timings.project_screenshorts_id','=','project_screenshots.id')
         // ->join('project_screenshots_attachments','project_screenshots_attachments.project_screenshorts_timing_id','=','project_screenshots_timings.id')
-        // ->leftJoin('projects','projects.id','=','project_screenshots.project_id')
-        // ->leftJoin('users','users.id','=','project_screenshots.user_id')
-        // ->where('date',date('Y-m-d'))
-        with('getTimings')
+        // ->join('projects','projects.id','=','project_screenshots.project_id')
+        // ->join('users','users.id','=','project_screenshots.user_id')
+        ->where('date',date('Y-m-d'))
+        
+        -> with('getTimings','getTimings.getattechments')
         ->get();
 
         
