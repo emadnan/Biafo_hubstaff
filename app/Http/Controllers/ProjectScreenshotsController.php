@@ -93,7 +93,7 @@ class ProjectScreenshotsController extends Controller
                 $image = str_replace('data:image/png;base64,', '', $image);
                 $image = str_replace(' ', '+', $image);
                 $imageName = uniqid().'.'.'png';
-                \File::put(public_path(). '/screenshots/' . $imageName, base64_decode($image));
+                \File::put(public_path().'/screenshots/'.$imageName, base64_decode($image));
                 $path_url = new ProjectScreenshotsAttechments();
                 $path_url->project_screenshorts_timing_id = $id;
                 $path_url->path_url =asset('screenshots').'/'.$imageName;
@@ -103,12 +103,14 @@ class ProjectScreenshotsController extends Controller
     }
 
     public function getProjectScreenshots(){
-        $projectscreenshot= ProjectScreenshots::select('project_screenshots.*','project_screenshots.*','project_screenshots_timings.*','projects.*','projects.id as projects_id','project_screenshots_attachments.*','project_screenshots_attachments.id as project_screenshots_attachments_id','users.*')
-        ->join('project_screenshots_timings','project_screenshots_timings.project_screenshorts_id','=','project_screenshots.id')
-        ->join('project_screenshots_attachments','project_screenshots_attachments.project_screenshorts_timing_id','=','project_screenshots_timings.id')
-        ->join('projects','projects.id','=','project_screenshots.project_id')
-        ->join('users','users.id','=','project_screenshots.user_id')
-        ->where('date',date('Y-m-d'))
+        $projectscreenshot= ProjectScreenshots::
+        // select('project_screenshots.*','project_screenshots.*','project_screenshots_timings.*','projects.*','projects.id as projects_id','project_screenshots_attachments.*','project_screenshots_attachments.id as project_screenshots_attachments_id','users.*')
+        // ->join('project_screenshots_timings','project_screenshots_timings.project_screenshorts_id','=','project_screenshots.id')
+        // ->join('project_screenshots_attachments','project_screenshots_attachments.project_screenshorts_timing_id','=','project_screenshots_timings.id')
+        // ->leftJoin('projects','projects.id','=','project_screenshots.project_id')
+        // ->leftJoin('users','users.id','=','project_screenshots.user_id')
+        // ->where('date',date('Y-m-d'))
+        with('getTimings')
         ->get();
 
         
