@@ -40,7 +40,7 @@ class PermissionController extends Controller
         return response()->json(['message'=>'delete permission successfully']);
     }
 
-    public function get_permission_by_id($role){
+    public function get_permission_by_role_id($role){
 
         $permission = PermissionsRole::where('role_id',$role)->get();
 
