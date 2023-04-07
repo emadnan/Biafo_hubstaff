@@ -65,9 +65,13 @@ class ProjectScreenshotsController extends Controller
             // $update1 = ProjectScreenshotsTiming::where('id', $result1->id-1)
             // ->update(['end_time' => $start_time]);
             
-            $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
+            $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id-1)->orderBy('id','DESC')->first();
             $update = ProjectScreenshotsTiming::where('id', $result->id)
             ->update(['end_time' => $start_time]);
+
+            $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
+            $update = ProjectScreenshotsTiming::where('id', $result->id)
+            ->update(['end_time' => $end_time]);
 
             $result1 = ProjectScreenshots::where('user_id',$user_id)->where('project_id',$project_id)->where('date',date('Y-m-d'))->first();
             $update1 = ProjectScreenshots::where('id',$result1->id)
