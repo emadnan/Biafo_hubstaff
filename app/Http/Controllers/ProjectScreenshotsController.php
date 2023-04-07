@@ -45,6 +45,8 @@ class ProjectScreenshotsController extends Controller
         );
         
         $screenShots = \Request::input('screenShots');
+        // print_r($screenShots);
+        // exit();
         if($screenShots != null){
             $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds);
         
@@ -70,6 +72,8 @@ class ProjectScreenshotsController extends Controller
 
         }
         else{
+            // print_r($id);
+            // exit();
 
             // $result1 = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
             // $update1 = ProjectScreenshotsTiming::where('id', $result1->id-1)
