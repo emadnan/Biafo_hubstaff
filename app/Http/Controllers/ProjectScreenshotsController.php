@@ -24,6 +24,7 @@ class ProjectScreenshotsController extends Controller
         $end_time = $request->end_time;
         $path_url = $request->path_url;
         $isStart = $request->is_start;
+        $call_api = $request->call_api;
     
 
         $screenshots = ProjectScreenshots::firstOrCreate(
@@ -42,11 +43,17 @@ class ProjectScreenshotsController extends Controller
                 'seconds'=> $seconds
             ]
         );
-        // print_r($screenshots->id);
-        // exit();
-        $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds);
+        if($call_api != 1){
+            $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds);
         
         return response()->json(['Message' => 'Add project screenshots successfully']);
+        }
+        else{
+            return response()->json(['Message' => 'Time has started']);
+        }
+        // print_r($screenshots->id);
+        // exit();
+        
     }
     public function addProjectScreenshotTimings($id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds){
 
@@ -77,11 +84,10 @@ class ProjectScreenshotsController extends Controller
                 'minutes'=>$minutes,
                 'seconds'=>$seconds
             ]);
-            $this->addProjectScreenshotAttechment($timings->id);
             
         }
         
-        
+        $this->addProjectScreenshotAttechment($timings->id);
     }
 
     public function addProjectScreenshotAttechment($id)    {
