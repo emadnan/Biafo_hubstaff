@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class AssignProjectController extends Controller
 {
     public function assign_projects(Request $request){
-        $AssignProject= AssignProject::where('project_id',$request->project_id)->delete();
+        $AssignProject= AssignProject::where('project_id',$request->project_id)->where('stream_id',$request->stream_id)->delete();
         $project_id = $request->project_id;
         $stream_id = $request->stream_id;
         $user_ids = $request->user_ids;
