@@ -56,9 +56,8 @@ class ProjectScreenshotsController extends Controller
             $timings->project_screenshorts_id = $id;
             $timings->start_time = $start_time;
             $timings->end_time = null;
-            $this->addProjectScreenshotAttechment($timings->id);
-            
             $timings->save();
+            
 
         }
         else{
@@ -78,10 +77,11 @@ class ProjectScreenshotsController extends Controller
                 'minutes'=>$minutes,
                 'seconds'=>$seconds
             ]);
+            $this->addProjectScreenshotAttechment($timings->id);
             
         }
         
-        $this->addProjectScreenshotAttechment($timings->id);
+        
     }
 
     public function addProjectScreenshotAttechment($id)    {
