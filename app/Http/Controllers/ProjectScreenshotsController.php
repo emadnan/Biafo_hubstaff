@@ -24,8 +24,6 @@ class ProjectScreenshotsController extends Controller
         $end_time = $request->end_time;
         $path_url = $request->path_url;
         $isStart = $request->is_start;
-        $call_api = $request->call_api;
-    
 
         $screenshots = ProjectScreenshots::firstOrCreate(
             [
@@ -72,24 +70,25 @@ class ProjectScreenshotsController extends Controller
 
         }
         else{
-            // print_r($id);
-            // exit();
+            
 
             // $result1 = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
             // $update1 = ProjectScreenshotsTiming::where('id', $result1->id-1)
             // ->update(['end_time' => $start_time]);
             
             $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
-            $update = ProjectScreenshotsTiming::where('id', $result->id)
-            ->update(['end_time' => $end_time]);
-
+            $update = ProjectScreenshotsTiming::where('id', $result->id)->first();
+            $update->end_time = $end_time;
+            $update->save();
             $result1 = ProjectScreenshots::where('user_id',$user_id)->where('project_id',$project_id)->where('date',date('Y-m-d'))->first();
-            $update1 = ProjectScreenshots::where('id',$result1->id)
-            ->update([
-                'hours'=>$hours,
-                'minutes'=>$minutes,
-                'seconds'=>$seconds
-            ]);
+            $update1 = ProjectScreenshots::where('id',$result1->id)->first();
+            $update1->hours = $hours;
+            $update1->minutes = $minutes;
+            $update1->seconds = $seconds;
+            $update1->save();
+            
+            // print_r($result1);
+            // exit();
             
         }
         
