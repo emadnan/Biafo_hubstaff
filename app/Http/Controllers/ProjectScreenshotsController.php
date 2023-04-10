@@ -72,7 +72,7 @@ class ProjectScreenshotsController extends Controller
             // print_r('rafay Ch');
             // exit();
             $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
-            $update = ProjectScreenshotsTiming::where('end_time', null)->first();
+            $update = ProjectScreenshotsTiming::where('end_time', null)->get();
             $update->end_time = $end_time;
             $update->save();
             $result1 = ProjectScreenshots::where('user_id',$user_id)->where('project_id',$project_id)->where('date',date('Y-m-d'))->first();
