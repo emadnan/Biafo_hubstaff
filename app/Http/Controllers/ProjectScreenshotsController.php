@@ -50,9 +50,6 @@ class ProjectScreenshotsController extends Controller
         
         return response()->json(['Message' => 'Add project screenshots successfully']);
         }
-        else{
-            return response()->json(['Message' => 'Time has started']);
-        }
         // print_r($screenshots->id);
         // exit();
         
