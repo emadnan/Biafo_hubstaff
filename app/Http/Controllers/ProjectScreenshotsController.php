@@ -41,11 +41,9 @@ class ProjectScreenshotsController extends Controller
                 'seconds'=> $seconds
             ]
         );
+        $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds);
         
-       
-            $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds);
-        
-            return response()->json(['Message' => 'Add project screenshots successfully']);
+        return response()->json(['Message' => 'Add project screenshots successfully']);
         // print_r($screenshots->id);
         // exit();
         
@@ -59,12 +57,15 @@ class ProjectScreenshotsController extends Controller
             $timings->start_time = $start_time;
             $timings->end_time = null;
             $timings->save();
-            
-
+            $screenShots = \Request::input('screenShots');
+            if($screenShots != null)
+            {
+                $this->addProjectScreenshotAttechment($timings->id);
+            }
         }
         else{
             
-            return response()->json(['stopped' => "here"]);
+
             // $result1 = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
             // $update1 = ProjectScreenshotsTiming::where('id', $result1->id-1)
             // ->update(['end_time' => $start_time]);
@@ -79,17 +80,10 @@ class ProjectScreenshotsController extends Controller
             $update1->hours = $hours;
             $update1->minutes = $minutes;
             $update1->seconds = $seconds;
-            
-            $update1->save();
-            
-            
-        }
-        $screenShots = \Request::input('screenShots');
-        // print_r($screenShots);
-        // exit();
-        if($screenShots = null){
-            $this->addProjectScreenshotAttechment($timings->id);
-        }
+   
+            $update1->save();            
+        }       
+        
     }
 
     public function addProjectScreenshotAttechment($id)    {
