@@ -75,7 +75,8 @@ class ProjectScreenshotsController extends Controller
             // $result1 = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
             // $update1 = ProjectScreenshotsTiming::where('id', $result1->id-1)
             // ->update(['end_time' => $start_time]);
-            
+            // print_r('rafay Ch');
+            // exit();
             $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
             $update = ProjectScreenshotsTiming::where('id', $result->id)->first();
             $update->end_time = $end_time;
@@ -85,10 +86,11 @@ class ProjectScreenshotsController extends Controller
             $update1->hours = $hours;
             $update1->minutes = $minutes;
             $update1->seconds = $seconds;
-            $update1->save();
             
-            // print_r($result1);
-            // exit();
+            $update1->save();
+            print_r($update1);
+            exit();
+            
             
         }
         
@@ -98,8 +100,6 @@ class ProjectScreenshotsController extends Controller
     public function addProjectScreenshotAttechment($id)    {
         $screenShots = \Request::input('screenShots');
 
-        // print_r($screenShots);
-        // exit;
         if(!empty($screenShots))    {
             foreach($screenShots as $image )    {
             
