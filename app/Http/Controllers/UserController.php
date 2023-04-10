@@ -57,7 +57,7 @@ class UserController extends Controller
         $token = JWTAuth::fromUser($user, [
             'name' => $request->get('name'),
             'email' => $request->get('email'),
-            'role' => 5,
+            // 'role' => 5,
             
         ]);
 
