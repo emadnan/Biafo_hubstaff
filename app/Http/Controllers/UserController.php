@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\PermissionsRole;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
@@ -14,8 +15,11 @@ class UserController extends Controller
 {
     public function authenticate(Request $request) {
         $credentials = $request->only('email', 'password');
-        $user= User::where('email',$credentials)->get();
-
+        $user= User::where('email',$credentials)->first();
+        // print_r($user);
+        // exit();
+        $permissions = PermissionsRole::join('permissions','permissions.id','=','role_has_permissions.permission_id')
+        ->where('role_id',$user->role)->get();
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 400);
@@ -24,7 +28,7 @@ class UserController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        return response()->json(compact('user','token'));
+        return response()->json(compact('user','token','permissions'));
     }
 
     public function register(Request $request) {
