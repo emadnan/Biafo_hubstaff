@@ -45,7 +45,7 @@ class ProjectScreenshotsController extends Controller
         $screenShots = \Request::input('screenShots');
         // print_r($screenShots);
         // exit();
-        if($screenShots != null){
+        if($screenShots = null){
             $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds);
         
         return response()->json(['Message' => 'Add project screenshots successfully']);
