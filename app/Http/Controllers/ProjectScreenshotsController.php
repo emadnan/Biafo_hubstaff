@@ -71,7 +71,7 @@ class ProjectScreenshotsController extends Controller
         }
         else{
             
-
+            return response()->json(['stopped' => "here"]);
             // $result1 = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
             // $update1 = ProjectScreenshotsTiming::where('id', $result1->id-1)
             // ->update(['end_time' => $start_time]);
