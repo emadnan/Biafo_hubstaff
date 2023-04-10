@@ -88,8 +88,6 @@ class ProjectScreenshotsController extends Controller
             $update1->seconds = $seconds;
             
             $update1->save();
-            print_r($update1);
-            exit();
             
             
         }
