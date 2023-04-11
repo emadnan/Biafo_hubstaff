@@ -51,13 +51,13 @@ class UserController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
-            'role' => 5,
+            // 'role_id' => $request->get('role_id'),
         ]);
 
         $token = JWTAuth::fromUser($user, [
             'name' => $request->get('name'),
             'email' => $request->get('email'),
-            // 'role' => 5,
+            // 'role_id' => $request->get('role_id'),
             
         ]);
 
@@ -103,6 +103,7 @@ class UserController extends Controller
     //ADD USERS CRUD
     function add_user(){
         $user = new User();
+        $user->company_id = \Request::input('company_id');
         $user->name = \Request::input('name');
         $user->email = \Request::input('email');
         $user->password = Hash::make('password');
@@ -116,6 +117,7 @@ class UserController extends Controller
         $id = \Request::input('id');
         $user = User::where('id',$id)
         ->update([
+            'company_id' => \Request::input('company_id'),
             'name' => \Request::input('name'),
             'email' => \Request::input('email'),
             'password' => Hash::make($request->get('password')),
