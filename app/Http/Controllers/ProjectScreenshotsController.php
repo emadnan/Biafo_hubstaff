@@ -108,18 +108,18 @@ class ProjectScreenshotsController extends Controller
         $projectscreenshot= ProjectScreenshots::select('project_screenshots.*','projects.project_name as project_name','users.name as user_name')
         ->join('users','users.id','=','project_screenshots.user_id')
         ->join('projects','projects.id','=','project_screenshots.project_id')
-        // select('projects.*','projects.id as projects_id','users.name as user_name')
-        // ->join('project_screenshots_timings','project_screenshots_timings.project_screenshorts_id','=','project_screenshots.id')
-        // ->join('project_screenshots_attachments','project_screenshots_attachments.project_screenshorts_timing_id','=','project_screenshots_timings.id')
-        // ->join('projects','projects.id','=','project_screenshots.project_id')
-        // ->join('users','users.id','=','project_screenshots.user_id')
         ->where('date',date('Y-m-d'))
-        
-        -> with('getTimings','getTimings.getattechments')
+        ->with('getTimings','getTimings.getattechments')
         ->get();
 
+        $totalTime = $projectscreenshot->sum(function ($screenshot) {
+            return $screenshot->hours * 3600 + $screenshot->minutes * 60 + $screenshot->seconds;
+        });
         
-        return response()->json(['ProjectScreenshot' => $projectscreenshot]);
+        $totalhours = floor($totalTime / 3600);
+        $totalminutes = floor(($totalTime % 3600) / 60);
+        $totalseconds = $totalTime % 60;
+        return response()->json(['ProjectScreenshot' => $projectscreenshot, 'totalhours'=> $totalhours, 'totalminutes'=>$totalminutes, 'totalseconds'=>$totalseconds]);
     }
 
 }
