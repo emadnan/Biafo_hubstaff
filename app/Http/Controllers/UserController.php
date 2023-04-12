@@ -62,7 +62,6 @@ class UserController extends Controller
         $company->company_email= $validatedData['email'];
         $company->save();
 
-
         $user = new User();
         $user->company_id = $company->id;
         $user->name = $validatedData['name'];
@@ -71,13 +70,16 @@ class UserController extends Controller
         $user->role = $request->get('role');
         $user->save();
 
+        
+        // print_r($user);
+        // exit();
         $token = JWTAuth::fromUser($user, [
             'name' => $request->get('name'),
             'email' => $request->get('email')
             
         ]);
 
-        return response()->json(['message'=>'SignUp successfully']);
+        return response()->json(['message'=>'register successfully']);
     }
 
     public function getAuthenticatedUser() {
