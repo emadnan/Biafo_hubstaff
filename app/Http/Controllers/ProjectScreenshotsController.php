@@ -116,10 +116,12 @@ class ProjectScreenshotsController extends Controller
             return $screenshot->hours * 3600 + $screenshot->minutes * 60 + $screenshot->seconds;
         });
         
-        $totalhours = floor($totalTime / 3600);
-        $totalminutes = floor(($totalTime % 3600) / 60);
-        $totalseconds = $totalTime % 60;
-        return response()->json(['ProjectScreenshot' => $projectscreenshot, 'totalhours'=> $totalhours, 'totalminutes'=>$totalminutes, 'totalseconds'=>$totalseconds]);
+        $TotalHours = floor($totalTime / 3600);
+        $TotalMinutes = floor(($totalTime % 3600) / 60);
+        $TotalSeconds = $totalTime % 60;
+
+        $data = compact('projectscreenshot','TotalHours','TotalMinutes','TotalSeconds');
+        return  response()->json($data);
     }
 
 }
