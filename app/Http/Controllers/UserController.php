@@ -15,7 +15,9 @@ class UserController extends Controller
 {
     public function authenticate(Request $request) {
         $credentials = $request->only('email', 'password');
-        $user= User::where('email',$credentials)->first();
+        $user= User::select('users.*','company.*','company.id as CompanyId')
+        ->join('company','company.id','=','users.company_id')
+        ->where('email',$credentials)->first();
         // print_r($user);
         // exit();
         $permissions = PermissionsRole::join('permissions','permissions.id','=','role_has_permissions.permission_id')
@@ -28,7 +30,8 @@ class UserController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        return response()->json(compact('user','token','permissions'));
+        return response()->json(['Users' => $user, 'token'=>$token, 'permissions'=>$permissions]);
+        
     }
 
     public function register(Request $request) {
@@ -46,18 +49,23 @@ class UserController extends Controller
         // if($validator->fails()){
         //     return response()->json($validator->errors()->toJson(), 400);
         // }
-
-        $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            // 'role_id' => $request->get('role_id'),
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => 'required|string|min:8|max:255',
         ]);
+
+        $user = new User();
+        $user->company_id = $validatedData['company_id'];
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
+        $user->password = Hash::make($validatedData['password']);
+        $user->role = $request->get('role');
+        $user->save();
 
         $token = JWTAuth::fromUser($user, [
             'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            // 'role_id' => $request->get('role_id'),
+            'email' => $request->get('email')
             
         ]);
 
