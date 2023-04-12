@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+// use Faker\Provider\Company;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Company;
 use App\Models\PermissionsRole;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +17,7 @@ class UserController extends Controller
 {
     public function authenticate(Request $request) {
         $credentials = $request->only('email', 'password');
-        $user= User::select('users.*','company.*','company.id as CompanyId')
+        $user= User::select('users.*','users.id as user_id','company.*','company.id as CompanyId')
         ->join('company','company.id','=','users.company_id')
         ->where('email',$credentials)->first();
         // print_r($user);
@@ -55,8 +57,14 @@ class UserController extends Controller
             'password' => 'required|string|min:8|max:255',
         ]);
 
+        $company = new Company();
+        $company->company_name= $validatedData['name'];
+        $company->company_email= $validatedData['email'];
+        $company->save();
+
+
         $user = new User();
-        $user->company_id = $validatedData['company_id'];
+        $user->company_id = $company->id;
         $user->name = $validatedData['name'];
         $user->email = $validatedData['email'];
         $user->password = Hash::make($validatedData['password']);
