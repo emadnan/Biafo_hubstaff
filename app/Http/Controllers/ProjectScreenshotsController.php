@@ -127,19 +127,21 @@ class ProjectScreenshotsController extends Controller
         return response()->json($data);
     }
 
-    public function getProjectScreenshotsByDate($date1, $date2)
+    public function getProjectScreenshotsByDate($date1, $date2,$user_id)
     {
         if ($date2==0) {
             $projectscreenshot = ProjectScreenshots::select('project_screenshots.*', 'projects.project_name as project_name', 'users.name as user_name')
                 ->join('users', 'users.id', '=', 'project_screenshots.user_id')
                 ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
                 ->where('date', $date1)
+                ->where('user_id',$user_id)
                 ->with('getTimings', 'getTimings.getattechments')
                 ->get();
         } else {
             $projectscreenshot = ProjectScreenshots::select('project_screenshots.*', 'projects.project_name as project_name', 'users.name as user_name')
                 ->join('users', 'users.id', '=', 'project_screenshots.user_id')
                 ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
+                ->where('user_id',$user_id)
                 ->whereBetween('date', [$date1, $date2])
                 ->with('getTimings', 'getTimings.getattechments')
                 ->get();
