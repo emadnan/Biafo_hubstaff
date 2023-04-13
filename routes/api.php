@@ -219,3 +219,6 @@ Route::get('/get_Project_Screenshots',[ProjectScreenshotsController::class,'getP
 
 // get users by company id API\
 Route::get('/get_company_by_company_id/{id}',[CompanyController::class,'get_company_by_company_id']);
+
+//get screenshots by date
+Route::get('/get_projectscreenshot_by_date/{date1}/{date2}',[ProjectScreenshotsController::class,'getProjectScreenshotsByDate']);
