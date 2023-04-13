@@ -128,6 +128,12 @@ class UserController extends Controller
         $user->role = \Request::input('role');
         $user->save();
         
+        $token = JWTAuth::fromUser($user, [
+            'name' => \Request::input('name'),
+            'email' => \Request::input('email'),
+            
+        ]);
+
         return response()->json(['message'=>'Add User successfully']);
     }
 
