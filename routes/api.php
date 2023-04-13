@@ -214,5 +214,8 @@ Route::get('/get-streams',[StreamsController::class,'get_streams']);
 // Add screenshots API\
 Route::post('/Add_project_screenshots',[ProjectScreenshotsController::class,'addProjectScreenshot']);
 
-// Add screenshots API\
+// get screenshots API\
 Route::get('/get_Project_Screenshots',[ProjectScreenshotsController::class,'getProjectScreenshots']);
+
+// get users by company id API\
+Route::get('/get_company_by_company_id/{id}',[CompanyController::class,'get_company_by_company_id']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -51,5 +52,12 @@ class CompanyController extends Controller
         $company = Company::where('id',$id)->get();
         
         return response()->json(['company' => $company]);
+    }
+
+    public function get_company_by_company_id($id){
+        
+        $user = User::where('company_id',$id)->get();
+        
+        return response()->json(['users' => $user]);
     }
 }
