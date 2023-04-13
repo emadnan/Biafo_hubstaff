@@ -24,7 +24,7 @@ class AssignProjectController extends Controller
 
     public function get_assign_projects()
     {
-        $assign = AssignProject::select('assign_projects.*','assign_projects.user_id as assign_projects.user_id','users.*','users.id as user_id','projects.*','projects.id as project_id', 'streams.*','streams.id as stream_id','streams.user_id as streams_user_id')
+        $assign = AssignProject::select('assign_projects.*','assign_projects_user_id as assign_projects.user_id','users.*','users.id as user_id','projects.*','projects.id as project_id', 'streams.*','streams.id as stream_id','streams.user_id as streams_user_id')
         ->join('users','users.id','=','assign_projects.user_id')
         ->join('projects','projects.id','=','assign_projects.project_id')
         ->join('streams','streams.id','=','assign_projects.stream_id')
