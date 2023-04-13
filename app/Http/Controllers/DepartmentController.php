@@ -36,11 +36,11 @@ class DepartmentController extends Controller
         return response()->json(['Departments' => $department]);
     }
 
-    function delete_department($id){
-
+    function delete_department(){
+        $id = \Request::input('id');
         $department = Department::where('id',$id)->delete();
 
-        return response()->json(['Department' => $department]);
+        return response()->json(['message' => 'Delete Department succssesfully ' ]);
     }
 
     public function get_department_by_id($id)
