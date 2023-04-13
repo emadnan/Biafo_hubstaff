@@ -24,14 +24,14 @@ class UserController extends Controller
         // exit();
         $permissions = PermissionsRole::join('permissions','permissions.id','=','role_has_permissions.permission_id')
         ->where('role_id',$user->role)->get();
-        try {
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 400);
-            }
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
-
+        // try {
+        //     if (! $token = JWTAuth::attempt($credentials)) {
+        //         return response()->json(['error' => 'invalid_credentials'], 400);
+        //     }
+        // } catch (JWTException $e) {
+        //     return response()->json(['error' => 'could_not_create_token'], 500);
+        // }
+        $token = $user->createToken('my-app-token')->plainTextToken;
         return response()->json(['Users' => $user, 'token'=>$token, 'permissions'=>$permissions]);
         
     }
