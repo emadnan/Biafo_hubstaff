@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Models\ProjectScreenshots;
 use App\Models\ProjectScreenshotsTiming;
 use App\Models\ProjectScreenshotsAttechments;
@@ -158,6 +158,15 @@ class ProjectScreenshotsController extends Controller
 
         $data = compact('projectscreenshot', 'TotalHours', 'TotalMinutes', 'TotalSeconds');
         return response()->json($data);
+    }
+    function getTotalTimebyUserId($userId)
+    {
+        $todayDate = Carbon::today();
+        
+        $totalTime = ProjectScreenshots::where('user_id', $userId)
+        ->where('date',$todayDate)
+        ->first();
+        return response()->json($totalTime);
     }
 
 }

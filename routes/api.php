@@ -42,6 +42,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('logout', [UserController::class, 'logout']);
     //change password
 });
+Route::get('/get_totalTime/{userId}',[ProjectScreenshotsController::class,'getTotalTimebyUserId']);
+
 Route::post('/changepassword',[UserController::class,'change_password']);
 
 //Add Roles API
