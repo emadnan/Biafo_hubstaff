@@ -110,8 +110,9 @@ class ProjectScreenshotsController extends Controller
     {
         $projectscreenshot = ProjectScreenshots::
             select('users.*','projects.*','project_screenshots.*')    
-            ->join('users', 'users.id', '=', 'project_screenshots.user_id')
+            ->join('users', 'users.id', '=','company.company_name', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
+            ->join('company', 'company.id','=','users.company_id')
             ->where('date', date('Y-m-d'))
             ->with('getTimings', 'getTimings.getattechments')
             ->get();
