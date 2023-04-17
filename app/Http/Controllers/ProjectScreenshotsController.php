@@ -112,6 +112,7 @@ class ProjectScreenshotsController extends Controller
             ->join('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->where('date', date('Y-m-d'))
+            ->where('user_id', auth()->id())
             ->with('getTimings', 'getTimings.getattechments')
             ->get();
 
