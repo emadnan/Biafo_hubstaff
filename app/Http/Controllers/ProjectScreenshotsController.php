@@ -108,7 +108,7 @@ class ProjectScreenshotsController extends Controller
 
     public function getProjectScreenshots()
     {
-        $projectscreenshot = ProjectScreenshots::select('users.*','project_screenshots.*', 'projects.id as projects_id','users.id as users_id')
+        $projectscreenshot = ProjectScreenshots::select('users.*','projects.*','project_screenshots.*', 'projects.id as projects_id','users.id as users_id')
             ->join('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->where('date', date('Y-m-d'))
