@@ -28,13 +28,13 @@ class UserController extends Controller
         ->where('role_id',$user->role)->get();
         
         $token = $user->createToken('my-app-token')->plainTextToken;
-        try {
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 400);
-            }
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
+        // try {
+        //     if (! $token = JWTAuth::attempt($credentials)) {
+        //         return response()->json(['error' => 'invalid_credentials'], 400);
+        //     }
+        // } catch (JWTException $e) {
+        //     return response()->json(['error' => 'could_not_create_token'], 500);
+        // }
         return response()->json(['Users' => $user, 'token'=>$token, 'permissions'=>$permissions]);
         
     }
