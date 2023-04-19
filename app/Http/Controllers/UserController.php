@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\PermissionsRole;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Mail;
@@ -17,28 +18,44 @@ use App\Mail\WelcomeEmail;
 
 class UserController extends Controller
 {
-    public function authenticate(Request $request) {
+    public function authenticate(Request $request)
+    {
+        // Validate user input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Get user credentials
         $credentials = $request->only('email', 'password');
-        $user= User::select('users.*','users.id as user_id','company.*','company.id as CompanyId')
+        $User= User::select('users.*','company.*')
         ->join('company','company.id','=','users.company_id')
         ->where('email',$credentials)->first();
-        // print_r($user);
-        // exit();
         $permissions = PermissionsRole::join('permissions','permissions.id','=','role_has_permissions.permission_id')
-        ->where('role_id',$user->role)->get();
-        
-        $token = $user->createToken('my-app-token')->plainTextToken;
-        // try {
-        //     if (! $token = JWTAuth::attempt($credentials)) {
-        //         return response()->json(['error' => 'invalid_credentials'], 400);
-        //     }
-        // } catch (JWTException $e) {
-        //     return response()->json(['error' => 'could_not_create_token'], 500);
-        // }
-        return response()->json(['Users' => $user, 'token'=>$token, 'permissions'=>$permissions]);
-        
-    }
+        ->where('role_id',$User->role)->get();
 
+        try {
+            // Attempt to authenticate user
+            if (! $token = JWTAuth::attempt($credentials)) {
+                // Authentication failed
+                return response()->json(['error' => 'Invalid email or password.'], 401);
+            }
+        } catch (JWTException $e) {
+            // Failed to generate token
+            return response()->json(['error' => 'Failed to login.'], 500);
+        }
+
+        // Get authenticated user
+        $user = Auth::user();
+
+        // Authentication successful, return token and user information
+        return response()->json([
+            'Users'=>$User,
+            'token' => $token,
+            'permissions'=>$permissions
+        ]);
+    }
+    
     public function register(Request $request) {
 
         // print_r($request->all());
@@ -122,22 +139,51 @@ class UserController extends Controller
     }
 
     //ADD USERS CRUD
-    function add_user(){
-        $user = new User();
-        $user->company_id = \Request::input('company_id');
-        $user->name = \Request::input('name');
-        $user->email = \Request::input('email');
-        $user->password = Hash::make('password');
-        $user->role = \Request::input('role');
-        $user->save();
+    // function add_user(){
+    //     $user = new User();
+    //     $user->company_id = \Request::input('company_id');
+    //     $user->name = \Request::input('name');
+    //     $user->email = \Request::input('email');
+    //     $user->password = Hash::make('password');
+    //     $user->role = \Request::input('role');
+    //     $user->save();
         
-        $token = JWTAuth::fromUser($user, [
-            'name' => \Request::input('name'),
-            'email' => \Request::input('email'),
+    //     $token = JWTAuth::fromUser($user, [
+    //         'name' => \Request::input('name'),
+    //         'email' => \Request::input('email'),
             
+    //     ]);
+
+    //     return response()->json(['message'=>'Add User successfully']);
+    // }
+
+    public function add_user(Request $request)
+    {
+        // Validate user input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
         ]);
 
-        return response()->json(['message'=>'Add User successfully']);
+        // Create a new User instance
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->role = $request->input('role');
+        $user->company_id = $request->input('company_id');
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+
+        // Generate a JWT token for the newly created user
+        $token = JWTAuth::fromUser($user);
+
+        // Return a response with the JWT token and user data
+        return response()->json([
+            'token' => $token,
+            'user' => $user,
+            'message' => 'User created successfully'
+        ], 201);
     }
 
     function update_user(Request $request){
