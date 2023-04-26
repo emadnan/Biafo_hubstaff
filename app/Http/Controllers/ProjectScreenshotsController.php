@@ -61,17 +61,19 @@ class ProjectScreenshotsController extends Controller
             $timings->end_time = null;
             $timings->save();
             $screenShots = \Request::input('screenShots');
+            
+            // $result = ProjectScreenshotsTiming::where('project_screenshorts_id', ($id-1))->where('end_time', null)->orderBy('id', 'DESC')->first();
+            // if ($result && isset($result->id)) {
+            //     $update = ProjectScreenshotsTiming::where('id', $result->id)->first();
+            //     $update->end_time = $start_time;
+            //     $update->save();
+            // }
+            
             if ($screenShots != null) {
                 $this->addProjectScreenshotAttechment($timings->id);
             }
         } else {
 
-
-            // $result1 = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id','DESC')->first();
-            // $update1 = ProjectScreenshotsTiming::where('id', $result1->id-1)
-            // ->update(['end_time' => $start_time]);
-            // print_r('rafay Ch');
-            // exit();
             $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->orderBy('id', 'DESC')->first();
             $update = ProjectScreenshotsTiming::where('end_time', null)->first();
             $update->end_time = $end_time;
@@ -81,11 +83,11 @@ class ProjectScreenshotsController extends Controller
             $update1->hours = $hours;
             $update1->minutes = $minutes;
             $update1->seconds = $seconds;
-
             $update1->save();
         }
 
     }
+
 
     public function addProjectScreenshotAttechment($id)
     {
@@ -161,13 +163,15 @@ class ProjectScreenshotsController extends Controller
         $data = compact('projectscreenshot', 'TotalHours', 'TotalMinutes', 'TotalSeconds');
         return response()->json($data);
     }
-    function getTotalTimebyUserId($userId)
+    function getTotalTimebyUserId($userId,$projectId)
     {
         $todayDate = Carbon::today();
         
         $totalTime = ProjectScreenshots::where('user_id', $userId)
+        ->where('project_id',$projectId)
         ->where('date',$todayDate)
         ->first();
+        
         return response()->json($totalTime);
     }
 

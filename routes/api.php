@@ -42,7 +42,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('logout', [UserController::class, 'logout']);
     //change password
 });
-Route::get('/get_totalTime/{userId}',[ProjectScreenshotsController::class,'getTotalTimebyUserId']);
+Route::get('/get_totalTime/{userId}/{projectId}',[ProjectScreenshotsController::class,'getTotalTimebyUserId']);
 
 Route::post('/changepassword',[UserController::class,'change_password']);
 
@@ -224,3 +224,5 @@ Route::get('/get_company_by_company_id/{id}',[CompanyController::class,'get_comp
 
 //get screenshots by date
 Route::get('/get_projectscreenshot_by_date/{date1}/{date2}/{user_id}',[ProjectScreenshotsController::class,'getProjectScreenshotsByDate']);
+
+//
