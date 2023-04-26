@@ -22,13 +22,14 @@ class UserController extends Controller
     {
         // Validate user input
         $request->validate([
+            
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
         // Get user credentials
         $credentials = $request->only('email', 'password');
-        $User= User::select('users.*','company.*')
+        $User= User::select('users.*','users.id as user_id','company.id as company_id','company.company_name as company_name')
         ->join('company','company.id','=','users.company_id')
         ->where('email',$credentials)->first();
         $permissions = PermissionsRole::join('permissions','permissions.id','=','role_has_permissions.permission_id')
