@@ -167,7 +167,8 @@ class ProjectScreenshotsController extends Controller
     {
         $todayDate = Carbon::today();
         
-        $totalTime = ProjectScreenshots::where('user_id', $userId)
+        $totalTime = ProjectScreenshots::select('project_screenshots.hours as Hours','project_screenshots.minutes as Minutes','project_screenshots.seconds as Seconds')
+        ->where('user_id', $userId)
         ->where('project_id',$projectId)
         ->where('date',$todayDate)
         ->first();
