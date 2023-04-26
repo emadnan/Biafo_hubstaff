@@ -173,7 +173,17 @@ class ProjectScreenshotsController extends Controller
         ->where('date',$todayDate)
         ->first();
         
-        return response()->json($totalTime);
+        if($totalTime != null){
+            return response()->json($totalTime);
+        }
+        else{
+            $Hours=0;
+            $Minutes=0;
+            $Seconds=0;
+            $data = compact('Hours','Minutes','Seconds');
+
+            return response()->json($data);
+        }
     }
 
 }
