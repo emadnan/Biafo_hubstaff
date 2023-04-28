@@ -55,19 +55,19 @@ class ProjectScreenshotsController extends Controller
 
         $timings = new ProjectScreenshotsTiming();
         if ($isStart == 1) {
-
+            $result = ProjectScreenshotsTiming::where('project_screenshorts_id', $id)->where('end_time', null)->orderBy('id', 'DESC')->first();
+            if ($result && isset($result->id)) {
+                $update = ProjectScreenshotsTiming::where('id', $result->id)->first();
+                $update->end_time = $start_time;
+                $update->save();
+            }
             $timings->project_screenshorts_id = $id;
             $timings->start_time = $start_time;
             $timings->end_time = null;
             $timings->save();
             $screenShots = \Request::input('screenShots');
             
-            // $result = ProjectScreenshotsTiming::where('project_screenshorts_id', ($id-1))->where('end_time', null)->orderBy('id', 'DESC')->first();
-            // if ($result && isset($result->id)) {
-            //     $update = ProjectScreenshotsTiming::where('id', $result->id)->first();
-            //     $update->end_time = $start_time;
-            //     $update->save();
-            // }
+            
             
             if ($screenShots != null) {
                 $this->addProjectScreenshotAttechment($timings->id);
