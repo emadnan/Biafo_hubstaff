@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\ProjectScreenshots;
 use App\Models\ProjectScreenshotsTiming;
@@ -130,6 +131,18 @@ class ProjectScreenshotsController extends Controller
         $data = compact('projectscreenshot', 'TotalHours', 'TotalMinutes', 'TotalSeconds');
         return response()->json($data);
     }
+
+    public function sum()
+    {
+        $userId = Auth::id(); // get the authenticated user's ID
+        $hours = ProjectScreenshots::where('user_id', $userId)->sum('hours');
+        $minutes = ProjectScreenshots::where('user_id', $userId)->sum('minutes');
+        $seconds = ProjectScreenshots::where('user_id', $userId)->sum('seconds');
+        $data = compact('hours', 'minutes', 'seconds');
+        return response()->json($data);
+    }
+    
+
 
     public function getProjectScreenshotsByDate($date1, $date2,$user_id)
     {

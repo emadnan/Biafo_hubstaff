@@ -40,6 +40,8 @@ Route::post('login', [UserController::class, 'authenticate']);
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', [UserController::class, 'getAuthenticatedUser']);
     Route::post('logout', [UserController::class, 'logout']);
+
+    Route::get('/getSum',[ProjectScreenshotsController::class,'sum']);
     //change password
 });
 Route::get('/get_totalTime/{userId}/{projectId}',[ProjectScreenshotsController::class,'getTotalTimebyUserId']);
