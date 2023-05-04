@@ -44,7 +44,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/getSum',[ProjectScreenshotsController::class,'sum']);
     //change password
 });
-Route::get('/get_totalTime/{userId}/{projectId}',[ProjectScreenshotsController::class,'getTotalTimebyUserId']);
+Route::get('/get_totalTime/{userId}/{projectId}/{streamsName}',[ProjectScreenshotsController::class,'getTotalTimebyUserId']);
 
 Route::post('/changepassword',[UserController::class,'change_password']);
 

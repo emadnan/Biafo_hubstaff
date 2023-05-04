@@ -187,13 +187,14 @@ class ProjectScreenshotsController extends Controller
         $data = compact('projectscreenshot', 'TotalHours', 'TotalMinutes', 'TotalSeconds');
         return response()->json($data);
     }
-    function getTotalTimebyUserId($userId,$projectId)
+    function getTotalTimebyUserId($userId,$projectId,$streamsName)
     {
         $todayDate = Carbon::today();
         
         $totalTime = ProjectScreenshots::select('project_screenshots.hours as Hours','project_screenshots.minutes as Minutes','project_screenshots.seconds as Seconds')
         ->where('user_id', $userId)
         ->where('project_id',$projectId)
+        ->where('stream_name',$streamsName)
         ->where('date',$todayDate)
         ->first();
         
