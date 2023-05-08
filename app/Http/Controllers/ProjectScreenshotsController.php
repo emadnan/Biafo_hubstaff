@@ -32,11 +32,11 @@ class ProjectScreenshotsController extends Controller
             [
                 'user_id' => $user_id,
                 'project_id' => $project_id,
-                'date' => date('Y-m-d')
+                'date' => date('Y-m-d'),
+                'stream_name' => $stream_name
+
             ],
             [
-
-                'stream_name' => $stream_name,
                 'longitude' => $longitude,
                 'latitude' => $latitude,
                 'hours' => $hours,
