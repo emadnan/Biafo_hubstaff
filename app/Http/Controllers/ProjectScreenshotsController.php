@@ -44,14 +44,14 @@ class ProjectScreenshotsController extends Controller
                 'seconds' => $seconds
             ]
         );
-        $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds);
+        $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds, $stream_name);
 
         return response()->json(['Message' => 'Add project screenshots successfully']);
         // print_r($screenshots->id);
         // exit();
 
     }
-    public function addProjectScreenshotTimings($id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds)
+    public function addProjectScreenshotTimings($id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds, $stream_name)
     {
 
         $timings = new ProjectScreenshotsTiming();
@@ -79,7 +79,7 @@ class ProjectScreenshotsController extends Controller
             // $update = ProjectScreenshotsTiming::where('end_time', null)->first();
             $result->end_time = $end_time;
             $result->save();
-            $result1 = ProjectScreenshots::where('user_id', $user_id)->where('project_id', $project_id)->where('date', date('Y-m-d'))->first();
+            $result1 = ProjectScreenshots::where('user_id', $user_id)->where('project_id', $project_id)->where('date', date('Y-m-d'))->where('stream_name',$stream_name)->first();
             $update1 = ProjectScreenshots::where('id', $result1->id)->first();
             $update1->hours = $hours;
             $update1->minutes = $minutes;
