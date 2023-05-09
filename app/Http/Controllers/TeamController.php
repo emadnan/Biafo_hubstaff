@@ -6,13 +6,12 @@ use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-    function add_team(){
+    function add_team(Request $request){
         $team = new Team();
         $team->team_name = \Request::input('team_name');
-        $team->members = \Request::input('members');
-        $team->projects  = \Request::input('projects');
+        $team->team_company_id = \Request::input('team_company_id');
+        $team->description  = \Request::input('description');
         $team->save();
-        
         return response()->json(['message'=>'Add Team successfully']);
     }
 
@@ -21,8 +20,8 @@ class TeamController extends Controller
         $role = Team::where('id',$id)
             ->update([
                 'team_name' => \Request::input('team_name'),
-                'members' => \Request::input('members'),
-                'projects' => \Request::input('projects'),
+                'team_company_id' => \Request::input('team_company_id'),
+                'description' => \Request::input('description'),
             ]);
 
         return response()->json(['Message' => 'team Updated']);
