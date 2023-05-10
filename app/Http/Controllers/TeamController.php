@@ -39,4 +39,11 @@ class TeamController extends Controller
 
         return response()->json(['message'=>'delete Team successfully']);
     }
+
+    public function getTeamById($team_id)
+    {
+        $team = Team::
+        where('id',$team_id)->get();
+        return response()->json(['Team' => $team]);
+    }
 }

@@ -172,6 +172,9 @@ Route::post('/delete_team',[TeamController::class,'delete_team']);
 //Get All Teams
 Route::get('/get_teams',[TeamController::class,'get_teams']);
 
+//Get Team by ID
+Route::get('/getTeam/{team_id}',[TeamController::class,'getTeamById']);
+
 //Get All Country API
 Route::get('/get_country',[CountryController::class,'get_country']);
 
@@ -226,5 +229,3 @@ Route::get('/get_company_by_company_id/{id}',[CompanyController::class,'get_comp
 
 //get screenshots by date
 Route::get('/get_projectscreenshot_by_date/{date1}/{date2}/{user_id}',[ProjectScreenshotsController::class,'getProjectScreenshotsByDate']);
-
-//
