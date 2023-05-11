@@ -102,7 +102,7 @@ class ProjectScreenshotsController extends Controller
                 $imageName = uniqid() . '.' . 'png';
                 \File::put(public_path() . '/screenshots/' . $imageName, base64_decode($image));
                 $path_url = new ProjectScreenshotsAttechments();
-                $path_url->project_screenshorts_timing_id = $id;
+                $path_url->project_screenshorts_timing_id = ($id-1);
                 $path_url->path_url = asset('screenshots') . '/' . $imageName;
                 $path_url->save();
             }
