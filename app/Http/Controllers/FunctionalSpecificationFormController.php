@@ -14,7 +14,7 @@ class FunctionalSpecificationFormController extends Controller
         $Functional->wricef_id = \Request::input('wricef_id');
         $Functional->module_name = \Request::input('module_name');
         $Functional->functional_lead = \Request::input('functional_lead');
-        $Functional->requested_date = Carbon::createFromFormat('d-m-Y', \Request::input('requested_date'))->format('Y-m-d');
+        $Functional->requested_date = \Request::input('requested_date');
         $Functional->type_of_development = \Request::input('type_of_development');
         $Functional->priority = \Request::input('priority');
         $Functional->usage_frequency = \Request::input('usage_frequency');
