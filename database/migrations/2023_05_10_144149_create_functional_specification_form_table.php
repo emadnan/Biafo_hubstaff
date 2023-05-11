@@ -18,7 +18,7 @@ class CreateFunctionalSpecificationFormTable extends Migration
             $table->string('wricef_id');
             $table->string('module_name');
             $table->string('functional_lead');
-            $table->date('requested_date');
+            $table->dateTime('requested_date');
             $table->string('type_of_development');
             $table->string('priority');
             $table->string('usage_frequency');
