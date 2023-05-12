@@ -179,6 +179,9 @@ Route::get('/getTeam/{team_id}',[TeamController::class,'getTeamById']);
 //team has users
 Route::post('/teamHasUsers',[TeamController::class,'teamHasUsers']);
 
+//team has users
+Route::get('/getUsersByTeamId/{team_id}',[TeamController::class,'getUsersByTeamId']);
+
 //Get All Country API
 Route::get('/get_country',[CountryController::class,'get_country']);
 

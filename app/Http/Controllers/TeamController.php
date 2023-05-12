@@ -65,5 +65,12 @@ class TeamController extends Controller
     
         return response()->json(['message' => 'Users added to the team successfully']);
     }
+
+    Function getUsersByTeamId($team_id){
+
+        $users = TeamHasUser::where('team_id',$team_id)->get();
+
+        return response()->json(['users' => $users]);
+    }
     
 }
