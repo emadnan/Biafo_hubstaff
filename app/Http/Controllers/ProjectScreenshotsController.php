@@ -71,7 +71,7 @@ class ProjectScreenshotsController extends Controller
             
             
             if ($screenShots != null) {
-                $this->addProjectScreenshotAttechment($timings->id);
+                $this->addProjectScreenshotAttechment($result->id);
             }
         } else {
 
