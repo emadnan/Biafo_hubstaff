@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Team;
+use App\Models\TeamHasUser;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
@@ -46,4 +47,23 @@ class TeamController extends Controller
         where('id',$team_id)->get();
         return response()->json(['Team' => $team]);
     }
+    function teamHasUsers(Request $request) {
+
+        $userIds = $request->input('user_ids');
+        $teamId = $request->input('team_id');
+    
+        // Delete existing team-user relationships for the given team ID
+        TeamHasUser::where('team_id', $teamId)->delete();
+    
+        foreach ($userIds as $userId) {
+            // Create a new team-user relationship
+            $teamUser = new TeamHasUser;
+            $teamUser->team_id = $teamId;
+            $teamUser->user_id = $userId;
+            $teamUser->save();
+        }
+    
+        return response()->json(['message' => 'Users added to the team successfully']);
+    }
+    
 }

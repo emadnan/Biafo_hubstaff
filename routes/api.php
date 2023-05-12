@@ -176,6 +176,9 @@ Route::get('/get_teams',[TeamController::class,'get_teams']);
 //Get Team by ID
 Route::get('/getTeam/{team_id}',[TeamController::class,'getTeamById']);
 
+//team has users
+Route::post('/teamHasUsers',[TeamController::class,'teamHasUsers']);
+
 //Get All Country API
 Route::get('/get_country',[CountryController::class,'get_country']);
 
@@ -205,7 +208,6 @@ Route::get('/get_assign_projects',[AssignProjectController::class,'get_assign_pr
 
 //Deloete Assign Projects API
 Route::post('/delete_assign_projects',[AssignProjectController::class,'delete_assign_projects']);
-
 
 //Update Assign Projects API
 Route::post('/update_assign_projects',[AssignProjectController::class,'update_assign_projects']);
