@@ -24,13 +24,7 @@ class CreateFunctionalSpecificationFormTable extends Migration
             $table->string('usage_frequency');
             $table->string('transaction_code');
             $table->string('authorization_level');
-            $table->string('description');
-            $table->string('field_technical_name');
-            $table->string('field_length');
-            $table->string('field_type');
-            $table->string('field_table_name');
-            $table->string('mandatory_or_optional');
-            $table->string('parameter_or_selection');
+
             $table->timestamps();
         });
     }
