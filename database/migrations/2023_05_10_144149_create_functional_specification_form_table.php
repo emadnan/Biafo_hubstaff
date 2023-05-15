@@ -22,8 +22,8 @@ class CreateFunctionalSpecificationFormTable extends Migration
             $table->string('type_of_development');
             $table->string('priority');
             $table->string('usage_frequency');
-            $table->string('transaction_code');
-            $table->string('authorization_level');
+            $table->string('transaction_code')->nullable();
+            $table->string('authorization_level')->nullable();
 
             $table->timestamps();
         });
