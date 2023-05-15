@@ -237,7 +237,7 @@ Route::get('/get_company_by_company_id/{id}',[CompanyController::class,'get_comp
 Route::get('/get_projectscreenshot_by_date/{date1}/{date2}/{user_id}',[ProjectScreenshotsController::class,'getProjectScreenshotsByDate']);
 
 // Add FSF API\
-Route::post('/addFunctionalSpecificationForm',[FunctionalSpecificationFormController::class,'addFunctionalSpecificationForm']);
+Route::post('/addFunctionalSpecificationForm/{step_no}',[FunctionalSpecificationFormController::class,'addFunctionalSpecificationForm']);
 
 // Update FSF API\
 Route::post('/updateFunctionalSpecificationForm',[FunctionalSpecificationFormController::class,'updateFunctionalSpecificationForm']);
