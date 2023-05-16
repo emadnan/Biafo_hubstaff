@@ -88,7 +88,9 @@ class FunctionalSpecificationFormController extends Controller
 
     function getFunctionalSpecificationForm(){
         
-        $Functional = FunctionalSpecificationForm::get();
+        $Functional = FunctionalSpecificationForm::
+            with('getFsfParameter')
+            ->get();
 
         return response()->json(['Functional'=>$Functional]);
     }
