@@ -102,4 +102,12 @@ class FunctionalSpecificationFormController extends Controller
 
         return response()->json(['Functional'=>$Functional]);
     }
+
+    function getFsfHasParameterByFsfId($fsf_id){
+
+        $fsf = FsfHasParameter::where('fsf_id',$fsf_id)
+        ->get();
+
+        return response()->json(['fsf_has_parameter'=>$fsf]);
+    }
 }

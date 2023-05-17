@@ -253,3 +253,6 @@ Route::get('/getFunctionalSpecificationForm',[FunctionalSpecificationFormControl
 
 // get FSF By Id API\
 Route::get('/getFunctionalSpecificationFormById',[FunctionalSpecificationFormController::class,'getFunctionalSpecificationFormById']);
+
+// get FSF By Fsf_Id API\
+Route::get('/getFsfHasParameterByFsfId/{fsf_id}',[FunctionalSpecificationFormController::class,'getFsfHasParameterByFsfId']);
