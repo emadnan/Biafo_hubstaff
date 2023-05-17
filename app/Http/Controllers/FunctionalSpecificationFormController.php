@@ -124,7 +124,7 @@ class FunctionalSpecificationFormController extends Controller
     function updateFsfHasParameterByFsfId(){
 
         $id = \Request::input('id');
-        $fsf = FunctionalSpecificationForm::where('id',$id)
+        $fsf = FsfHasParameter::where('id',$id)
         ->update([
 
             'fsf_id' => \Request::input('fsf_id'),
