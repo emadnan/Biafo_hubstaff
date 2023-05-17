@@ -112,10 +112,10 @@ class FunctionalSpecificationFormController extends Controller
     }
 
     function DeleteFsfHasParameterByFsfId(){
-        
-        $fsf_id = \Request::input('fsf_id');
 
-        $fsf = FsfHasParameter::where('fsf_id',$fsf_id)
+        $id = \Request::input('id');
+
+        $fsf = FsfHasParameter::where('id',$id)
         ->delete();
 
         return response()->json(['fsf_has_parameter'=>'delete parameters Successfully']);
