@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\ScreenShot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use App\Models\File;
 
 class ScreenShotsController extends Controller
 {
@@ -61,6 +63,28 @@ class ScreenShotsController extends Controller
             \File::put(public_path(). '/screenshots/' . $imageName, base64_decode($image));
         }
         return response()->json(['message'=>'Add screen shot successfully']);
+    }
+
+    public function saveFile(Request $request)
+    {
+        // Validate the incoming request
+        $validatedData = $request->validate([
+            'file' => 'required|file',
+        ]);
+        $file = $request->file('file');
+        $folder = 'uploads';
+
+        // Generate a unique filename
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+
+        // // Store the file in the specified folder
+        // Storage::disk('public')->putFileAs($folder, $file, $filename);
+        $path = $file->move(public_path().'/uploads/', $filename);
+        // $storedFile = new 
+        // $storedFile->path = $folder . '/' . $filename;
+        // $storedFile->save();
+
+        return response()->json(['message' => 'File saved successfully', 'path'=>$path], 200);
     }
 }
     

@@ -116,6 +116,9 @@ Route::get('/get_ScreenShot',[ScreenShotsController::class,'get_ScreenShot']);
 //Add screen_shots API
 Route::post('/delete_ScreenShot',[ScreenShotsController::class,'delete_ScreenShot']);
 
+//Add screen_shots API
+Route::post('/saveFile',[ScreenShotsController::class,'saveFile']);
+
 //Add department API
 Route::post('/add_department',[DepartmentController::class,'add_department']);
 
