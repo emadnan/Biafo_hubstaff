@@ -131,11 +131,9 @@ class FunctionalSpecificationFormController extends Controller
             'description' => \Request::input('description'),
             'field_technical_name' => \Request::input('field_technical_name'),
             'field_length' => \Request::input('field_length'),
-            'type_of_development' => \Request::input('field_length'),
             'field_type' => \Request::input('field_type'),
             'field_table_name' => \Request::input('field_table_name'),
             'mandatory_or_optional' => \Request::input('mandatory_or_optional'),
-            'authorization_level' => \Request::input('authorization_level'),
             'parameter_or_selection' => \Request::input('parameter_or_selection')
 
         ]);
