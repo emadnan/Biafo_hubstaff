@@ -120,4 +120,26 @@ class FunctionalSpecificationFormController extends Controller
 
         return response()->json(['fsf_has_parameter'=>'delete parameters Successfully']);
     }
+
+    function updateFsfHasParameterByFsfId(){
+
+        $id = \Request::input('id');
+        $fsf = FunctionalSpecificationForm::where('id',$id)
+        ->update([
+
+            'fsf_id' => \Request::input('fsf_id'),
+            'description' => \Request::input('description'),
+            'field_technical_name' => \Request::input('field_technical_name'),
+            'field_length' => Carbon::createFromFormat('d-m-Y', \Request::input('requested_date'))->format('Y-m-d'),
+            'type_of_development' => \Request::input('field_length'),
+            'field_type' => \Request::input('field_type'),
+            'field_table_name' => \Request::input('field_table_name'),
+            'mandatory_or_optional' => \Request::input('mandatory_or_optional'),
+            'authorization_level' => \Request::input('authorization_level'),
+            'parameter_or_selection' => \Request::input('parameter_or_selection')
+
+        ]);
+        
+        return response()->json(['message'=>'Update FSF Has ParaMeter Successfully']);
+    } 
 }
