@@ -130,7 +130,7 @@ class FunctionalSpecificationFormController extends Controller
             'fsf_id' => \Request::input('fsf_id'),
             'description' => \Request::input('description'),
             'field_technical_name' => \Request::input('field_technical_name'),
-            'field_length' => Carbon::createFromFormat('d-m-Y', \Request::input('requested_date'))->format('Y-m-d'),
+            'field_length' => \Request::input('field_length'),
             'type_of_development' => \Request::input('field_length'),
             'field_type' => \Request::input('field_type'),
             'field_table_name' => \Request::input('field_table_name'),
