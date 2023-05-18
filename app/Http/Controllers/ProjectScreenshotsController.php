@@ -44,6 +44,19 @@ class ProjectScreenshotsController extends Controller
                 'seconds' => $seconds
             ]
         );
+        $update1 = ProjectScreenshots::where('user_id', $user_id)
+        ->where('project_id',$project_id)
+        ->where('date',date('Y-m-d'))
+        ->where('stream_name',$stream_name)
+        ->first();
+        if($update1)
+        {
+            $update1->hours = $hours;
+            $update1->minutes = $minutes;
+            $update1->seconds = $seconds;
+            $update1->save();
+        }
+
         $this->addProjectScreenshotTimings($screenshots->id, $isStart, $start_time, $end_time, $user_id, $project_id, $hours, $minutes, $seconds, $stream_name);
 
         return response()->json(['Message' => 'Add project screenshots successfully']);
