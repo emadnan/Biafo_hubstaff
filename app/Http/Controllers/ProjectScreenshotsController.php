@@ -224,4 +224,27 @@ class ProjectScreenshotsController extends Controller
         }
     }
 
+    function updateTimeAfterOneMinute(Request $request){
+
+        $user_id = $request->user_id;
+        $project_id = $request->project_id;
+        $stream_name = $request->stream_name;
+        $hours = $request->hours;
+        $minutes = $request->minutes;
+        $seconds = $request->seconds;
+
+        $update1 = ProjectScreenshots::where('user_id', $user_id)
+        ->where('project_id',$project_id)
+        ->where('date',date('Y-m-d'))
+        ->where('stream_name',$stream_name)
+        ->first();
+        if($update1)
+        {
+            $update1->hours = $hours;
+            $update1->minutes = $minutes;
+            $update1->seconds = $seconds;
+            $update1->save();
+        }
+    }
+
 }

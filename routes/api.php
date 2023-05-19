@@ -230,6 +230,9 @@ Route::get('/get-streams',[StreamsController::class,'get_streams']);
 // Add screenshots API\
 Route::post('/Add_project_screenshots',[ProjectScreenshotsController::class,'addProjectScreenshot']);
 
+// Update total time with in 1 minute screenshots API\
+Route::post('/updateTimeAfterOneMinute',[ProjectScreenshotsController::class,'updateTimeAfterOneMinute']);
+
 // get screenshots API\
 Route::get('/get_Project_Screenshots',[ProjectScreenshotsController::class,'getProjectScreenshots']);
 
