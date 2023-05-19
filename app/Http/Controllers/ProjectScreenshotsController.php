@@ -245,6 +245,8 @@ class ProjectScreenshotsController extends Controller
             $update1->seconds = $seconds;
             $update1->save();
         }
+
+        return response()->json(['data'=>$update1,'message'=>'Add project screenshots successfully']);
     }
 
 }
