@@ -198,6 +198,7 @@ class UserController extends Controller
             'team_id'=> \Request::input('team_id'),
             'name' => \Request::input('name'),
             'email' => \Request::input('email'),
+            'password' => Hash::make($request->get('password')),
             'role' => \Request::input('role'),
             'remember_token' => $token
         ]);
