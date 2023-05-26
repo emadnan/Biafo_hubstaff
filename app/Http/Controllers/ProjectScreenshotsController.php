@@ -276,14 +276,14 @@ class ProjectScreenshotsController extends Controller
                 ->join('users', 'users.id', '=', 'project_screenshots.user_id')
                 ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
                 ->where('date', $date1)
-                ->where('user_id',$company_id)
+                ->where('company_id',$company_id)
                 ->with('getTimings', 'getTimings.getattechments')
                 ->get();
         } else {
             $projectscreenshot = ProjectScreenshots::select('project_screenshots.*', 'projects.project_name as project_name', 'users.name as user_name')
                 ->join('users', 'users.id', '=', 'project_screenshots.user_id')
                 ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
-                ->where('user_id',$company_id)
+                ->where('company_id',$company_id)
                 ->whereBetween('date', [$date1, $date2])
                 ->with('getTimings', 'getTimings.getattechments')
                 ->get();
