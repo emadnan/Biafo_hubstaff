@@ -252,23 +252,21 @@ class ProjectScreenshotsController extends Controller
     function getTotalWorkbyUserId($userId)
     {
         $todayDate = Carbon::today();
-        
-        $totalTime = ProjectScreenshots::select('project_screenshots.hours as Hours','project_screenshots.minutes as Minutes','project_screenshots.seconds as Seconds')
-        ->where('user_id', $userId)
-        ->where('date',$todayDate)
-        ->get();
-        
-        if($totalTime != null){
-            return response()->json($totalTime);
+        $hours = ProjectScreenshots::where('user_id', $userId)->where('date',$todayDate)->sum('hours');
+        $minutes = ProjectScreenshots::where('user_id', $userId)->where('date',$todayDate)->sum('minutes');
+        $seconds = ProjectScreenshots::where('user_id', $userId)->where('date',$todayDate)->sum('seconds');
+        if($seconds>60){
+            $seconds = $seconds - 60;
+            $minutes = $minutes + 1;
         }
-        else{
-            $Hours=0;
-            $Minutes=0;
-            $Seconds=0;
-            $data = compact('Hours','Minutes','Seconds');
 
-            return response()->json($data);
+        if($minutes>60){
+            $minutes = $minutes - 60;
+            $hours = $hours + 1;
         }
+        
+        $data = compact('hours', 'minutes', 'seconds');
+        return response()->json($data);
     }
 
 }
