@@ -277,7 +277,7 @@ class ProjectScreenshotsController extends Controller
                 ->join('company', 'company.id', '=', 'users.company_id')
                 ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
                 ->where('date', $date1)
-                ->where('company_id',$company_id)
+                ->where('company.id',$company_id)
                 ->with('getTimings', 'getTimings.getattechments')
                 ->get();
         } else {
@@ -285,7 +285,7 @@ class ProjectScreenshotsController extends Controller
                 ->join('users', 'users.id', '=', 'project_screenshots.user_id')
                 ->join('company', 'company.id', '=', 'users.company_id')
                 ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
-                ->where('company_id',$company_id)
+                ->where('company.id',$company_id)
                 ->whereBetween('date', [$date1, $date2])
                 ->with('getTimings', 'getTimings.getattechments')
                 ->get();
