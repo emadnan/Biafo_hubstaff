@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeEmail;
 
@@ -29,11 +30,11 @@ class UserController extends Controller
 
         // Get user credentials
         $credentials = $request->only('email', 'password');
-        $User= User::select('users.*','users.id as user_id','company.id as company_id','company.company_name as company_name')
+        $user= User::select('users.*','users.id as user_id','company.id as company_id','company.company_name as company_name')
         ->join('company','company.id','=','users.company_id')
         ->where('email',$credentials)->first();
         $permissions = PermissionsRole::join('permissions','permissions.id','=','role_has_permissions.permission_id')
-        ->where('role_id',$User->role)->get();
+        ->where('role_id',$user->role)->get();
 
         try {
             // Attempt to authenticate user
@@ -47,11 +48,11 @@ class UserController extends Controller
         }
 
         // Get authenticated user
-        $user = Auth::user();
+        $User = Auth::user();
 
         // Authentication successful, return token and user information
         return response()->json([
-            'Users'=>$User,
+            'Users'=>$user,
             'token' => $token,
             'permissions'=>$permissions
         ]);
@@ -190,17 +191,18 @@ class UserController extends Controller
 
     function update_user(Request $request){
         $id = \Request::input('id');
-        $user = User::where('id',$id)
+        $token = Str::random(60);
+        $user = User::where('id', $id)
         ->update([
             'company_id' => \Request::input('company_id'),
-            'team_id'=> \Request::input('team_id'),
+            'team_id' => \Request::input('team_id'),
             'name' => \Request::input('name'),
             'email' => \Request::input('email'),
             'password' => Hash::make($request->get('password')),
-            'role' => \Request::input('role')
+            'role' => \Request::input('role'),
+            'remember_token' => $token, // Add the generated token here
         ]);
-
-        return response()->json(['Message' => 'User Updated']);
+        return response()->json(['Message' => 'User Updated','token' => $token,]);
     }
 
     public function get_users()
