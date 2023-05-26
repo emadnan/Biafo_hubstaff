@@ -47,6 +47,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 });
 Route::get('/get_totalTime/{userId}/{projectId}/{streamsName}',[ProjectScreenshotsController::class,'getTotalTimebyUserId']);
 
+Route::get('/getTotalWorkbyUserId/{userId}',[ProjectScreenshotsController::class,'getTotalWorkbyUserId']);
+
 Route::post('/changepassword',[UserController::class,'change_password']);
 
 //Add Roles API

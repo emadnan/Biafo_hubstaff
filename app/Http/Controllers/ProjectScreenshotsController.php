@@ -249,4 +249,26 @@ class ProjectScreenshotsController extends Controller
         return response()->json(['data'=>$update1,'message'=>'Add project screenshots successfully']);
     }
 
+    function getTotalWorkbyUserId($userId)
+    {
+        $todayDate = Carbon::today();
+        
+        $totalTime = ProjectScreenshots::select('project_screenshots.hours as Hours','project_screenshots.minutes as Minutes','project_screenshots.seconds as Seconds')
+        ->where('user_id', $userId)
+        ->where('date',$todayDate)
+        ->first();
+        
+        if($totalTime != null){
+            return response()->json($totalTime);
+        }
+        else{
+            $Hours=0;
+            $Minutes=0;
+            $Seconds=0;
+            $data = compact('Hours','Minutes','Seconds');
+
+            return response()->json($data);
+        }
+    }
+
 }
