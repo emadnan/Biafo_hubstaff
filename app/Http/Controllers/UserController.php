@@ -175,6 +175,7 @@ class UserController extends Controller
         $user->role = $request->input('role');
         $user->company_id = $request->input('company_id');
         $user->team_id = $request->input('team_id');
+        $user->password = Hash::make($request->input('password'));
         $user->save();
 
         // Generate a JWT token for the newly created user
@@ -197,9 +198,8 @@ class UserController extends Controller
             'team_id' => \Request::input('team_id'),
             'name' => \Request::input('name'),
             'email' => \Request::input('email'),
-            'password' => Hash::make($request->get('password')),
             'role' => \Request::input('role'),
-            'remember_token' => $token, // Add the generated token here
+            'remember_token' => $token // Add the generated token here
         ]);
         return response()->json(['Message' => 'User Updated','token' => $token,]);
     }
