@@ -256,7 +256,7 @@ class ProjectScreenshotsController extends Controller
         $totalTime = ProjectScreenshots::select('project_screenshots.hours as Hours','project_screenshots.minutes as Minutes','project_screenshots.seconds as Seconds')
         ->where('user_id', $userId)
         ->where('date',$todayDate)
-        ->first();
+        ->get();
         
         if($totalTime != null){
             return response()->json($totalTime);
