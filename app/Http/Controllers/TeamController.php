@@ -78,7 +78,7 @@ class TeamController extends Controller
     function getTeamLeadByCompanyId($company_id){
         $users = User::
         where('company_id',$company_id)
-        ->where('role',3)
+        ->where('role',7)
         ->get();
 
         return response()->json(['Team_Leads' => $users]);
