@@ -16,7 +16,8 @@ class FunctionalSpecificationFormController extends Controller
             $Functional = new FunctionalSpecificationForm();
             $Functional->wricef_id = \Request::input('wricef_id');
             $Functional->module_name = \Request::input('module_name');
-            $Functional->functional_lead = \Request::input('functional_lead');
+            $Functional->functional_lead_id = \Request::input('functional_lead_id');
+            $Functional->team_lead_id = \Request::input('team_lead_id');
             $Functional->requested_date = \Request::input('requested_date');
             $Functional->type_of_development = \Request::input('type_of_development');
             $Functional->priority = \Request::input('priority');
@@ -62,7 +63,8 @@ class FunctionalSpecificationFormController extends Controller
         ->update([
             'wricef_id' => \Request::input('wricef_id'),
             'module_name' => \Request::input('module_name'),
-            'functional_lead' => \Request::input('functional_lead'),
+            'functional_lead_id' => \Request::input('functional_lead_id'),
+            'team_lead_id' => \Request::input('team_lead_id'),
             'requested_date' => Carbon::createFromFormat('d-m-Y', \Request::input('requested_date'))->format('Y-m-d'),
             'type_of_development' => \Request::input('type_of_development'),
             'priority' => \Request::input('priority'),
