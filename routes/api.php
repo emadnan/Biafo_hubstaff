@@ -273,3 +273,6 @@ Route::post('/UpdateFsfHasParameterByFsfId',[FunctionalSpecificationFormControll
 
 // get FSF By Fsf_Id API\
 Route::get('/getFsfHasParameterById/{id}',[FunctionalSpecificationFormController::class,'getFsfHasParameterById']);
+
+//get team lead by company Id
+Route::get('/getTeamLeadByCompanyId/{company_id}',[TeamController::class,'getTeamLeadByCompanyId']);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Team;
+use App\Models\User;
+
 use App\Models\TeamHasUser;
 use Illuminate\Http\Request;
 
@@ -71,6 +73,15 @@ class TeamController extends Controller
         $users = TeamHasUser::where('team_id',$team_id)->get();
 
         return response()->json(['users' => $users]);
+    }
+
+    function getTeamLeadByCompanyId($company_id){
+        $users = User::
+        where('company_id',$company_id)
+        ->where('role',3)
+        ->get();
+
+        return response()->json(['Team_Leads' => $users]);
     }
     
 }
