@@ -220,31 +220,14 @@ class UserController extends Controller
     public function get_user($id)
     {
         $user = User::where('id',$id)->get();
+
         return response()->json(['User' => $user]);
     }
 
-    // public function store(Request $request)
-    // {
-    //     // Validate the form data
-    //     $validatedData = $request->validate([
-    //         'name' => 'required',
-    //         'email' => 'required|email|unique:users',
-    //     ]);
+    function getUsersByRoleId($role_id){
 
-    //     // Generate a random password
-    //     $password = str_random(10);
+        $user = User::where('role',$role_id)->get();
 
-    //     // Create a new user
-    //     $user = User::create([
-    //         'name' => $validatedData['name'],
-    //         'email' => $validatedData['email'],
-    //         'password' => Hash::make($password),
-    //     ]);
-
-    //     // Send a welcome email to the user
-    //     Mail::to($user)->send(new WelcomeEmail($user, $password));
-
-    //     // Redirect back to the form
-    //     return redirect()->back()->with('success', 'User created successfully!');
-    // }
+        return response()->json(['User' => $user]);
+    }
 }
