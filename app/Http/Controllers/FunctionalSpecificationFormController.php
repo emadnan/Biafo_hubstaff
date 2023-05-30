@@ -153,8 +153,8 @@ class FunctionalSpecificationFormController extends Controller
 
     function getFunctionalSpecificationFormByTeamLeadId(){
         
-        $Functional = FunctionalSpecificationForm::
-            with('getFsfParameter')
+        $Functional = FunctionalSpecificationForm::select('users.name')
+            ->with('getFsfParameter')
             ->get();
 
         return response()->json(['Functional'=>$Functional]);
