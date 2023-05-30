@@ -53,7 +53,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/getSum',[ProjectScreenshotsController::class,'sum']);
 
     //get FsF by team lead id
-    Route::get('/getFunctionalSpecificationFormByTeamLeadId/{TeamLeadId}',[FunctionalSpecificationFormController::class,'getFunctionalSpecificationFormByTeamLeadId']);
+    Route::get('/getFunctionalSpecificationFormByTeamLeadId',[FunctionalSpecificationFormController::class,'getFunctionalSpecificationFormByTeamLeadId']);
 });
 
 //get total time by userId, projectId, and StreamName

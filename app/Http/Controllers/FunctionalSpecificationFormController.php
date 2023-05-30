@@ -150,11 +150,10 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['message'=>'Update FSF Has ParaMeter Successfully']);
     } 
 
-    function getFunctionalSpecificationFormByTeamLeadId($TeamLeadId){
+    function getFunctionalSpecificationFormByTeamLeadId(){
         
         $Functional = FunctionalSpecificationForm::
-            where('team_lead_id',$TeamLeadId)
-            ->with('getFsfParameter')
+            with('getFsfParameter')
             ->get();
 
         return response()->json(['Functional'=>$Functional]);
