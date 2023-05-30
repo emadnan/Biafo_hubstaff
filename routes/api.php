@@ -34,21 +34,35 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Authentication Routes
+// Register API
 Route::post('register', [UserController::class, 'register']);
+
+//login API
 Route::post('login', [UserController::class, 'authenticate']);
 
+//All Auths APIs
 Route::group(['middleware' => ['jwt.verify']], function() {
+
+    //get authenticated user
     Route::get('user', [UserController::class, 'getAuthenticatedUser']);
+
+    //Logout API
     Route::post('logout', [UserController::class, 'logout']);
 
+    //get total sum of time work in all projects
     Route::get('/getSum',[ProjectScreenshotsController::class,'sum']);
-    //change password
+
+    //get FsF by team lead id
+    Route::get('/getFunctionalSpecificationFormByTeamLeadId/{TeamLeadId}',[FunctionalSpecificationFormController::class,'getFunctionalSpecificationFormByTeamLeadId']);
 });
+
+//get total time by userId, projectId, and StreamName
 Route::get('/get_totalTime/{userId}/{projectId}/{streamsName}',[ProjectScreenshotsController::class,'getTotalTimebyUserId']);
 
+// get total work time by user id
 Route::get('/getTotalWorkbyUserId/{userId}',[ProjectScreenshotsController::class,'getTotalWorkbyUserId']);
 
+//Change Password
 Route::post('/changepassword',[UserController::class,'change_password']);
 
 //Add Roles API
