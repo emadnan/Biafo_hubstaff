@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\FunctionalSpecificationForm;
 use App\Models\FsfHasParameter;
+use App\Models\FsfAssignToUser;
 use Carbon\Carbon;
 
 
@@ -157,5 +158,20 @@ class FunctionalSpecificationFormController extends Controller
             ->get();
 
         return response()->json(['Functional'=>$Functional]);
+    }
+
+    public function fsfAssignToUsers(Request $request){
+           
+        $user_ids = $request->user_ids;
+        $fsf_id = \Request::input('fsf_id');
+        $assign = FsfAssignToUser::where('fsf_id',$fsf_id)->delete();
+        foreach($user_ids as $user_id)
+        {
+            $assign = new FsfAssignToUser;
+            $assign->fsf_id = $fsf_id;
+            $assign->user_id = $user_id;
+            $assign->save();
+        }
+        return response()->json(['message'=>' FSF Assign To Users Successfully']);
     }
 }

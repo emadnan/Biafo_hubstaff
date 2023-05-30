@@ -290,3 +290,6 @@ Route::get('/getFsfHasParameterById/{id}',[FunctionalSpecificationFormController
 
 //get team lead by company Id
 Route::get('/getTeamLeadByCompanyId/{company_id}',[TeamController::class,'getTeamLeadByCompanyId']);
+
+// fsf assign by users\
+Route::post('/fsfAssignToUsers',[FunctionalSpecificationFormController::class,'fsfAssignToUsers']);
