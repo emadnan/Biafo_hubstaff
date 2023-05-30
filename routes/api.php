@@ -202,7 +202,7 @@ Route::post('/teamHasUsers',[TeamController::class,'teamHasUsers']);
 Route::get('/getUsersByTeamId/{team_id}',[TeamController::class,'getUsersByTeamId']);
 
 //team has users
-Route::get('/getUsersByRoleId/{role_id}',[TeamController::class,'getUsersByRoleId']);
+Route::get('/getUsersByRoleId/{role_id}',[UserController::class,'getUsersByRoleId']);
 
 //Get All Country API
 Route::get('/get_country',[CountryController::class,'get_country']);
