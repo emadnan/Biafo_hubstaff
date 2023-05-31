@@ -15,6 +15,11 @@ class FunctionalSpecificationForm extends Model
     function function_lead_details(){
         return $this->BelongsTo('App\Models\User','functional_lead_id','id');
     }
+
+    function team_lead_details(){
+        return $this->BelongsTo('App\Models\User','team_lead_id','id');
+    }
+
     function getFsfParameter(){
         return $this->hasMany('App\Models\FsfHasParameter', 'fsf_id', 'id');
     }
