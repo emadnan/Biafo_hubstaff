@@ -255,14 +255,15 @@ class ProjectScreenshotsController extends Controller
         $hours = ProjectScreenshots::where('user_id', $userId)->where('date',$todayDate)->sum('hours');
         $minutes = ProjectScreenshots::where('user_id', $userId)->where('date',$todayDate)->sum('minutes');
         $seconds = ProjectScreenshots::where('user_id', $userId)->where('date',$todayDate)->sum('seconds');
-        if($seconds>60){
-            $seconds = $seconds - 60;
-            $minutes = $minutes + 1;
+        
+        while ($seconds >= 60) {
+            $seconds -= 60;
+            $minutes += 1;
         }
-
-        if($minutes>60){
-            $minutes = $minutes - 60;
-            $hours = $hours + 1;
+    
+        while ($minutes >= 60) {
+            $minutes -= 60;
+            $hours += 1;
         }
         
         $data = compact('hours', 'minutes', 'seconds');
