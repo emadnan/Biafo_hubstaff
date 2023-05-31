@@ -175,4 +175,12 @@ class FunctionalSpecificationFormController extends Controller
         }
         return response()->json(['message'=>' FSF Assign To Users Successfully']);
     }
+
+    function getFsfAssignToUsersByFsfId($fsf_id){
+
+        $fsf = FsfAssignToUser::where('fsf_id',$fsf_id)
+        ->get();
+
+        return response()->json(['fsf_Assign_to_users'=>$fsf]);
+    }
 }

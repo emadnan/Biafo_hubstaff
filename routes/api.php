@@ -296,3 +296,6 @@ Route::get('/getTeamLeadByCompanyId/{company_id}',[TeamController::class,'getTea
 
 // fsf assign by users\
 Route::post('/fsfAssignToUsers',[FunctionalSpecificationFormController::class,'fsfAssignToUsers']);
+
+//get Fsf Assign to users
+Route::get('/getFsfAssignToUsersByFsfId/{fsf_id}',[FunctionalSpecificationFormController::class,'getFsfAssignToUsersByFsfId']);
