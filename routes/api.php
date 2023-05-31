@@ -299,3 +299,6 @@ Route::post('/fsfAssignToUsers',[FunctionalSpecificationFormController::class,'f
 
 //get Fsf Assign to users
 Route::get('/getFsfAssignToUsersByFsfId/{fsf_id}',[FunctionalSpecificationFormController::class,'getFsfAssignToUsersByFsfId']);
+
+//get sum of hours, minuts and seconds  
+Route::get('/getSumByDateWithUserId/{date1}/{date2}/{userId}',[ProjectScreenshotsController::class,'sumByDateWithUserId']);

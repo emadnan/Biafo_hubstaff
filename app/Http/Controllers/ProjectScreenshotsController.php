@@ -294,4 +294,24 @@ class ProjectScreenshotsController extends Controller
 
         return response()->json($projectscreenshot);
     }
+
+    public function sumByDateWithUserId($date1, $date2,$userId)
+    {
+
+        $hours = ProjectScreenshots::where('user_id', $userId)->whereBetween('date', [$date1, $date2])->sum('hours');
+        $minutes = ProjectScreenshots::where('user_id', $userId)->whereBetween('date', [$date1, $date2])->sum('minutes');
+        $seconds = ProjectScreenshots::where('user_id', $userId)->whereBetween('date', [$date1, $date2])->sum('seconds');
+        if($seconds>60){
+            $seconds = $seconds - 60;
+            $minutes = $minutes + 1;
+        }
+
+        if($minutes>60){
+            $minutes = $minutes - 60;
+            $hours = $hours + 1;
+        }
+        
+        $data = compact('hours', 'minutes', 'seconds');
+        return response()->json($data);
+    }
 }
