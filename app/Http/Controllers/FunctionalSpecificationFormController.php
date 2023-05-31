@@ -101,7 +101,10 @@ class FunctionalSpecificationFormController extends Controller
     function getFunctionalSpecificationFormById(){
         
         $id = \Request::input('id');
-        $Functional = FunctionalSpecificationForm::where('id',$id)->get();
+        $Functional = FunctionalSpecificationForm::
+        where('id',$id)
+        ->with('getFsfParameter')
+        ->get();
 
         return response()->json(['Functional'=>$Functional]);
     }
