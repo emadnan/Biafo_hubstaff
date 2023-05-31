@@ -105,7 +105,7 @@ class FunctionalSpecificationFormController extends Controller
         // exit();
         $Functional = FunctionalSpecificationForm::
         where('id',$fsf)
-        ->with('function_lead_details','function_lead_details','getFsfParameter')
+        ->with('team_lead_details','function_lead_details','getFsfParameter')
         ->get();
 
         return response()->json(['Functional'=>$Functional]);
