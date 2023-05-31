@@ -103,7 +103,7 @@ class FunctionalSpecificationFormController extends Controller
         $id = \Request::input('id');
         $Functional = FunctionalSpecificationForm::
         select('users.*','users.name')
-        ->join('users','user.id','=','functional_specification_form.functional_lead_id')
+        ->join('users','users.id','=','functional_specification_form.functional_lead_id')
         ->where('id',$id)
         ->with('getFsfParameter')
         ->get();
