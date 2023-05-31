@@ -104,8 +104,7 @@ class FunctionalSpecificationFormController extends Controller
         // print_r($fsf);
         // exit();
         $Functional = FunctionalSpecificationForm::
-        join('users','users.id','=','functional_specification_form.functional_lead_id')
-        ->where('id',$fsf)
+        where('id',$fsf)
         ->with('getFsfParameter')
         ->get();
 
