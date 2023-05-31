@@ -12,8 +12,8 @@ class FunctionalSpecificationForm extends Model
     protected $table="functional_specification_form";
     protected $primaryKey="id";
 
-    function function_lead_name(){
-        return $this->BelongsTo('App\Models\User','id','functional_lead_id');
+    function function_lead_details(){
+        return $this->BelongsTo('App\Models\User','functional_lead_id','id');
     }
     function getFsfParameter(){
         return $this->hasMany('App\Models\FsfHasParameter', 'fsf_id', 'id');
