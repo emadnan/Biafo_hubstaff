@@ -14,7 +14,7 @@ class AddDeadLineIntoFsfAssignToUsersTable extends Migration
     public function up()
     {
         Schema::table('fsf_assign_to_users', function (Blueprint $table) {
-            $table->dateTime('dead_line')->after('user_id');
+            $table->dateTime('dead_line')->after('user_id')->nullable();
         });
     }
 
