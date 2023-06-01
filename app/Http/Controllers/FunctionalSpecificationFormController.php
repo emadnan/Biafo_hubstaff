@@ -204,5 +204,13 @@ class FunctionalSpecificationFormController extends Controller
 
         return response()->json(['Functional'=>$Functional]);
     }
-    
+    function getFsfAssignToUserByFsfIdAdnLogin(){
+        $userId = Auth::id();
+
+        $fsf_Assign_to_users = FsfAssignToUser::where('user_id',$userId)
+        ->get();
+
+        return response()->json(['fsf_Assign_to_users'=>$fsf_Assign_to_users]);
+
+    }  
 }
