@@ -221,7 +221,7 @@ class FunctionalSpecificationFormController extends Controller
         $fsf_id = \Request::input('fsf_id');
 
         $fsf_Assign_to_users = FsfAssignToUser::where('fsf_id',$fsf_id)
-        ->where('user_id',$fsf_id)
+        ->where('user_id',$userId)
         ->update([
             'status' => \Request::input('status'),
             'comment' => \Request::input('comment')
