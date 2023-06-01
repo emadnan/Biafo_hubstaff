@@ -193,6 +193,8 @@ class FunctionalSpecificationFormController extends Controller
     function getFunctionalSpecificationFormBylogin(){
         
         $userId = Auth::id();
+        print_r($userId);
+        exit();
         $Functional = FsfAssignToUser::
         where('user_id',$userId)
         ->with('team_lead_details','function_lead_details','getFsfParameter')
