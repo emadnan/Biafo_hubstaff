@@ -213,4 +213,20 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['fsf_Assign_to_users'=>$fsf_Assign_to_users]);
 
     }  
+
+    function updateStatusByLogin(){
+
+        $userId = Auth::id();
+
+        $fsf_id = \Request::input('fsf_id');
+
+        $fsf_Assign_to_users = FsfAssignToUser::where('fsf_id',$fsf_id)
+        ->where('user_id',$fsf_id)
+        ->update([
+            'status' => \Request::input('status'),
+            'comment' => \Request::input('comment')
+        ]);
+        
+        return response()->json(['message'=>'Update Status of Fsf Successfully']);
+    }
 }

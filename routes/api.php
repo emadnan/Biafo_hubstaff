@@ -61,6 +61,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     // get FSF assign to user by login API
     Route::get('/getFsfAssignToUserByFsfIdAdnLogin',[FunctionalSpecificationFormController::class,'getFsfAssignToUserByFsfIdAdnLogin']);
 
+    //update status of fsf assign to user API
+    Route::post('updateStatusByLogin', [FunctionalSpecificationFormController::class, 'updateStatusByLogin']);
+
 });
 
 //get total time by userId, projectId, and StreamName
