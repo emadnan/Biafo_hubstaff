@@ -192,10 +192,8 @@ class FunctionalSpecificationFormController extends Controller
 
     function getFunctionalSpecificationFormBylogin(){
         
-        $userId = Auth::id();
         $Functional = FunctionalSpecificationForm::
-        where('userId',$userId)
-        ->with('team_lead_details','function_lead_details','getFsfParameter')
+        with('team_lead_details','function_lead_details','getFsfParameter')
         ->get();
 
         return response()->json(['Functional'=>$Functional]);
