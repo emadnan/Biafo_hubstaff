@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\FunctionalSpecificationForm;
 use App\Models\FsfHasParameter;
 use App\Models\FsfAssignToUser;
+use App\Models\fsf_assign_to_users;
 use Carbon\Carbon;
 
 
@@ -192,8 +193,10 @@ class FunctionalSpecificationFormController extends Controller
 
     function getFunctionalSpecificationFormBylogin(){
         
-        $Functional = FunctionalSpecificationForm::
-        with('team_lead_details','function_lead_details','getFsfParameter')
+        $userId = Auth::id();
+        $Functional = fsf_assign_to_users::
+        where('user_id',$userId)
+        ->with('team_lead_details','function_lead_details','getFsfParameter')
         ->get();
 
         return response()->json(['Functional'=>$Functional]);
