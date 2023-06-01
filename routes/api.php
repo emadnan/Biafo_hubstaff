@@ -54,6 +54,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //get FsF by team lead id
     Route::get('/getFunctionalSpecificationFormByTeamLeadId',[FunctionalSpecificationFormController::class,'getFunctionalSpecificationFormByTeamLeadId']);
+    
+    // get FSF By login API\
+    Route::get('/getFunctionalSpecificationFormBylogin',[FunctionalSpecificationFormController::class,'getFunctionalSpecificationFormBylogin']);
+
 });
 
 //get total time by userId, projectId, and StreamName
@@ -302,6 +306,3 @@ Route::get('/getFsfAssignToUsersByFsfId/{fsf_id}',[FunctionalSpecificationFormCo
 
 //get sum of hours, minuts and seconds  
 Route::get('/getSumByDateWithUserId/{date1}/{date2}/{userId}',[ProjectScreenshotsController::class,'sumByDateWithUserId']);
-
-// get FSF By login API\
-Route::get('/getFunctionalSpecificationFormBylogin',[FunctionalSpecificationFormController::class,'getFunctionalSpecificationFormBylogin']);
