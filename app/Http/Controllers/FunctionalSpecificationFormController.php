@@ -194,7 +194,7 @@ class FunctionalSpecificationFormController extends Controller
         
         $userId = Auth::id();
         $Functional = FunctionalSpecificationForm::
-        whrer('userId',$userId)
+        where('userId',$userId)
         ->with('team_lead_details','function_lead_details','getFsfParameter')
         ->get();
 
