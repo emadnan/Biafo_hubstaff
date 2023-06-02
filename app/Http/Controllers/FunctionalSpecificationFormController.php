@@ -217,7 +217,9 @@ class FunctionalSpecificationFormController extends Controller
     function updateStatusByLogin(){
 
         $userId = Auth::id();
-
+        if(!$userId){
+            return response()->json(['message'=>'user not login']);
+        }
         $fsf_id = \Request::input('fsf_id');
 
         $fsf_Assign_to_users = FsfAssignToUser::where('fsf_id',$fsf_id)
