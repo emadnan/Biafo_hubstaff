@@ -256,4 +256,15 @@ class FunctionalSpecificationFormController extends Controller
 
         return response()->json(['fsf_Assign_to_users'=>$fsf_Assign_to_users]);
     }
+
+    function getFsfAssignToteamleadByFsfIdAndLogin($fsf_id){
+        $userId = Auth::id();
+        
+        // $fsf_id = \Request::input('fsf_id');
+        $fsf_Assign_to_users = FunctionalSpecificationForm::where('team_lead_id',$userId)
+        ->where('id',$fsf_id)
+        ->get();
+
+        return response()->json(['fsf_Assign_to_users'=>$fsf_Assign_to_users]);
+    }
 }

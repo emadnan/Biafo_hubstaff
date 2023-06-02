@@ -70,6 +70,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     // get FSF assign to user by login API
     Route::get('/getFsfAssignToUserByFsfIdAndLogin/{fsf_id}',[FunctionalSpecificationFormController::class,'getFsfAssignToUserByFsfIdAndLogin']);
 
+    // get FSF assign to user by login API
+    Route::get('/getFsfAssignToteamleadByFsfIdAndLogin/{fsf_id}',[FunctionalSpecificationFormController::class,'getFsfAssignToteamleadByFsfIdAndLogin']);
+
 });
 
 //get total time by userId, projectId, and StreamName
