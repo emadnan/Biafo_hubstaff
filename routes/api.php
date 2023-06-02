@@ -338,3 +338,6 @@ Route::post('/updateTasks',[TaskManagementController::class,'updateTasks']);
 
 //get Fsf Assign to users by fsf id
 Route::get('/getFsfFromAssignToteamleadByFsfIdAndLogin/{fsf_id}',[FunctionalSpecificationFormController::class,'getFsfFromAssignToteamleadByFsfIdAndLogin']);
+
+// delete task by id
+Route::post('/deleteTaskById',[TaskManagementController::class,'deleteTaskById']);

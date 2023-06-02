@@ -55,4 +55,14 @@ class TaskManagementController extends Controller
         return response()->json(['message'=>'Update Tasks Successfully']);
     }
 
+    function deleteTaskById(){
+        
+        $id = \Request::input('id');
+        $task = TaskManagement::
+
+        where('id',$id)
+        ->delete();
+
+        return response()->json(['task'=>'delete fsf Successfully']);
+    }
 }
