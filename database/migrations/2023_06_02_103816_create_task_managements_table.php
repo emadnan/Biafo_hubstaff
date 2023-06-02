@@ -19,7 +19,7 @@ class CreateTaskManagementsTable extends Migration
             $table->integer('team_lead_id');
             $table->integer('project_id');
             $table->string('task_description');
-            $table->dateTime('start_time');
+            $table->dateTime('start_date');
             $table->dateTime('dead_line');
             $table->timestamps();
         });
