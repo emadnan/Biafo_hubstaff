@@ -274,7 +274,7 @@ class FunctionalSpecificationFormController extends Controller
         
         // $fsf_id = \Request::input('fsf_id');
         $fsf_Assign_to_users = FsfAssignToUser::
-        join('users.*','users.id','=','fsf_assign_to_users.user_id')
+        join('users','users.id','=','fsf_assign_to_users.user_id')
         ->where('fsf_id',$fsf_id)
         ->get();
 
