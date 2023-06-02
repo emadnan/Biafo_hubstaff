@@ -251,6 +251,8 @@ class FunctionalSpecificationFormController extends Controller
 
         
         $fsf_id = \Request::input('fsf_id');
+        print_r($userId,$fsf_id);
+        exit();
 
         $fsf_Assign_to_users = FsfAssignToUser::where('user_id',$userId)
         ->where('fsf_id',$fsf_id)
