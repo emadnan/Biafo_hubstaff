@@ -27,9 +27,7 @@ class TaskManagementController extends Controller
 
     function getTasks(){
         
-        $task = TaskManagement::
-            with('getFsfParameter')
-            ->get();
+        $task = TaskManagement::get();
 
         return response()->json(['task'=>$task]);
     }
