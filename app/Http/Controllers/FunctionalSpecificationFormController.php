@@ -260,10 +260,21 @@ class FunctionalSpecificationFormController extends Controller
     }
 
     function getFsfAssignToteamleadByFsfIdAndLogin($fsf_id){
-        $userId = Auth::id();
+        $id = Auth::id();
         
         // $fsf_id = \Request::input('fsf_id');
-        $fsf_Assign_to_users = FunctionalSpecificationForm::where('team_lead_id',$userId)
+        $fsf_Assign_to_users = FunctionalSpecificationForm::where('team_lead_id',$id)
+        ->where('id',$fsf_id)
+        ->get();
+
+        return response()->json(['fsf_Assign_to_users'=>$fsf_Assign_to_users]);
+    }
+
+    function getFsfFromAssignToteamleadByFsfIdAndLogin($fsf_id){
+        $id = Auth::id();
+        
+        // $fsf_id = \Request::input('fsf_id');
+        $fsf_Assign_to_users = FsfAssignToUser::where('team_lead_id',$id)
         ->where('id',$fsf_id)
         ->get();
 
