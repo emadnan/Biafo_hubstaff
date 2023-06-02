@@ -40,4 +40,19 @@ class TaskManagementController extends Controller
         return response()->json(['task'=>$task]);
     }
 
+    function updateTasks(){
+        $id = \Request::input('id');
+        $fsf_Assign_to_users = TaskManagement::where('id',$id)
+        ->update([
+            'status' => \Request::input('user_id'),
+            'project_id' => \Request::input('project_id'),
+            'team_lead_id' => \Request::input('team_lead_id'),
+            'task_description' => \Request::input('task_description'),
+            'start_date' => \Request::input('start_date'),
+            'dead_line' => \Request::input('dead_line')
+        ]);
+        
+        return response()->json(['message'=>'Update Tasks Successfully']);
+    }
+
 }

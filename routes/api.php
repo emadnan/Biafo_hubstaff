@@ -332,3 +332,6 @@ Route::get('/getTasks',[TaskManagementController::class,'getTasks']);
 
 //get task by id
 Route::get('/getTaskById/{id}',[TaskManagementController::class,'getTaskById']);
+
+// update task by id
+Route::post('/updateTasks',[TaskManagementController::class,'updateTasks']);
