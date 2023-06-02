@@ -204,7 +204,7 @@ class FunctionalSpecificationFormController extends Controller
 
         return response()->json(['Functional'=>$Functional]);
     }
-    function getFsfAssignToUserByFsfIdAdnLogin(){
+    function getFsfAssignToUserByLogin(){
         $userId = Auth::id();
 
         $fsf_Assign_to_users = FsfAssignToUser::where('user_id',$userId)
@@ -244,5 +244,19 @@ class FunctionalSpecificationFormController extends Controller
         ]);
         
         return response()->json(['message'=>'Update Status of Fsf Successfully']);
+    }
+
+    function getFsfAssignToUserByFsfIdAndLogin(){
+        $userId = Auth::id();
+
+        
+        $fsf_id = \Request::input('fsf_id');
+
+        $fsf_Assign_to_users = FsfAssignToUser::where('user_id',$userId)
+        ->where('fsf_id',$fsf_id)
+        ->get();
+
+        return response()->json(['fsf_Assign_to_users'=>$fsf_Assign_to_users]);
+
     }
 }
