@@ -246,19 +246,14 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['message'=>'Update Status of Fsf Successfully']);
     }
 
-    function getFsfAssignToUserByFsfIdAndLogin(){
+    function getFsfAssignToUserByFsfIdAndLogin($fsf_id){
         $userId = Auth::id();
-
         
-        $fsf_id = \Request::input('fsf_id');
-        print_r($fsf_id);
-        exit();
-
+        // $fsf_id = \Request::input('fsf_id');
         $fsf_Assign_to_users = FsfAssignToUser::where('user_id',$userId)
         ->where('fsf_id',$fsf_id)
         ->get();
 
         return response()->json(['fsf_Assign_to_users'=>$fsf_Assign_to_users]);
-
     }
 }

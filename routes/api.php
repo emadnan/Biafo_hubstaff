@@ -68,7 +68,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('updateStatusByTeamLogin', [FunctionalSpecificationFormController::class, 'updateStatusByTeamLogin']);
 
     // get FSF assign to user by login API
-    Route::get('/getFsfAssignToUserByFsfIdAndLogin',[FunctionalSpecificationFormController::class,'getFsfAssignToUserByFsfIdAndLogin']);
+    Route::get('/getFsfAssignToUserByFsfIdAndLogin/{fsf_id}',[FunctionalSpecificationFormController::class,'getFsfAssignToUserByFsfIdAndLogin']);
 
 });
 
