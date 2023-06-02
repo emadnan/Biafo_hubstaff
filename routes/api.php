@@ -18,6 +18,8 @@ use App\Http\Controllers\AssignProjectController;
 use App\Http\Controllers\StreamsController;
 use App\Http\Controllers\ProjectScreenshotsController;
 use App\Http\Controllers\FunctionalSpecificationFormController;
+use App\Http\Controllers\TaskManagementController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +70,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('updateStatusByTeamLogin', [FunctionalSpecificationFormController::class, 'updateStatusByTeamLogin']);
 
     //Add Task by team lead login API
-    Route::post('addTasks', [FunctionalSpecificationFormController::class, 'addTasks']);
+    Route::post('addTasks', [TaskManagementController::class, 'addTasks']);
 
     // get FSF assign to user by login API
     Route::get('/getFsfAssignToUserByFsfIdAndLogin/{fsf_id}',[FunctionalSpecificationFormController::class,'getFsfAssignToUserByFsfIdAndLogin']);
