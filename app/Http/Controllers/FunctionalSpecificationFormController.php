@@ -172,6 +172,7 @@ class FunctionalSpecificationFormController extends Controller
         $user_ids = $request->user_ids;
         $fsf_id = \Request::input('fsf_id');
         $dead_line = \Request::input('dead_line');
+        $assign = FsfAssignToUser::where('fsf_id',$fsf_id)->delete();
         foreach($user_ids as $user_id)
         {
             $assign = new FsfAssignToUser;
