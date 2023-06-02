@@ -67,6 +67,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //update status of fsf by team lead API
     Route::post('updateStatusByTeamLogin', [FunctionalSpecificationFormController::class, 'updateStatusByTeamLogin']);
 
+    //Add Task by team lead login API
+    Route::post('addTasks', [FunctionalSpecificationFormController::class, 'addTasks']);
+
     // get FSF assign to user by login API
     Route::get('/getFsfAssignToUserByFsfIdAndLogin/{fsf_id}',[FunctionalSpecificationFormController::class,'getFsfAssignToUserByFsfIdAndLogin']);
 
