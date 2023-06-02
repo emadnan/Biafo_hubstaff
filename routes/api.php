@@ -328,4 +328,4 @@ Route::get('/getFsfAssignToUsersByFsfId/{fsf_id}',[FunctionalSpecificationFormCo
 Route::get('/getSumByDateWithUserId/{date1}/{date2}/{userId}',[ProjectScreenshotsController::class,'sumByDateWithUserId']);
 
 //get all streams 
-Route::get('/getTasks',[StreamsController::class,'getTasks']);
+Route::get('/getTasks',[TaskManagementController::class,'getTasks']);
