@@ -32,8 +32,7 @@ class TaskManagementController extends Controller
         return response()->json(['task'=>$task]);
     }
 
-    function getTaskById(){
-        $id = \Request::input('id');
+    function getTaskById($id){
         $task = TaskManagement::
         where('id',$id)
         ->get();
