@@ -329,3 +329,6 @@ Route::get('/getSumByDateWithUserId/{date1}/{date2}/{userId}',[ProjectScreenshot
 
 //get all Tasks 
 Route::get('/getTasks',[TaskManagementController::class,'getTasks']);
+
+//get task by id
+Route::get('/getTaskById',[TaskManagementController::class,'getTaskById']);
