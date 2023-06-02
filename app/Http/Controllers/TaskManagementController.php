@@ -44,7 +44,7 @@ class TaskManagementController extends Controller
         $id = \Request::input('id');
         $fsf_Assign_to_users = TaskManagement::where('id',$id)
         ->update([
-            'status' => \Request::input('user_id'),
+            'user_id' => \Request::input('user_id'),
             'project_id' => \Request::input('project_id'),
             'team_lead_id' => \Request::input('team_lead_id'),
             'task_description' => \Request::input('task_description'),
