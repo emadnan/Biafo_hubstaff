@@ -229,4 +229,20 @@ class FunctionalSpecificationFormController extends Controller
         
         return response()->json(['message'=>'Update Status of Fsf Successfully']);
     }
+
+    function updateStatusByTeamLogin(){
+
+        $userId = Auth::id();
+
+        $fsf_id = \Request::input('fsf_id');
+
+        $fsf_Assign_to_users = FunctionalSpecificationForm::where('fsf_id',$fsf_id)
+        ->where('user_id',$userId)
+        ->update([
+            'status' => \Request::input('status'),
+            'comment' => \Request::input('comment')
+        ]);
+        
+        return response()->json(['message'=>'Update Status of Fsf Successfully']);
+    }
 }

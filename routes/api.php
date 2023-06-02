@@ -64,6 +64,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //update status of fsf assign to user API
     Route::post('updateStatusByLogin', [FunctionalSpecificationFormController::class, 'updateStatusByLogin']);
 
+    //update status of fsf by team lead API
+    Route::post('updateStatusByTeamLogin', [FunctionalSpecificationFormController::class, 'updateStatusByTeamLogin']);
+
 });
 
 //get total time by userId, projectId, and StreamName
