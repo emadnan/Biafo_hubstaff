@@ -25,4 +25,13 @@ class TaskManagementController extends Controller
         return response()->json(['message'=>'Add Task Successfully']);
     }
 
+    function getTasks(){
+        
+        $task = TaskManagement::
+            with('getFsfParameter')
+            ->get();
+
+        return response()->json(['task'=>$task]);
+    }
+
 }
