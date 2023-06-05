@@ -341,3 +341,6 @@ Route::get('/getFsfFromAssignToteamleadByFsfIdAndLogin/{fsf_id}',[FunctionalSpec
 
 // delete task by id
 Route::post('/deleteTaskById',[TaskManagementController::class,'deleteTaskById']);
+
+// calculating weekly worked
+Route::get('/calculateWeeklyWork',[ProjectScreenshotsController::class,'calculateWeeklyWork']);
