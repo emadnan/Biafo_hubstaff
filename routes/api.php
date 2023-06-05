@@ -78,6 +78,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     // get FSF assign to user by login API
     Route::get('/getFsfAssignToteamleadByFsfIdAndLogin/{fsf_id}',[FunctionalSpecificationFormController::class,'getFsfAssignToteamleadByFsfIdAndLogin']);
 
+    // calculating weekly worked
+    Route::get('/calculateWeeklyWork',[ProjectScreenshotsController::class,'calculateWeeklyWork']);
 });
 
 //get total time by userId, projectId, and StreamName
@@ -341,6 +343,3 @@ Route::get('/getFsfFromAssignToteamleadByFsfIdAndLogin/{fsf_id}',[FunctionalSpec
 
 // delete task by id
 Route::post('/deleteTaskById',[TaskManagementController::class,'deleteTaskById']);
-
-// calculating weekly worked
-Route::get('/calculateWeeklyWork',[ProjectScreenshotsController::class,'calculateWeeklyWork']);
