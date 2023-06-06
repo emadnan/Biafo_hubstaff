@@ -18,6 +18,7 @@ class FunctionalSpecificationFormController extends Controller
             
             $Functional = new FunctionalSpecificationForm();
             $Functional->wricef_id = \Request::input('wricef_id');
+            $Functional->reference_id = \Request::input('reference_id');
             $Functional->module_name = \Request::input('module_name');
             $Functional->functional_lead_id = \Request::input('functional_lead_id');
             $Functional->team_lead_id = \Request::input('team_lead_id');
@@ -65,6 +66,7 @@ class FunctionalSpecificationFormController extends Controller
         $Functional = FunctionalSpecificationForm::where('id',$id)
         ->update([
             'wricef_id' => \Request::input('wricef_id'),
+            'fsf_id' => \Request::input('fsf_id'),
             'module_name' => \Request::input('module_name'),
             'functional_lead_id' => \Request::input('functional_lead_id'),
             'team_lead_id' => \Request::input('team_lead_id'),
