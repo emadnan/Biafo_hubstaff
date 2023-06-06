@@ -37,10 +37,6 @@ class ModulesSeeder extends Seeder
                 'description' => 'Description for Module 5',
             ],
             [
-                'name' => 'Module 2',
-                'description' => 'Description for Module 2',
-            ],
-            [
                 'name' => 'FI',
                 'description' => 'Description for Module 6',
             ],
