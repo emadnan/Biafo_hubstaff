@@ -27,7 +27,11 @@ class TaskManagementController extends Controller
 
     function getTasks(){
         
-        $task = TaskManagement::get();
+        $task = TaskManagement::
+        select('users.*','project.*')
+        ->join('users','users.id','=','task_managements.user_id')
+        ->join('projects','projects.id','=','task_managements.project_id')
+        ->get();
 
         return response()->json(['task'=>$task]);
     }
