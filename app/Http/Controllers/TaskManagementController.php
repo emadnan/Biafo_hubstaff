@@ -38,7 +38,10 @@ class TaskManagementController extends Controller
 
     function getTaskById($id){
         $task = TaskManagement::
-        where('id',$id)
+        select('task_managements.*','users.*','projects.*','task_managements.id as task_managements_id')
+        ->join('users','users.id','=','task_managements.user_id')
+        ->join('projects','projects.id','=','task_managements.project_id')
+        ->where('id',$id)
         ->get();
 
         return response()->json(['task'=>$task]);
