@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\FunctionalSpecificationForm;
 use App\Models\FsfHasParameter;
 use App\Models\FsfAssignToUser;
+use App\Models\Module;
 use Carbon\Carbon;
 
 
@@ -279,5 +280,11 @@ class FunctionalSpecificationFormController extends Controller
         ->get();
 
         return response()->json(['fsf_Assign_to_users'=>$fsf_Assign_to_users]);
+    }
+
+    function getModules(){
+        $Module = Module::
+            get();
+        return response()->json(['Module'=>$Module]);
     }
 }

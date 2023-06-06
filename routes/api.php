@@ -343,3 +343,6 @@ Route::get('/getFsfFromAssignToteamleadByFsfIdAndLogin/{fsf_id}',[FunctionalSpec
 
 // delete task by id
 Route::post('/deleteTaskById',[TaskManagementController::class,'deleteTaskById']);
+
+//get All Modules
+Route::get('/getModules',[FunctionalSpecificationFormController::class,'getModules']);
