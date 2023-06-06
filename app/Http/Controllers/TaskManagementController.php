@@ -30,7 +30,6 @@ class TaskManagementController extends Controller
         $task = TaskManagement::
         select('task_managements.*','users.*','projects.*','task_managements.id as task_managements_id')
         ->join('users','users.id','=','task_managements.user_id')
-        ->join('users','users.id','=','task_managements.team_lead_id')
         ->join('projects','projects.id','=','task_managements.project_id')
         ->with('team_lead_details')
         ->get();

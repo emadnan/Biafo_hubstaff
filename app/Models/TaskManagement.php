@@ -11,4 +11,8 @@ class TaskManagement extends Model
 
     protected $table="task_managements";
     protected $primaryKey="id";
+
+    function team_lead_details(){
+        return $this->BelongsTo('App\Models\User','team_lead_id','id');
+    }
 }
