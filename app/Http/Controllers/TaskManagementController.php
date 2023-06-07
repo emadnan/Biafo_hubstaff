@@ -59,7 +59,8 @@ class TaskManagementController extends Controller
             'team_lead_id' => \Request::input('team_lead_id'),
             'task_description' => \Request::input('task_description'),
             'start_date' => \Request::input('start_date'),
-            'dead_line' => \Request::input('dead_line')
+            'dead_line' => \Request::input('dead_line'),
+            'priorites' => \Request::input('priorities')
         ]);
         
         return response()->json(['message'=>'Update Tasks Successfully']);
