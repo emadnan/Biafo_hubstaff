@@ -18,6 +18,7 @@ class TaskManagementController extends Controller
         $task->task_description = \Request::input('task_description');
         $task->start_date = \Request::input('start_date');
         $task->dead_line = \Request::input('dead_line');
+        $task->priorites = \Request::input('priorities');
         $task->team_lead_id =$userId;
 
         $task->save();
