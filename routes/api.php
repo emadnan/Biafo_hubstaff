@@ -293,8 +293,11 @@ Route::get('/get_projectscreenshot_by_compny_id/{date1}/{date2}/{company_id}',[P
 // Add FSF API\
 Route::post('/addFunctionalSpecificationForm',[FunctionalSpecificationFormController::class,'addFunctionalSpecificationForm']);
 
-// Add FSF API\
+// Add FSF Has output Parameters API\
 Route::post('/addFsfOutputParameters',[FunctionalSpecificationFormController::class,'addFsfOutputParameters']);
+
+// Add FSF Has Input Parameters API\
+Route::post('/addFsfHasInputParameters',[FunctionalSpecificationFormController::class,'addFsfHasInputParameters']);
 
 // Update FSF API\
 Route::post('/updateFunctionalSpecificationForm',[FunctionalSpecificationFormController::class,'updateFunctionalSpecificationForm']);

@@ -37,7 +37,7 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['message'=>'Add Functional Specificational Form Successfully']);
     }
 
-    function addFsfParameters()   {
+    function addFsfHasInputParameters()   {
         
         $fsfhasparameter = new FsfHasParameter();
         $fsfhasparameter->fsf_id = \Request::input('fsf_id');
