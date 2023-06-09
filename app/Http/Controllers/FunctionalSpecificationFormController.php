@@ -22,7 +22,7 @@ class FunctionalSpecificationFormController extends Controller
         $Functional->type_of_development = \Request::input('type_of_development');
         $Functional->wricef_id = \Request::input('wricef_id');
         $Functional->functional_lead_id = \Request::input('functional_lead_id');
-        $Functional->ABAP_lead_id = \Request::input('ABAP_lead_id');
+        $Functional->ABAP_team_lead_id = \Request::input('ABAP_team_lead_id');
         $Functional->requested_date = \Request::input('requested_date');
         $Functional->priority = \Request::input('priority');
         $Functional->usage_frequency = \Request::input('usage_frequency');
