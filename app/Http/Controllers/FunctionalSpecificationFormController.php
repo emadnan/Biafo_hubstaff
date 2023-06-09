@@ -146,11 +146,8 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['Fsf Has output Parameters'=>$FsfHasOutputParameters]);
     }
 
-    function getFsfHasOutputParameterById(Request $request){
+    function getFsfHasOutputParameterById($id){
         
-        $id = $request->id;
-        print_r($id);
-        exit();
         $FsfHasOutputParameters = FsfHasOutputParameter::
         where('id',$id)
         ->get();
