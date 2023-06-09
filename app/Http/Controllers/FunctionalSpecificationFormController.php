@@ -47,7 +47,7 @@ class FunctionalSpecificationFormController extends Controller
             'module_id' => \Request::input('module_id'),
             'project_id' => \Request::input('project_id'),
             'type_of_development' => \Request::input('type_of_development'),
-            'requested_date' => Carbon::createFromFormat('d-m-Y', \Request::input('requested_date'))->format('Y-m-d'),
+            'requested_date' => \Request::input('requested_date'),
             'wricef_id' => \Request::input('wricef_id'),
             'functional_lead_id' => \Request::input('functional_lead_id'),
             'ABAP_team_lead_id' => \Request::input('ABAP_team_lead_id'),
