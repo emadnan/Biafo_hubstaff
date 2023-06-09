@@ -13,52 +13,63 @@ use Illuminate\Http\Request;
 
 class FunctionalSpecificationFormController extends Controller
 {
-    function addFunctionalSpecificationForm($step_no){
-        if($step_no==1)    {
-            
-            $Functional = new FunctionalSpecificationForm();
-            $Functional->wricef_id = \Request::input('wricef_id');
-            $Functional->reference_id = \Request::input('reference_id');
-            $Functional->module_name = \Request::input('module_name');
-            $Functional->functional_lead_id = \Request::input('functional_lead_id');
-            $Functional->team_lead_id = \Request::input('team_lead_id');
-            $Functional->requested_date = \Request::input('requested_date');
-            $Functional->type_of_development = \Request::input('type_of_development');
-            $Functional->priority = \Request::input('priority');
-            $Functional->usage_frequency = \Request::input('usage_frequency');
-            $Functional->save();
+    function addFunctionalSpecificationForm(){
 
-            return response()->json(['message'=>'Add Functional Specificational Form Successfully', 'id'=>$Functional->id]);
-        }
+        $Functional = new FunctionalSpecificationForm();
+        $Functional->reference_id = \Request::input('reference_id');
+        $Functional->module_id = \Request::input('module_id');
+        $Functional->project_id = \Request::input('project_id');
+        $Functional->type_of_development = \Request::input('type_of_development');
+        $Functional->wricef_id = \Request::input('wricef_id');
+        $Functional->functional_lead_id = \Request::input('functional_lead_id');
+        $Functional->ABAP_lead_id = \Request::input('ABAP_lead_id');
+        $Functional->requested_date = \Request::input('requested_date');
+        $Functional->priority = \Request::input('priority');
+        $Functional->usage_frequency = \Request::input('usage_frequency');
+        $Functional->transaction_code = \Request::input('transaction_code');
+        $Functional->authorization_role = \Request::input('authorization_role');
+        $Functional->input_screen = \Request::input('input_screen');
+        $Functional->output_screen = \Request::input('output_screen');
 
-        elseif($step_no==2){
-            $id = \Request::input('id');
-            $Functional = FunctionalSpecificationForm::where('id',$id)
-            ->update([
-                'transaction_code' => \Request::input('transaction_code'),
-                'authorization_level' => \Request::input('authorization_level')
-            ]);
-            
-            return response()->json(['message'=>'Add Functional Specificational Form step_no 2 Successfully']);
-        }
+        $Functional->save();
 
-        elseif($step_no==3)    {
-            
-            $fsfhasparameter = new FsfHasParameter();
-            $fsfhasparameter->fsf_id = \Request::input('fsf_id');
-            $fsfhasparameter->description = \Request::input('description');
-            $fsfhasparameter->field_technical_name = \Request::input('field_technical_name');
-            $fsfhasparameter->field_length = \Request::input('field_length');
-            $fsfhasparameter->field_type = \Request::input('field_type');
-            $fsfhasparameter->field_table_name = \Request::input('field_table_name');
-            $fsfhasparameter->mandatory_or_optional = \Request::input('mandatory_or_optional');
-            $fsfhasparameter->parameter_or_selection = \Request::input('parameter_or_selection');
-            $fsfhasparameter->save();
-            
-            return response()->json(['message'=>'Add FSF Parameters Successfully']);
-        }
+        return response()->json(['message'=>'Add Functional Specificational Form Successfully']);
+    }
+
+    function addFsfParameters()   {
         
-    }    
+        $fsfhasparameter = new FsfHasParameter();
+        $fsfhasparameter->fsf_id = \Request::input('fsf_id');
+        $fsfhasparameter->description = \Request::input('description');
+        $fsfhasparameter->input_parameter_name = \Request::input('input_parameter_name');
+        $fsfhasparameter->field_technical_name = \Request::input('field_technical_name');
+        $fsfhasparameter->field_length = \Request::input('field_length');
+        $fsfhasparameter->field_type = \Request::input('field_type');
+        $fsfhasparameter->field_table_name = \Request::input('field_table_name');
+        $fsfhasparameter->mandatory_or_optional = \Request::input('mandatory_or_optional');
+        $fsfhasparameter->parameter_or_selection = \Request::input('parameter_or_selection');
+        $fsfhasparameter->save();
+        
+        return response()->json(['message'=>'Add FSF input Parameters Successfully']);
+    }
+    
+    function addFsfOutputParameters()   {
+        
+        $fsfhasparameter = new FsfHasParameter();
+        $fsfhasparameter->fsf_id = \Request::input('fsf_id');
+        $fsfhasparameter->description = \Request::input('description');
+        $fsfhasparameter->output_parameter_name = \Request::input('output_parameter_name');
+        $fsfhasparameter->input_parameter_name = \Request::input('input_parameter_name');
+        $fsfhasparameter->field_technical_name = \Request::input('field_technical_name');
+        $fsfhasparameter->field_length = \Request::input('field_length');
+        $fsfhasparameter->field_type = \Request::input('field_type');
+        $fsfhasparameter->field_table_name = \Request::input('field_table_name');
+        $fsfhasparameter->mandatory_or_optional = \Request::input('mandatory_or_optional');
+        $fsfhasparameter->parameter_or_selection = \Request::input('parameter_or_selection');
+        $fsfhasparameter->save();
+        
+        return response()->json(['message'=>'Add FSF output Parameters Successfully']);
+    }
 
     function updateFunctionalSpecificationForm(){
 

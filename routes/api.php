@@ -291,7 +291,10 @@ Route::get('/get_projectscreenshot_by_date/{date1}/{date2}/{user_id}',[ProjectSc
 Route::get('/get_projectscreenshot_by_compny_id/{date1}/{date2}/{company_id}',[ProjectScreenshotsController::class,'getProjectScreenshotsByDateWithCompanyId']);
 
 // Add FSF API\
-Route::post('/addFunctionalSpecificationForm/{step_no}',[FunctionalSpecificationFormController::class,'addFunctionalSpecificationForm']);
+Route::post('/addFunctionalSpecificationForm',[FunctionalSpecificationFormController::class,'addFunctionalSpecificationForm']);
+
+// Add FSF API\
+Route::post('/addFsfOutputParameters',[FunctionalSpecificationFormController::class,'addFsfOutputParameters']);
 
 // Update FSF API\
 Route::post('/updateFunctionalSpecificationForm',[FunctionalSpecificationFormController::class,'updateFunctionalSpecificationForm']);
