@@ -14,7 +14,7 @@ class AddInputScreenAndOutputScreenIntoFunctionalSpecificationFormTable extends 
     public function up()
     {
         Schema::table('functional_specification_form', function (Blueprint $table) {
-            $table->integer('referance_id')->after('id');
+            $table->integer('reference_id')->after('id');
             $table->string('input_screen')->after('development_logic')->nullable();
             $table->string('output_screen')->after('input_screen')->nullable();
         });
@@ -28,7 +28,7 @@ class AddInputScreenAndOutputScreenIntoFunctionalSpecificationFormTable extends 
     public function down()
     {
         Schema::table('functional_specification_form', function (Blueprint $table) {
-            $table->dropColumn('referance_id');
+            $table->dropColumn('reference_id');
             $table->dropColumn('input_screen');
             $table->dropColumn('output_screen');
         });
