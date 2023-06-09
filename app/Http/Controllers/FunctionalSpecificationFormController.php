@@ -38,6 +38,30 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['message'=>'Add Functional Specificational Form Successfully']);
     }
 
+    function updateFunctionalSpecificationForm(){
+
+        $id = \Request::input('id');
+        $Functional = FunctionalSpecificationForm::where('id',$id)
+        ->update([
+            'reference_id' => \Request::input('reference_id'),
+            'module_id' => \Request::input('module_id'),
+            'project_id' => \Request::input('project_id'),
+            'type_of_development' => \Request::input('type_of_development'),
+            'requested_date' => Carbon::createFromFormat('d-m-Y', \Request::input('requested_date'))->format('Y-m-d'),
+            'wricef_id' => \Request::input('wricef_id'),
+            'functional_lead_id' => \Request::input('functional_lead_id'),
+            'ABAP_team_lead_id' => \Request::input('ABAP_team_lead_id'),
+            'priority' => \Request::input('priority'),
+            'usage_frequency' => \Request::input('usage_frequency'),
+            'transaction_code' => \Request::input('transaction_code'),
+            'development_logic' => \Request::input('development_logic'),
+            'input_screen' => \Request::input('input_screen'),
+            'output_screen' => \Request::input('output_screen')
+        ]);
+        
+        return response()->json(['message'=>'Update Functional Specificational Form Successfully']);
+    } 
+
     function addFsfHasInputParameters()   {
         
         $fsfhasparameter = new FsfHasParameter();
@@ -72,30 +96,7 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['message'=>'Add FSF output Parameters Successfully']);
     }
 
-    function updateFunctionalSpecificationForm(){
-
-        $id = \Request::input('id');
-        $Functional = FunctionalSpecificationForm::where('id',$id)
-        ->update([
-            'wricef_id' => \Request::input('wricef_id'),
-            'fsf_id' => \Request::input('fsf_id'),
-            'module_name' => \Request::input('module_name'),
-            'functional_lead_id' => \Request::input('functional_lead_id'),
-            'team_lead_id' => \Request::input('team_lead_id'),
-            'requested_date' => Carbon::createFromFormat('d-m-Y', \Request::input('requested_date'))->format('Y-m-d'),
-            'type_of_development' => \Request::input('type_of_development'),
-            'priority' => \Request::input('priority'),
-            'usage_frequency' => \Request::input('usage_frequency'),
-            'transaction_code' => \Request::input('transaction_code'),
-            'authorization_level' => \Request::input('authorization_level'),
-            'description' => \Request::input('description'),
-            'field_technical_name' => \Request::input('field_technical_name'),
-            'mandatory_or_optional' => \Request::input('mandatory_or_optional'),
-            'parameter_or_selection' => \Request::input('parameter_or_selection')
-        ]);
-        
-        return response()->json(['message'=>'Update Functional Specificational Form Successfully']);
-    } 
+    
 
     function deleteFunctionalSpecificationForm(){
         
