@@ -28,6 +28,7 @@ class FunctionalSpecificationFormController extends Controller
         $Functional->usage_frequency = \Request::input('usage_frequency');
         $Functional->transaction_code = \Request::input('transaction_code');
         $Functional->authorization_role = \Request::input('authorization_role');
+        $Functional->development_logic = \Request::input('development_logic');
         $Functional->input_screen = \Request::input('input_screen');
         $Functional->output_screen = \Request::input('output_screen');
 
