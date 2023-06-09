@@ -138,6 +138,14 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['message'=>'Update FSF Has output ParaMeter Successfully']);
     }
 
+    function getFsfHasOutputParameters(){
+        
+        $FsfHasOutputParameters = FsfHasOutputParameter::
+        get();
+
+        return response()->json(['Fsf Has output Parameters'=>$FsfHasOutputParameters]);
+    }
+
     function deleteFunctionalSpecificationForm(){
         
         $id = \Request::input('id');
