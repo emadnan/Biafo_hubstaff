@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FunctionalSpecificationForm;
 use App\Models\FsfHasParameter;
+use App\Models\FsfHasOutputParameter;
 use App\Models\FsfAssignToUser;
 use App\Models\Module;
 use Carbon\Carbon;
@@ -56,7 +57,7 @@ class FunctionalSpecificationFormController extends Controller
     
     function addFsfOutputParameters()   {
         
-        $fsfhasparameter = new FsfHasParameter();
+        $fsfhasparameter = new FsfHasOutputParameter();
         $fsfhasparameter->fsf_id = \Request::input('fsf_id');
         $fsfhasparameter->description = \Request::input('description');
         $fsfhasparameter->output_parameter_name = \Request::input('output_parameter_name');
