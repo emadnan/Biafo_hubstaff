@@ -60,7 +60,6 @@ class FunctionalSpecificationFormController extends Controller
         $fsfhasparameter->fsf_id = \Request::input('fsf_id');
         $fsfhasparameter->description = \Request::input('description');
         $fsfhasparameter->output_parameter_name = \Request::input('output_parameter_name');
-        $fsfhasparameter->input_parameter_name = \Request::input('input_parameter_name');
         $fsfhasparameter->field_technical_name = \Request::input('field_technical_name');
         $fsfhasparameter->field_length = \Request::input('field_length');
         $fsfhasparameter->field_type = \Request::input('field_type');
