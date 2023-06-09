@@ -317,10 +317,13 @@ Route::get('/getFsfHasParameterByFsfId/{fsf_id}',[FunctionalSpecificationFormCon
 // Delete FSF By Fsf_Id API\
 Route::post('/DeleteFsfHasParameterByFsfId',[FunctionalSpecificationFormController::class,'DeleteFsfHasParameterByFsfId']);
 
-// Delete FSF By Fsf_Id API\
+//update FSF has input papameters By Fsf_Id API\
 Route::post('/UpdateFsfHasInputParameterByFsfId',[FunctionalSpecificationFormController::class,'UpdateFsfHasInputParameterByFsfId']);
 
-// get FSF By Fsf_Id API\
+// Delete FSF By Fsf_Id API\
+Route::post('/UpdateFsfHasOutputParameterByFsfId',[FunctionalSpecificationFormController::class,'UpdateFsfHasOutputParameterByFsfId']);
+
+// get FSF has output papameters By Fsf_Id API\
 Route::get('/getFsfHasParameterById/{id}',[FunctionalSpecificationFormController::class,'getFsfHasParameterById']);
 
 //get team lead by company Id

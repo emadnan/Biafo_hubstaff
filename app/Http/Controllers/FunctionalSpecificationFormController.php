@@ -97,7 +97,7 @@ class FunctionalSpecificationFormController extends Controller
 
         ]);
         
-        return response()->json(['message'=>'Update FSF Has ParaMeter Successfully']);
+        return response()->json(['message'=>'Update FSF Has input ParaMeter Successfully']);
     }
 
     function addFsfOutputParameters()   {
@@ -117,7 +117,26 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['message'=>'Add FSF output Parameters Successfully']);
     }
 
-    
+    function UpdateFsfHasOutputParameterByFsfId(){
+
+        $id = \Request::input('id');
+        $fsf = FsfHasOutputParameter::where('id',$id)
+        ->update([
+
+            'fsf_id' => \Request::input('fsf_id'),
+            'description' => \Request::input('description'),
+            'output_parameter_name' => \Request::input('output_parameter_name'),
+            'field_technical_name' => \Request::input('field_technical_name'),
+            'field_length' => \Request::input('field_length'),
+            'field_type' => \Request::input('field_type'),
+            'field_table_name' => \Request::input('field_table_name'),
+            'mandatory_or_optional' => \Request::input('mandatory_or_optional'),
+            'parameter_or_selection' => \Request::input('parameter_or_selection')
+
+        ]);
+        
+        return response()->json(['message'=>'Update FSF Has output ParaMeter Successfully']);
+    }
 
     function deleteFunctionalSpecificationForm(){
         
