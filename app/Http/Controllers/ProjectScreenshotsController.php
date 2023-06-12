@@ -354,9 +354,6 @@ class ProjectScreenshotsController extends Controller
         $startDate = Carbon::now()->startOfWeek(Carbon::MONDAY); // Get the start of the current week (Monday)
         $endDate = Carbon::today(); // Get the current date as the end date
 
-        $project = ProjectScreenshots::where('user_id', $userId)
-        ->whereBetween('date', [$startDate, $endDate])
-        ->get();
 
         $hours = ProjectScreenshots::where('user_id', $userId)
             ->whereBetween('date', [$startDate, $endDate])
@@ -379,6 +376,10 @@ class ProjectScreenshotsController extends Controller
                 $minutes -= 60;
                 $hours += 1;
             }
+
+            $project = ProjectScreenshots::where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->get();
 
         $data = compact('hours', 'minutes', 'seconds');
         return response()->json($data);
