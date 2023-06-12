@@ -210,6 +210,13 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['fsf_has_parameter'=>'delete parameters Successfully']);
     }
 
+    function DeleteFsfHasOutputParameterByFsfId($id){
+
+        $fsf = FsfHasOutputParameter::where('id',$id)
+        ->delete();
+
+        return response()->json(['fsf_has_parameter'=>'delete Fsf has Output Parameters Successfully']);
+    }
      
 
     function getFunctionalSpecificationFormByTeamLeadId(){

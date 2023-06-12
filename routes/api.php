@@ -317,6 +317,9 @@ Route::get('/getFsfHasParameterByFsfId/{fsf_id}',[FunctionalSpecificationFormCon
 // Delete FSF By Fsf_Id API\
 Route::post('/DeleteFsfHasParameterByFsfId',[FunctionalSpecificationFormController::class,'DeleteFsfHasParameterByFsfId']);
 
+// Delete FSF has output parameters by Fsf_Id API\
+Route::post('/DeleteFsfHasOutputParameterByFsfId/{id}',[FunctionalSpecificationFormController::class,'DeleteFsfHasOutputParameterByFsfId']);
+
 //update FSF has input papameters By Fsf_Id API\
 Route::post('/UpdateFsfHasInputParameterByFsfId',[FunctionalSpecificationFormController::class,'UpdateFsfHasInputParameterByFsfId']);
 
