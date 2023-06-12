@@ -373,3 +373,6 @@ Route::get('/calculateWeeklyActivity/{userId}',[ProjectScreenshotsController::cl
 
 // calculating Daily worked and time
 Route::get('/calculateDailyActivity/{userId}',[ProjectScreenshotsController::class,'calculateDailyActivity']);
+
+// calculating monthly worked and time
+Route::get('/calculateMonthlyActivity/{userId}',[ProjectScreenshotsController::class,'calculateMonthlyActivity']);

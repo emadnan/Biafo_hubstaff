@@ -423,4 +423,43 @@ class ProjectScreenshotsController extends Controller
         $data = compact('hours', 'minutes', 'seconds', 'project');
         return response()->json($data);
     }
+
+    
+    function calculateMonthlyActivity($userId){
+
+        $startDate = Carbon::now()->startOfMonth(); // Get the start of the current monthly
+        $endDate = Carbon::today(); // Get the current date as the end date
+
+
+        $hours = ProjectScreenshots::where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->sum('hours');
+
+        $minutes = ProjectScreenshots::where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->sum('minutes');
+
+        $seconds = ProjectScreenshots::where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->sum('seconds');
+
+            while ($seconds >= 60) {
+                $seconds -= 60;
+                $minutes += 1;
+            }
+        
+            while ($minutes >= 60) {
+                $minutes -= 60;
+                $hours += 1;
+            }
+
+            $project = ProjectScreenshots::
+            join('projects','projects.id','=','project_screenshots.project_id')
+            ->where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->get();
+
+        $data = compact('hours', 'minutes', 'seconds', 'project');
+        return response()->json($data);
+    }
 }
