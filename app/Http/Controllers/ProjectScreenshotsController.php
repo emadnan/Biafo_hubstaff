@@ -376,7 +376,9 @@ class ProjectScreenshotsController extends Controller
                 $hours += 1;
             }
 
-            $project = ProjectScreenshots::where('user_id', $userId)
+            $project = ProjectScreenshots::
+            join('projects','projects.id','=','project_screenshots.project_id')
+            ->where('user_id', $userId)
             ->whereBetween('date', [$startDate, $endDate])
             ->get();
 
