@@ -367,3 +367,6 @@ Route::post('/updateStatusByUserTask',[TaskManagementController::class,'updateSt
 
 //get All Modules
 Route::get('/getModules',[FunctionalSpecificationFormController::class,'getModules']);
+
+// calculating weekly worked and time
+Route::get('/calculateWeeklyActivity',[ProjectScreenshotsController::class,'calculateWeeklyActivity']);

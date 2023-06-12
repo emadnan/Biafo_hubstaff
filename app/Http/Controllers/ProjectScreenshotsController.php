@@ -346,4 +346,40 @@ class ProjectScreenshotsController extends Controller
         $data = compact('hours', 'minutes', 'seconds');
         return response()->json($data);
     }
+
+    function calculateWeeklyActivity(){
+        $userId =  \Request::input('userId');
+
+        $startDate = Carbon::now()->startOfWeek(Carbon::MONDAY); // Get the start of the current week (Monday)
+        $endDate = Carbon::today(); // Get the current date as the end date
+
+        $hours = ProjectScreenshots::where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->sum('hours');
+
+        $minutes = ProjectScreenshots::where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->sum('minutes');
+
+        $seconds = ProjectScreenshots::where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->sum('seconds');
+
+            while ($seconds >= 60) {
+                $seconds -= 60;
+                $minutes += 1;
+            }
+        
+            while ($minutes >= 60) {
+                $minutes -= 60;
+                $hours += 1;
+            }
+
+        $project = ProjectScreenshots::where('user_id', $userId)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->get();
+
+        $data = compact('hours', 'minutes', 'seconds', 'project');
+        return response()->json($data);
+    }
 }
