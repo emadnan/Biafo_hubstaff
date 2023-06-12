@@ -66,6 +66,19 @@ class TaskManagementController extends Controller
         return response()->json(['message'=>'Update Tasks Successfully']);
     }
 
+    function updateStatusByUserTask(){
+ 
+        $id = \Request::input('id');
+
+        $task = TaskManagement::where('id',$id)
+        ->update([
+            'status' => \Request::input('status'),
+            'comment' => \Request::input('comment')
+        ]);
+        
+        return response()->json(['message'=>'Update Status and comment of task Successfully']);
+    }
+
     function deleteTaskById(){
         
         $id = \Request::input('id');
