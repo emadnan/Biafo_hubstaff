@@ -370,3 +370,6 @@ Route::get('/getModules',[FunctionalSpecificationFormController::class,'getModul
 
 // calculating weekly worked and time
 Route::get('/calculateWeeklyActivity/{userId}',[ProjectScreenshotsController::class,'calculateWeeklyActivity']);
+
+// calculating Daily worked and time
+Route::get('/calculateDailyActivity/{userId}',[ProjectScreenshotsController::class,'calculateDailyActivity']);
