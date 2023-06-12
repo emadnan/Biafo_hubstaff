@@ -347,8 +347,7 @@ class ProjectScreenshotsController extends Controller
         return response()->json($data);
     }
 
-    function calculateWeeklyActivity(){
-        $userId =  \Request::input('userId');
+    function calculateWeeklyActivity($userId){
 
 
         $startDate = Carbon::now()->startOfWeek(Carbon::MONDAY); // Get the start of the current week (Monday)
