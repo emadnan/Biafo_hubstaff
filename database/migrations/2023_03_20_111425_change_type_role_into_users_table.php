@@ -14,7 +14,6 @@ class ChangeTypeRoleIntoUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role_id');
             $table->string('role')->nullable()->after('password');
         });
     }
@@ -27,7 +26,6 @@ class ChangeTypeRoleIntoUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('role_id')->after('password');
             $table->dropColumn('role');
             
         });
