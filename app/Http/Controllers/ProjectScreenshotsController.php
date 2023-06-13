@@ -397,11 +397,11 @@ class ProjectScreenshotsController extends Controller
             ->sum('hours');
 
         $minutes = ProjectScreenshots::where('user_id', $userId)
-            ->whereBetween('date', $today)
+            ->where('date', $today)
             ->sum('minutes');
 
         $seconds = ProjectScreenshots::where('user_id', $userId)
-            ->whereBetween('date', $today)
+            ->where('date', $today)
             ->sum('seconds');
 
             while ($seconds >= 60) {
