@@ -18,6 +18,8 @@ class ProjectController extends Controller
         $project->team_id = \Request::input('team_id');
         $project->to_dos = \Request::input('to_dos');
         $project->budget = \Request::input('budget');
+        $project->hours_time = \Request::input('hours_time');
+        $project->efficiency = \Request::input('efficiency');
         $project->save();
         return response()->json(['message'=>'Add Project successfully']);
     }
@@ -34,7 +36,9 @@ class ProjectController extends Controller
             'team_id' => \Request::input('team_id'),
             'to_dos' => \Request::input('to_dos'),
             'start_date' => \Request::input('start_date'),
-            'dead_line' => \Request::input('dead_line')
+            'dead_line' => \Request::input('dead_line'),
+            'hours_time' => \Request::input('hours_time'),
+            'efficiency' => \Request::input('efficiency')
         ]);
 
         return response()->json(['Message' => 'Project Updated']);
