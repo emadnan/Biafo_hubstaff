@@ -417,7 +417,7 @@ class ProjectScreenshotsController extends Controller
             $project = ProjectScreenshots::
             join('projects','projects.id','=','project_screenshots.project_id')
             ->where('user_id', $userId)
-            ->whereBetween('date', $today)
+            ->where('date', $today)
             ->get();
 
         $data = compact('hours', 'minutes', 'seconds', 'project');
