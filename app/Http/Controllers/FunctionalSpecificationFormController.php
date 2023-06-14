@@ -35,7 +35,7 @@ class FunctionalSpecificationFormController extends Controller
 
         $Functional->save();
 
-        return response()->json(['message'=>'Add Functional Specificational Form Successfully',$Functional->id]);
+        return response()->json(['message'=>'Add Functional Specificational Form Successfully','id'=>$Functional->id]);
     }
 
     function updateFunctionalSpecificationForm(){
