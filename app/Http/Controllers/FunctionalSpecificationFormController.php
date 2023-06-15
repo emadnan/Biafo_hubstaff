@@ -152,7 +152,7 @@ class FunctionalSpecificationFormController extends Controller
         where('id',$id)
         ->get();
 
-        return response()->json(['Fsf Has output Parameter'=>$FsfHasOutputParameters]);
+        return response()->json(['fsf_has_output_parameter'=>$FsfHasOutputParameters]);
     }
 
     function deleteFunctionalSpecificationForm(){
