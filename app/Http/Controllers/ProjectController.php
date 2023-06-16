@@ -50,9 +50,7 @@ class ProjectController extends Controller
             'team_id' => \Request::input('team_id'),
             'to_dos' => \Request::input('to_dos'),
             'start_date' => \Request::input('start_date'),
-            'dead_line' => \Request::input('dead_line'),
-            'hours_time' => \Request::input('hours_time'),
-            'efficiency' => \Request::input('efficiency')
+            'dead_line' => \Request::input('dead_line')
         ]);
 
         return response()->json(['Message' => 'Project Updated']);
