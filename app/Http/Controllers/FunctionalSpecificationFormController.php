@@ -176,7 +176,7 @@ class FunctionalSpecificationFormController extends Controller
         
         $fsf = \Request::input('fsf');
         $Functional = FunctionalSpecificationForm::
-        select('projects.*','modules.*','modules.name as Module_name')
+        select('functional_specification_form.*','modules.*','modules.name as Module_name')
         ->join('projects','projects.id','=','functional_specification_form.project_id')
         ->join('modules','modules.id','=','functional_specification_form.module_id')
         ->where('functional_specification_form.id',$fsf)
