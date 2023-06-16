@@ -379,3 +379,6 @@ Route::get('/calculateMonthlyActivity/{userId}',[ProjectScreenshotsController::c
 
 // devlopment Logic into Fsf Form
 Route::post('/addDevelopmentLogicIntoFsfForm',[FunctionalSpecificationFormController::class,'addDevelopmentLogicIntoFsfForm']);
+
+// Add input screen into Fsf Form
+Route::post('/addInputScreen',[FunctionalSpecificationFormController::class,'addInputScreen']);

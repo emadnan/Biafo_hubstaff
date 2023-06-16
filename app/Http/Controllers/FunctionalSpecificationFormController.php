@@ -368,4 +368,27 @@ class FunctionalSpecificationFormController extends Controller
             return response()->json(['message'=>'Developmentlogic Not Found']);
         }
     }
+
+    public function addInputScreen($id)
+    {
+        $screenShots = \Request::input('screenShots');
+
+        if (!empty($screenShots)) {
+            $image = str_replace('data:image/png;base64,', '', $screenShots);
+            $image = str_replace(' ', '+', $image);
+            $imageName = uniqid() . '.' . 'png';
+            \File::put(public_path() . '/input_screens/' . $imageName, base64_decode($image));
+            $path_url = FunctionalSpecificationForm::
+            where('id',$id)
+            ->update([
+                'input_screen' => asset('input_screens') . '/' . $imageName
+            ]);
+            
+            return response()->json(['message'=>'input_screen Updated']);
+        }
+        else    {
+            
+            return response()->json(['message'=>'input_screen Not Found']);
+        }
+    }
 }
