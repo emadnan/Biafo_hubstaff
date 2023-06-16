@@ -378,4 +378,4 @@ Route::get('/calculateDailyActivity/{userId}',[ProjectScreenshotsController::cla
 Route::get('/calculateMonthlyActivity/{userId}',[ProjectScreenshotsController::class,'calculateMonthlyActivity']);
 
 // devlopment Logic into Fsf Form
-Route::post('/addDevelopmentLogicIntoFsfForm',[TaskManagementController::class,'addDevelopmentLogicIntoFsfForm']);
+Route::post('/addDevelopmentLogicIntoFsfForm',[FunctionalSpecificationFormController::class,'addDevelopmentLogicIntoFsfForm']);
