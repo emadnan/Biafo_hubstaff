@@ -382,3 +382,6 @@ Route::post('/addDevelopmentLogicIntoFsfForm',[FunctionalSpecificationFormContro
 
 // Add input screen into Fsf Form
 Route::post('/addInputScreen/{id}',[FunctionalSpecificationFormController::class,'addInputScreen']);
+
+// Add output screen into Fsf Form
+Route::post('/addOutputScreen/{id}',[FunctionalSpecificationFormController::class,'addOutputScreen']);

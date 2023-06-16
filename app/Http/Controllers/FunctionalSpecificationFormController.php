@@ -30,8 +30,6 @@ class FunctionalSpecificationFormController extends Controller
         $Functional->transaction_code = \Request::input('transaction_code');
         $Functional->authorization_role = \Request::input('authorization_role');
         $Functional->development_logic = \Request::input('development_logic');
-        $Functional->input_screen = \Request::input('input_screen');
-        $Functional->output_screen = \Request::input('output_screen');
 
         $Functional->save();
 
@@ -54,9 +52,7 @@ class FunctionalSpecificationFormController extends Controller
             'priority' => \Request::input('priority'),
             'usage_frequency' => \Request::input('usage_frequency'),
             'transaction_code' => \Request::input('transaction_code'),
-            'development_logic' => \Request::input('development_logic'),
-            'input_screen' => \Request::input('input_screen'),
-            'output_screen' => \Request::input('output_screen')
+            'development_logic' => \Request::input('development_logic')
         ]);
         
         return response()->json(['message'=>'Update Functional Specificational Form Successfully']);
@@ -383,12 +379,35 @@ class FunctionalSpecificationFormController extends Controller
             ->update([
                 'input_screen' => asset('input_screens') . '/' . $imageName
             ]);
-            
+
             return response()->json(['message'=>'input_screen Updated']);
         }
         else    {
             
             return response()->json(['message'=>'input_screen Not Found']);
+        }
+    }
+
+    public function addOutputScreen($id)
+    {
+        $screenShots = \Request::input('screenShots');
+
+        if (!empty($screenShots)) {
+            $image = str_replace('data:image/png;base64,', '', $screenShots);
+            $image = str_replace(' ', '+', $image);
+            $imageName = uniqid() . '.' . 'png';
+            \File::put(public_path() . '/output_screens/' . $imageName, base64_decode($image));
+            $path_url = FunctionalSpecificationForm::
+            where('id',$id)
+            ->update([
+                'output_screen' => asset('output_screens') . '/' . $imageName
+            ]);
+
+            return response()->json(['message'=>'output_screen Updated']);
+        }
+        else    {
+            
+            return response()->json(['message'=>'output_screen Not Found']);
         }
     }
 }
