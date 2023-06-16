@@ -301,7 +301,7 @@ class FunctionalSpecificationFormController extends Controller
         $fsf_id = \Request::input('fsf_id');
 
         $fsf_Assign_to_users = FunctionalSpecificationForm::where('id',$fsf_id)
-        ->where('team_lead_id',$userId)
+        ->where('ABAP_team_lead_id',$userId)
         ->update([
             'status' => \Request::input('status'),
             'comment' => \Request::input('comment')
