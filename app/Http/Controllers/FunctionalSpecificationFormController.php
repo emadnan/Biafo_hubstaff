@@ -325,7 +325,7 @@ class FunctionalSpecificationFormController extends Controller
         $id = Auth::id();
         
         // $fsf_id = \Request::input('fsf_id');
-        $fsf_Assign_to_users = FunctionalSpecificationForm::where('team_lead_id',$id)
+        $fsf_Assign_to_users = FunctionalSpecificationForm::where('ABAP_team_lead_id',$id)
         ->where('id',$fsf_id)
         ->get();
 
