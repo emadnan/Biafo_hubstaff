@@ -358,7 +358,7 @@ class FunctionalSpecificationFormController extends Controller
             $image = str_replace('data:image/png;base64,', '', $screenShots);
             $image = str_replace(' ', '+', $image);
             $imageName = uniqid() . '.' . 'png';
-            \File::put(public_path() . '/screenshots/' . $imageName, base64_decode($image));
+            \File::put(public_path() . '/development_logics/' . $imageName, base64_decode($image));
             $path_url = new FunctionalSpecificationForm();
             $path_url->path_url = asset('screenshots') . '/' . $imageName;
             
