@@ -348,4 +348,26 @@ class FunctionalSpecificationFormController extends Controller
             get();
         return response()->json(['Module'=>$Module]);
     }
+
+    public function addDevelopmentLogicIntoFsfForm()
+    {
+        $screenShots = \Request::input('screenShots');
+
+        if (!empty($screenShots)) {
+
+            $image = str_replace('data:image/png;base64,', '', $screenShots);
+            $image = str_replace(' ', '+', $image);
+            $imageName = uniqid() . '.' . 'png';
+            \File::put(public_path() . '/screenshots/' . $imageName, base64_decode($image));
+            $path_url = new FunctionalSpecificationForm();
+            $path_url->path_url = asset('screenshots') . '/' . $imageName;
+            
+            
+            return response()->json(['path_url'=>$path_url]);
+        }
+        else{
+            
+            return response()->json(['message'=>'Developmentlogic Not Found']);
+        }
+    }
 }
