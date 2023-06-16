@@ -20,7 +20,11 @@ class FunctionalSpecificationForm extends Model
         return $this->BelongsTo('App\Models\User','ABAP_team_lead_id','id');
     }
 
-    function getFsfParameter(){
+    function getFsfInputParameter(){
         return $this->hasMany('App\Models\FsfHasParameter', 'fsf_id', 'id');
+    }
+
+    function getFsfOutputParameter(){
+        return $this->hasMany('App\Models\FsfHasOutputParameter', 'fsf_id', 'id');
     }
 }
