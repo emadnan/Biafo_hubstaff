@@ -175,10 +175,10 @@ class FunctionalSpecificationFormController extends Controller
     function getFunctionalSpecificationFormById(){
         
         $fsf = \Request::input('fsf');
-        // print_r($fsf);
-        // exit();
         $Functional = FunctionalSpecificationForm::
-        where('id',$fsf)
+        join('projects','projects.id','=','functional_specification_form.project_id')
+        ->join('modules','modules.id','=','functional_specification_form.module_id')
+        ->where('id',$fsf)
         ->with('team_lead_details','function_lead_details','getFsfParameter')
         ->get();
 
