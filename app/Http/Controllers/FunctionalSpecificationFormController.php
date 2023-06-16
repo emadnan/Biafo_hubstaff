@@ -176,7 +176,7 @@ class FunctionalSpecificationFormController extends Controller
         ->join('modules','modules.id','=','functional_specification_form.module_id')
         ->where('functional_specification_form.id',$fsf)
         ->with('team_lead_details','function_lead_details','getFsfInputParameter','getFsfOutputParameter')
-        ->first();
+        ->get();
 
         return response()->json(['Functional'=>$Functional]);
     }
