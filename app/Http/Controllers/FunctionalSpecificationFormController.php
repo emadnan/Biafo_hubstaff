@@ -166,7 +166,7 @@ class FunctionalSpecificationFormController extends Controller
     function getFunctionalSpecificationForm(){
         
         $Functional = FunctionalSpecificationForm::
-            with('getFsfParameter')
+            with('FsfHasInputParameter')
             ->get();
 
         return response()->json(['Functional'=>$Functional]);
@@ -180,7 +180,7 @@ class FunctionalSpecificationFormController extends Controller
         ->join('projects','projects.id','=','functional_specification_form.project_id')
         ->join('modules','modules.id','=','functional_specification_form.module_id')
         ->where('functional_specification_form.id',$fsf)
-        ->with('team_lead_details','function_lead_details','getFsfInputParameter','getFsfOutputParameter')
+        ->with('team_lead_details','function_lead_details','FsfHasInputParameter','getFsfOutputParameter')
         ->get();
 
         return response()->json(['Functional'=>$Functional]);
@@ -224,7 +224,7 @@ class FunctionalSpecificationFormController extends Controller
 
         $Functional = FunctionalSpecificationForm::select('users.*','functional_specification_form.*')
             ->join('users','users.id','=','functional_specification_form.functional_lead_id')
-            ->with('getFsfParameter')
+            ->with('FsfHasInputParameter')
             ->get();
 
         return response()->json(['Functional'=>$Functional]);
@@ -262,7 +262,7 @@ class FunctionalSpecificationFormController extends Controller
         ->join('fsf_assign_to_users','fsf_assign_to_users.fsf_id','=','functional_specification_form.id')
         
         ->where('fsf_assign_to_users.user_id',$userId)
-        ->with('team_lead_details','function_lead_details','getFsfParameter')
+        ->with('team_lead_details','function_lead_details','FsfHasInputParameter')
         ->get();
 
         return response()->json(['Functional'=>$Functional]);

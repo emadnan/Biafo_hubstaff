@@ -21,7 +21,7 @@ class FunctionalSpecificationForm extends Model
     }
 
     function getFsfInputParameter(){
-        return $this->hasMany('App\Models\FsfHasParameter', 'fsf_id', 'id');
+        return $this->hasMany('App\Models\FsfHasInputParameter', 'fsf_id', 'id');
     }
 
     function getFsfOutputParameter(){
