@@ -22,7 +22,6 @@ class ProjectController extends Controller
         $project->team_id = \Request::input('team_id');
         $project->to_dos = \Request::input('to_dos');
         $project->budget = \Request::input('budget');
-        $project->hours_time = calculateTimeDifferenceInHours($project->start_date, $project->dead_line);
         $project->save();
         
         return response()->json(['message' => 'Add Project successfully']);
