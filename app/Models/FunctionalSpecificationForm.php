@@ -17,7 +17,7 @@ class FunctionalSpecificationForm extends Model
     }
 
     function team_lead_details(){
-        return $this->BelongsTo('App\Models\User','team_lead_id','id');
+        return $this->BelongsTo('App\Models\User','ABAP_team_lead_id','id');
     }
 
     function getFsfParameter(){
