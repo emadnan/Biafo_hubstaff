@@ -168,9 +168,8 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['Functional'=>$Functional]);
     }
 
-    function getFunctionalSpecificationFormById(){
+    function getFunctionalSpecificationFormById($fsf){
         
-        $fsf = \Request::input('fsf');
         $Functional = FunctionalSpecificationForm::
         select('functional_specification_form.*','modules.*','projects.*','modules.name as Module_name')
         ->join('projects','projects.id','=','functional_specification_form.project_id')
