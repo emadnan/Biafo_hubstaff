@@ -397,7 +397,7 @@ Route::post('/addSubscription',[SubscriptionController::class,'addSubscription']
 Route::post('/updateSubscription/{id}',[SubscriptionController::class,'updateSubscription']);
 
 // delete subscription
-Route::post('/deleteSubscription/{id}',[FunctionalSpecificationFormController::class,'deleteSubscription']);
+Route::post('/deleteSubscription/{id}',[SubscriptionController::class,'deleteSubscription']);
 
 // //get task by user id
-// Route::get('/getTaskByUserId/{userId}',[TaskManagementController::class,'getTaskByUserId']);
+// Route::get('/getTaskByUserId/{userId}',[SubscriptionController::class,'getTaskByUserId']);
