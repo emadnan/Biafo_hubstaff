@@ -387,4 +387,4 @@ Route::post('/addInputScreen/{id}',[FunctionalSpecificationFormController::class
 Route::post('/addOutputScreen/{id}',[FunctionalSpecificationFormController::class,'addOutputScreen']);
 
 //get task by user id
-Route::get('/getTaskById/{userId}',[TaskManagementController::class,'getTaskById']);
+Route::get('/getTaskByUserId/{userId}',[TaskManagementController::class,'getTaskByUserId']);
