@@ -19,6 +19,7 @@ use App\Http\Controllers\StreamsController;
 use App\Http\Controllers\ProjectScreenshotsController;
 use App\Http\Controllers\FunctionalSpecificationFormController;
 use App\Http\Controllers\TaskManagementController;
+use App\Http\Controllers\SubscriptionController;
 
 
 /*
@@ -388,3 +389,15 @@ Route::post('/addOutputScreen/{id}',[FunctionalSpecificationFormController::clas
 
 //get task by user id
 Route::get('/getTaskByUserId/{userId}',[TaskManagementController::class,'getTaskByUserId']);
+
+// add subscription 
+Route::post('/addSubscription',[SubscriptionController::class,'addSubscription']);
+
+// // Add input screen into Fsf Form
+// Route::post('/addInputScreen/{id}',[FunctionalSpecificationFormController::class,'addInputScreen']);
+
+// // Add output screen into Fsf Form
+// Route::post('/addOutputScreen/{id}',[FunctionalSpecificationFormController::class,'addOutputScreen']);
+
+// //get task by user id
+// Route::get('/getTaskByUserId/{userId}',[TaskManagementController::class,'getTaskByUserId']);
