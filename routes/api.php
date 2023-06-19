@@ -399,5 +399,5 @@ Route::post('/updateSubscription/{id}',[SubscriptionController::class,'updateSub
 // delete subscription
 Route::post('/deleteSubscription/{id}',[SubscriptionController::class,'deleteSubscription']);
 
-// //get task by user id
-// Route::get('/getTaskByUserId/{userId}',[SubscriptionController::class,'getTaskByUserId']);
+// //get All subscription
+Route::get('/getAllSubscription',[SubscriptionController::class,'getAllSubscription']);
