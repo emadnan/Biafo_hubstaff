@@ -97,7 +97,7 @@ class TaskManagementController extends Controller
         ->join('projects','projects.id','=','task_managements.project_id')
         ->where('user_id',$userId)
         ->with('team_lead_details')
-        ->first();
+        ->get();
 
         return response()->json(['task'=>$task]);
     }
