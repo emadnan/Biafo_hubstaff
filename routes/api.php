@@ -393,8 +393,8 @@ Route::get('/getTaskByUserId/{userId}',[TaskManagementController::class,'getTask
 // add subscription 
 Route::post('/addSubscription',[SubscriptionController::class,'addSubscription']);
 
-// // Add input screen into Fsf Form
-// Route::post('/addInputScreen/{id}',[FunctionalSpecificationFormController::class,'addInputScreen']);
+// update subscription
+Route::post('/updateSubscription/{id}',[SubscriptionController::class,'updateSubscription']);
 
 // // Add output screen into Fsf Form
 // Route::post('/addOutputScreen/{id}',[FunctionalSpecificationFormController::class,'addOutputScreen']);
