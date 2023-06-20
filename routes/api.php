@@ -390,6 +390,10 @@ Route::post('/addOutputScreen/{id}',[FunctionalSpecificationFormController::clas
 //get task by user id
 Route::get('/getTaskByUserId/{userId}',[TaskManagementController::class,'getTaskByUserId']);
 
+//get task by project id
+Route::get('/getTaskByProjectId/{userId}',[TaskManagementController::class,'getTaskByProjectId']);
+
+
 // add subscription 
 Route::post('/addSubscription',[SubscriptionController::class,'addSubscription']);
 
@@ -400,4 +404,16 @@ Route::post('/updateSubscription/{id}',[SubscriptionController::class,'updateSub
 Route::post('/deleteSubscription/{id}',[SubscriptionController::class,'deleteSubscription']);
 
 // //get All subscription
+Route::get('/getAllSubscription',[SubscriptionController::class,'getAllSubscription']);
+
+// add subscription invoice
+Route::post('/addSubscription',[SubscriptionController::class,'addSubscription']);
+
+// update subscription invoice
+Route::post('/updateSubscription/{id}',[SubscriptionController::class,'updateSubscription']);
+
+// delete subscription invoice
+Route::post('/deleteSubscription/{id}',[SubscriptionController::class,'deleteSubscription']);
+
+// //get All subscription invoice
 Route::get('/getAllSubscription',[SubscriptionController::class,'getAllSubscription']);
