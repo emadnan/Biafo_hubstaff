@@ -393,6 +393,9 @@ Route::get('/getTaskByUserId/{userId}',[TaskManagementController::class,'getTask
 //get task by project id
 Route::get('/getTaskByProjectId/{projectId}',[TaskManagementController::class,'getTaskByProjectId']);
 
+//get task by project id and user id
+Route::get('/getTaskByUserIdAndProjectId/{userId}/{projectId}',[TaskManagementController::class,'getTaskByUserIdAndProjectId']);
+
 
 // add subscription 
 Route::post('/addSubscription',[SubscriptionController::class,'addSubscription']);

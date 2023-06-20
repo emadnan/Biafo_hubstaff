@@ -115,4 +115,16 @@ class TaskManagementController extends Controller
         return response()->json(['task'=>$task]);
     }
 
+    function getTaskByUserIdAndProjectId($userId,$projectId){
+        $task = TaskManagement::
+        select('task_managements.*','users.*','projects.*','task_managements.start_date as task_managements_start_date','task_managements.dead_line as task_managements_dead_line')
+        ->join('users','users.id','=','task_managements.user_id')
+        ->join('projects','projects.id','=','task_managements.project_id')
+        ->where('project_id',$projectId)
+        ->where('user_id',$userId)
+        ->with('team_lead_details')
+        ->get();
+
+        return response()->json(['task'=>$task]);
+    }
 }
