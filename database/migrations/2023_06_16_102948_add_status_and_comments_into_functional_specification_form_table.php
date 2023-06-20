@@ -15,7 +15,7 @@ class AddStatusAndCommentsIntoFunctionalSpecificationFormTable extends Migration
     {
         Schema::table('functional_specification_form', function (Blueprint $table) {
             $table->enum('status', ['Pending', 'InProgress', 'Completed'])->default('Pending')->after('output_screen');
-            $table->string('comment')->after('status')->nullable();
+            $table->string('comment')->after('status')->default('No Comment');
         });
     }
 
