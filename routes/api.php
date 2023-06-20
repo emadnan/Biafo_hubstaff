@@ -391,7 +391,7 @@ Route::post('/addOutputScreen/{id}',[FunctionalSpecificationFormController::clas
 Route::get('/getTaskByUserId/{userId}',[TaskManagementController::class,'getTaskByUserId']);
 
 //get task by project id
-Route::get('/getTaskByProjectId/{userId}',[TaskManagementController::class,'getTaskByProjectId']);
+Route::get('/getTaskByProjectId/{projectId}',[TaskManagementController::class,'getTaskByProjectId']);
 
 
 // add subscription 
