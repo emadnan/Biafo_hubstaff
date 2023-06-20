@@ -17,6 +17,7 @@ class CreateStreamsTable extends Migration
             $table->id();
             $table->integer('project_id');
             $table->integer('user_id');
+            $table->integer('company_id');
             $table->string('stream_name');
             $table->timestamps();
         });
