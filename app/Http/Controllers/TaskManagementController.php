@@ -60,6 +60,7 @@ class TaskManagementController extends Controller
             'task_description' => \Request::input('task_description'),
             'start_date' => \Request::input('start_date'),
             'dead_line' => \Request::input('dead_line'),
+            'status' => \Request::input('status'),
             'priorites' => \Request::input('priorities')
         ]);
         
