@@ -105,7 +105,7 @@ class TaskManagementController extends Controller
 
     function getTaskByProjectId($projectId){
         $task = TaskManagement::
-        select('task_managements.*','users.*','projects.*','task_managements.start_date as task_managements_start_date','task_managements.dead_line as task_managements_dead_line')
+        select('task_managements.*','users.*','projects.*','task_managements.start_date as task_managements_start_date','task_managements.id as task_managements_id','task_managements.dead_line as task_managements_dead_line')
         ->join('users','users.id','=','task_managements.user_id')
         ->join('projects','projects.id','=','task_managements.project_id')
         ->where('project_id',$projectId)
@@ -117,7 +117,7 @@ class TaskManagementController extends Controller
 
     function getTaskByUserIdAndProjectId($userId,$projectId){
         $task = TaskManagement::
-        select('task_managements.*','users.*','projects.*','task_managements.start_date as task_managements_start_date','task_managements.dead_line as task_managements_dead_line')
+        select('task_managements.*','users.*','projects.*','task_managements.start_date as task_managements_start_date','task_managements.id as task_managements_id','task_managements.dead_line as task_managements_dead_line')
         ->join('users','users.id','=','task_managements.user_id')
         ->join('projects','projects.id','=','task_managements.project_id')
         ->where('project_id',$projectId)
