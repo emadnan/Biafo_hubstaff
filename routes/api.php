@@ -413,7 +413,7 @@ Route::get('/getAllSubscription',[SubscriptionController::class,'getAllSubscript
 Route::post('/addSubscriptionInvoice',[SubscriptionController::class,'addSubscriptionInvoice']);
 
 // update subscription invoice
-Route::post('/updateSubscriptioninvoice/{id}',[SubscriptionController::class,'updateSubscription']);
+Route::post('/updateSubscriptionInvoice/{id}',[SubscriptionController::class,'updateSubscriptionInvoice']);
 
 // delete subscription invoice
 Route::post('/deleteSubscriptioninvoice/{id}',[SubscriptionController::class,'deleteSubscription']);
