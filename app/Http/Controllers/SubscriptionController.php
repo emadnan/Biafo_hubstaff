@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Subscription;
+use App\Models\SubscriptionInvoice;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
@@ -39,6 +41,61 @@ class SubscriptionController extends Controller
     public function getAllSubscription()
     {
         $subscriptions = Subscription::all();
+        return response()->json(['subscriptions' => $subscriptions]);
+    }
+
+
+    public function addSubscriptionInvoice(Request $request)
+    {
+        $subscription = new SubscriptionInvoice;
+        $subscription->stripe_id = $request->stripe_id;
+        $subscription->company_id = $request->company_id;
+        $subscription->subscription_id = $request->subscription_id;
+        $subscription->amount = $request->amount;
+        $subscription->start_date = Carbon::today();
+        $subscription->is_active = $request->is_active;
+        if ($subscription->subscription_id == 1) {
+
+            $subscription->end_date = null;
+            
+        }
+        elseif ($subscription->subscription_id == 2) {
+
+            $subscription->end_date = date('Y-m-d', strtotime('+1 month'));
+        }
+        elseif($subscription->subscription_id == 3) {
+
+            $subscription->end_date = $request->date('Y-m-d', strtotime('+1 year'));;
+        }
+        $subscription->save();
+
+
+        return response()->json(['massage' => 'Add subscription invoice successfully']);
+    }
+    public function deleteSubscriptionInvoice($id)
+    {
+        $subscription = SubscriptionInvoice::find($id);
+        $subscription->delete();
+        
+        return response()->json(['massage' => 'Delete subscription invoice successfully']);
+    }
+    public function updateSubscriptionInvoice($id,Request $request)
+    {
+        $subscription = SubscriptionInvoice::find($id);
+        $subscription->stripe_id = $request->stripe_id;
+        $subscription->company_id = $request->company_id;
+        $subscription->subscription_id = $request->subscription_idq;
+        $subscription->amount = $request->amount;
+        $subscription->start_date = $request->start_date;
+        $subscription->end_date = $request->end_date;
+        $subscription->is_active = $request->is_active;
+        $subscription->save();
+        return response()->json(['massage' => 'Update subscription invoice successfully']);
+    }
+
+    public function getAllSubscriptionInvoice()
+    {
+        $subscriptions = SubscriptionInvoice::all();
         return response()->json(['subscriptions' => $subscriptions]);
     }
 }

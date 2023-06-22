@@ -410,13 +410,13 @@ Route::post('/deleteSubscription/{id}',[SubscriptionController::class,'deleteSub
 Route::get('/getAllSubscription',[SubscriptionController::class,'getAllSubscription']);
 
 // add subscription invoice
-Route::post('/addSubscription',[SubscriptionController::class,'addSubscription']);
+Route::post('/addSubscriptionInvoice',[SubscriptionController::class,'addSubscriptionInvoice']);
 
 // update subscription invoice
-Route::post('/updateSubscription/{id}',[SubscriptionController::class,'updateSubscription']);
+Route::post('/updateSubscriptioninvoice/{id}',[SubscriptionController::class,'updateSubscription']);
 
 // delete subscription invoice
-Route::post('/deleteSubscription/{id}',[SubscriptionController::class,'deleteSubscription']);
+Route::post('/deleteSubscriptioninvoice/{id}',[SubscriptionController::class,'deleteSubscription']);
 
 // //get All subscription invoice
-Route::get('/getAllSubscription',[SubscriptionController::class,'getAllSubscription']);
+Route::get('/getAllSubscriptioninvoice',[SubscriptionController::class,'getAllSubscription']);
