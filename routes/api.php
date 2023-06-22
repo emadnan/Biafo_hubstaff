@@ -416,7 +416,7 @@ Route::post('/addSubscriptionInvoice',[SubscriptionController::class,'addSubscri
 Route::post('/updateSubscriptionInvoice/{id}',[SubscriptionController::class,'updateSubscriptionInvoice']);
 
 // delete subscription invoice
-Route::post('/deleteSubscriptioninvoice/{id}',[SubscriptionController::class,'deleteSubscription']);
+Route::post('/deleteSubscriptionInvoice/{id}',[SubscriptionController::class,'deleteSubscriptionInvoice']);
 
 // //get All subscription invoice
 Route::get('/getAllSubscriptioninvoice',[SubscriptionController::class,'getAllSubscription']);
