@@ -67,7 +67,7 @@ class SubscriptionController extends Controller
 
             $subscription->end_date = $request->date('Y-m-d', strtotime('+1 year'));;
         }
-        
+
         $subscription->save();
 
 
@@ -85,7 +85,7 @@ class SubscriptionController extends Controller
         $subscription = SubscriptionInvoice::find($id);
         $subscription->stripe_id = $request->stripe_id;
         $subscription->company_id = $request->company_id;
-        $subscription->subscription_id = $request->subscription_idq;
+        $subscription->subscription_id = $request->subscription_id;
         $subscription->amount = $request->amount;
         $subscription->start_date = $request->start_date;
         $subscription->end_date = $request->end_date;
