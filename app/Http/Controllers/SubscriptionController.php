@@ -88,7 +88,19 @@ class SubscriptionController extends Controller
         $subscription->subscription_id = $request->subscription_id;
         $subscription->amount = $request->amount;
         $subscription->start_date = $request->start_date;
-        $subscription->end_date = $request->end_date;
+        if ($request->subscription_id == 1) {
+
+            $subscription->end_date = null;
+            
+        }
+        elseif ($request->subscription_id == 2) {
+
+            $subscription->end_date = date('Y-m-d', strtotime('+1 month'));
+        }
+        elseif($request->subscription_id == 3) {
+
+            $subscription->end_date = $request->date('Y-m-d', strtotime('+1 year'));;
+        }
         $subscription->is_active = $request->is_active;
         $subscription->save();
         return response()->json(['massage' => 'Update subscription invoice successfully']);
