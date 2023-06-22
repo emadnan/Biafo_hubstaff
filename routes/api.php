@@ -419,4 +419,4 @@ Route::post('/updateSubscriptionInvoice/{id}',[SubscriptionController::class,'up
 Route::post('/deleteSubscriptionInvoice/{id}',[SubscriptionController::class,'deleteSubscriptionInvoice']);
 
 // //get All subscription invoice
-Route::get('/getAllSubscriptioninvoice',[SubscriptionController::class,'getAllSubscription']);
+Route::get('/getAllSubscriptionInvoice',[SubscriptionController::class,'getAllSubscriptionInvoice']);

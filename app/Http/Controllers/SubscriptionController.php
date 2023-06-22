@@ -107,10 +107,11 @@ class SubscriptionController extends Controller
         
         return response()->json(['massage' => 'Delete subscription invoice successfully']);
     }
-    
+
     public function getAllSubscriptionInvoice()
     {
         $subscriptions = SubscriptionInvoice::all();
+        
         return response()->json(['subscriptions' => $subscriptions]);
     }
 }
