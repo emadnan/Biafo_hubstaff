@@ -54,19 +54,20 @@ class SubscriptionController extends Controller
         $subscription->amount = $request->amount;
         $subscription->start_date = Carbon::today();
         $subscription->is_active = $request->is_active;
-        if ($subscription->subscription_id == 1) {
+        if ($request->subscription_id == 1) {
 
             $subscription->end_date = null;
             
         }
-        elseif ($subscription->subscription_id == 2) {
+        elseif ($request->subscription_id == 2) {
 
             $subscription->end_date = date('Y-m-d', strtotime('+1 month'));
         }
-        elseif($subscription->subscription_id == 3) {
+        elseif($request->subscription_id == 3) {
 
             $subscription->end_date = $request->date('Y-m-d', strtotime('+1 year'));;
         }
+        
         $subscription->save();
 
 
