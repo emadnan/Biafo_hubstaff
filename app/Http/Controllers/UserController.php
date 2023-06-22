@@ -101,7 +101,7 @@ class UserController extends Controller
             
         ]);
 
-        return response()->json(['message'=>'register successfully']);
+        return response()->json(['message'=>'register successfully','company'=>$user]);
     }
 
     public function getAuthenticatedUser() {
@@ -177,6 +177,14 @@ class UserController extends Controller
         $user->team_id = $request->input('team_id');
         $user->password = Hash::make($request->input('password'));
         $user->save();
+
+        $mail = [
+            'name' => $user->name,
+            "password" => $request->password,
+            "email" => $user->email
+        ];
+        // Send Email
+        Mail::to($user->email)->send(new WelcomeEmail($mail));
 
         // Generate a JWT token for the newly created user
         $token = JWTAuth::fromUser($user);
