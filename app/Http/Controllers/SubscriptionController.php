@@ -99,7 +99,7 @@ class SubscriptionController extends Controller
         }
         elseif($request->subscription_id == 3) {
 
-            $subscription->end_date = $request->date('Y-m-d', strtotime('+1 year'));;
+            $subscription->end_date = date('Y-m-d', strtotime('+1 year'));;
         }
         $subscription->is_active = $request->is_active;
         $subscription->save();
