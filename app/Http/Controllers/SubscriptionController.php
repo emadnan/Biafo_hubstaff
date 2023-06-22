@@ -73,13 +73,7 @@ class SubscriptionController extends Controller
 
         return response()->json(['massage' => 'Add subscription invoice successfully']);
     }
-    public function deleteSubscriptionInvoice($id)
-    {
-        $subscription = SubscriptionInvoice::find($id);
-        $subscription->delete();
-        
-        return response()->json(['massage' => 'Delete subscription invoice successfully']);
-    }
+   
     public function updateSubscriptionInvoice($id,Request $request)
     {
         $subscription = SubscriptionInvoice::find($id);
@@ -106,6 +100,14 @@ class SubscriptionController extends Controller
         return response()->json(['massage' => 'Update subscription invoice successfully']);
     }
 
+    public function deleteSubscriptionInvoice($id)
+    {
+        $subscription = SubscriptionInvoice::find($id);
+        $subscription->delete();
+        
+        return response()->json(['massage' => 'Delete subscription invoice successfully']);
+    }
+    
     public function getAllSubscriptionInvoice()
     {
         $subscriptions = SubscriptionInvoice::all();
