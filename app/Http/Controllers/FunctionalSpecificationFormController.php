@@ -31,6 +31,17 @@ class FunctionalSpecificationFormController extends Controller
         $Functional->authorization_role = \Request::input('authorization_role');
         $Functional->development_logic = \Request::input('development_logic');
 
+        $screenShots = \Request::input('attachment');
+
+            if (!empty($screenShots)) {
+                $image = str_replace('data:image/png;base64,', '', $screenShots);
+                $image = str_replace(' ', '+', $image);
+                $imageName = uniqid() . '.' . 'png';
+                \File::put(public_path() . '/attachment/' . $imageName, base64_decode($image));
+                $Functional->attachment = asset('attachment') . '/' . $imageName;
+
+            }
+
         $Functional->save();
 
         return response()->json(['message'=>'Add Functional Specificational Form Successfully','id'=>$Functional->id]);
@@ -410,26 +421,4 @@ class FunctionalSpecificationFormController extends Controller
         }
     }
 
-    public function addAttechmentIntoFsf($id)
-    {
-        $screenShots = \Request::input('screenShots');
-
-        if (!empty($screenShots)) {
-            $image = str_replace('data:image/png;base64,', '', $screenShots);
-            $image = str_replace(' ', '+', $image);
-            $imageName = uniqid() . '.' . 'png';
-            \File::put(public_path() . '/attachment/' . $imageName, base64_decode($image));
-            $path_url = FunctionalSpecificationForm::
-            where('id',$id)
-            ->update([
-                'attachment' => asset('attachment') . '/' . $imageName
-            ]);
-
-            return response()->json(['message'=>'attachment Updated']);
-        }
-        else    {
-            
-            return response()->json(['message'=>'attachment Not Found']);
-        }
-    }
 }
