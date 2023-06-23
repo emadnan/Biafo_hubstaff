@@ -116,7 +116,7 @@ class ProjectScreenshotsController extends Controller
                 \File::put(public_path() . '/screenshots/' . $imageName, base64_decode($image));
                 $path_url = new ProjectScreenshotsAttechments();
                 $path_url->project_screenshorts_timing_id = $id;
-                $path_url->path_url = asset('screenshots') . '/' . $imageName;
+                $path_url->path_url = $imageName;
                 $path_url->save();
             }
         }
