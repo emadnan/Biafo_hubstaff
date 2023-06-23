@@ -72,7 +72,7 @@ class SubscriptionController extends Controller
             'is_active'=>'0'
         ]);
 
-        Stripe::setApiKey('sk_test_51NDmESBgFjVq8izx2dWzzYxXuSSL4rlD8tBIa3nVxoM8v6gEAuAW2VItQ52jSr0CuUAv298RyQwaWcGHQMxsnBYh00iga61yGN');
+        Stripe::setApiKey(env('STRIPE_SECRET_TEST'));
 
         $payment = \Stripe\PaymentIntent::create([
             'amount' => $subscription->amount,
