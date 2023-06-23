@@ -65,8 +65,12 @@ class SubscriptionController extends Controller
         }
         elseif($request->subscription_id == 3) {
 
-            $subscription->end_date = date('Y-m-d', strtotime('+1 year'));;
+            $subscription->end_date = date('Y-m-d', strtotime('+1 year'));
         }
+        $find=SubscriptionInvoice::where('company_id',$subscription->company_id)
+        ->update([
+            'is_active'=>'0'
+        ]);
 
         $subscription->save();
 
