@@ -38,7 +38,7 @@ class FunctionalSpecificationFormController extends Controller
                 $image = str_replace(' ', '+', $image);
                 $imageName = uniqid() . '.' . 'png';
                 \File::put(public_path() . '/attachment/' . $imageName, base64_decode($image));
-                $Functional->attachment = asset('attachment') . '/' . $imageName;
+                $Functional->attachment = $imageName;
 
             }
 
@@ -366,7 +366,7 @@ class FunctionalSpecificationFormController extends Controller
             $image = str_replace(' ', '+', $image);
             $imageName = uniqid() . '.' . 'png';
             \File::put(public_path() . '/development_logics/' . $imageName, base64_decode($image));
-            $path_url = asset('development_logics'). '/'. $imageName;
+            $path_url =$imageName;
             return response()->json(['path_url'=>$path_url]);
         }
         else{
@@ -387,7 +387,7 @@ class FunctionalSpecificationFormController extends Controller
             $path_url = FunctionalSpecificationForm::
             where('id',$id)
             ->update([
-                'input_screen' => asset('input_screens') . '/' . $imageName
+                'input_screen' => $imageName
             ]);
 
             return response()->json(['message'=>'input_screen Updated']);
@@ -410,7 +410,7 @@ class FunctionalSpecificationFormController extends Controller
             $path_url = FunctionalSpecificationForm::
             where('id',$id)
             ->update([
-                'output_screen' => asset('output_screens') . '/' . $imageName
+                'output_screen' => $imageName
             ]);
 
             return response()->json(['message'=>'output_screen Updated']);
