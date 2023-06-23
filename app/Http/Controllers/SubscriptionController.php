@@ -72,7 +72,6 @@ class SubscriptionController extends Controller
             'is_active'=>'0'
         ]);
 
-        Stripe::setApiKey(env('STRIPE_SECRET_TEST'));
         Stripe::setApiKey(config('services.stripe.secret_test'));
 
         $payment = \Stripe\PaymentIntent::create([
