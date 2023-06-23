@@ -53,7 +53,6 @@ class SubscriptionController extends Controller
         $subscription->subscription_id = $request->subscription_id;
         $subscription->amount = $request->amount;
         $subscription->start_date = Carbon::today();
-        $subscription->is_active = $request->is_active;
         if ($request->subscription_id == 1) {
 
             $subscription->end_date = null;
@@ -85,7 +84,7 @@ class SubscriptionController extends Controller
         $subscription->company_id = $request->company_id;
         $subscription->subscription_id = $request->subscription_id;
         $subscription->amount = $request->amount;
-        $subscription->start_date = $request->start_date;
+        $subscription->start_date = Carbon::today();
         if ($request->subscription_id == 1) {
 
             $subscription->end_date = null;
@@ -99,7 +98,10 @@ class SubscriptionController extends Controller
 
             $subscription->end_date = date('Y-m-d', strtotime('+1 year'));;
         }
-        $subscription->is_active = $request->is_active;
+        $find=SubscriptionInvoice::where('company_id',$subscription->company_id)
+        ->update([
+            'is_active'=>'0'
+        ]);
         $subscription->save();
         return response()->json(['massage' => 'Update subscription invoice successfully']);
     }
