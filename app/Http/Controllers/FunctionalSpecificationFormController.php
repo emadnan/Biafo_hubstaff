@@ -409,4 +409,27 @@ class FunctionalSpecificationFormController extends Controller
             return response()->json(['message'=>'output_screen Not Found']);
         }
     }
+
+    public function addAttechmentIntoFsf($id)
+    {
+        $screenShots = \Request::input('screenShots');
+
+        if (!empty($screenShots)) {
+            $image = str_replace('data:image/png;base64,', '', $screenShots);
+            $image = str_replace(' ', '+', $image);
+            $imageName = uniqid() . '.' . 'png';
+            \File::put(public_path() . '/attachment/' . $imageName, base64_decode($image));
+            $path_url = FunctionalSpecificationForm::
+            where('id',$id)
+            ->update([
+                'attachment' => asset('attachment') . '/' . $imageName
+            ]);
+
+            return response()->json(['message'=>'attachment Updated']);
+        }
+        else    {
+            
+            return response()->json(['message'=>'attachment Not Found']);
+        }
+    }
 }

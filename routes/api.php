@@ -420,3 +420,6 @@ Route::post('/deleteSubscriptionInvoice/{id}',[SubscriptionController::class,'de
 
 // //get All subscription invoice
 Route::get('/getAllSubscriptionInvoice',[SubscriptionController::class,'getAllSubscriptionInvoice']);
+
+// Add Attechments into Fsf Form
+Route::post('/addAttechmentIntoFsf/{id}',[FunctionalSpecificationFormController::class,'addAttechmentIntoFsf']);
