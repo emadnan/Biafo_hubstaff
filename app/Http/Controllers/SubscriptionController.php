@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Subscription;
 use App\Models\SubscriptionInvoice;
 use Carbon\Carbon;
+use Stripe\Stripe;
 use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
@@ -71,8 +72,18 @@ class SubscriptionController extends Controller
             'is_active'=>'0'
         ]);
 
-        $subscription->save();
+        Stripe::setApiKey(env('STRIPE_SECRET_TEST'));
+        Stripe::setApiKey(config('services.stripe.secret_test'));
 
+        $payment = \Stripe\PaymentIntent::create([
+            'amount' => $subscription->amount,
+            'currency' => 'USD',
+            'description' => 'WORKLOG',
+            'payment_method' => $subscription->stripe_id,
+            'confirm' => true
+        ]);
+
+        $subscription->save();
 
         return response()->json(['massage' => 'Add subscription invoice successfully']);
     }
