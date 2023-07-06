@@ -26,15 +26,16 @@ class TaskManagementController extends Controller
 
         $task->save();
         
-        $task = TaskManagement::select('task_managements.*', 'users.email as user_email', 'projects.project_name')
+        $task1 = TaskManagement::select('task_managements.*', 'users.email as user_email', 'projects.project_name')
             ->join('users', 'users.id', '=', 'task_managements.user_id')
             ->join('projects', 'projects.id', '=', 'task_managements.project_id')
             ->where('task_managements.id', $task->id)
             ->with('team_lead_details')
             ->first();
-
+        print_r($task1);
+        exit();
         $mailData = [
-            'userName' => $task->user->name,
+            'userName' => $task1->user->name,
             'projectName' => $task->project_name,
             'deadline' => $task->dead_line,
             'email' => $task->user_email,
