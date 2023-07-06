@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TaskManagement;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AssignTaskEmail;
+
 
 use Illuminate\Http\Request;
 
 class TaskManagementController extends Controller
 {
-    public function addTasks(){
+    public function addTasks()  {
         
         $userId = Auth::id();
 
@@ -18,13 +21,36 @@ class TaskManagementController extends Controller
         $task->task_description = \Request::input('task_description');
         $task->start_date = \Request::input('start_date');
         $task->dead_line = \Request::input('dead_line');
-        $task->priorites = \Request::input('priorities');
-        $task->team_lead_id =$userId;
+        $task->priorities = \Request::input('priorities');
+        $task->team_lead_id = $userId;
 
         $task->save();
         
-        return response()->json(['message'=>'Add Task Successfully']);
+        $task1 = TaskManagement::select('task_managements.*', 'users.email as user_email', 'projects.project_name')
+            ->join('users', 'users.id', '=', 'task_managements.user_id')
+            ->join('projects', 'projects.id', '=', 'task_managements.project_id')
+            ->where('task_managements.id', $task->id)
+            ->with('team_lead_details')
+            ->first();
+
+        $mailData = [
+            'userName' => $task1->user->name,
+            'projectName' => $task1->project->project_name,
+            'deadline' => $task1->dead_line,
+            'email' => $task1->user_email,
+            'priorities' => $task1->priorities,
+            'taskDescription' => $task1->task_description,
+            'team_lead_name' => $task1->team_lead_details->name,
+            'team_lead_email' => $task1->team_lead_details->email
+        ];
+        print_r($mailData);
+        exit();
+        // Send Email
+        Mail::to($task->user_email)->send(new AssignTaskEmail($mailData));
+
+        return response()->json(['message' => 'Task added successfully']);
     }
+
 
     function getTasks(){
         
