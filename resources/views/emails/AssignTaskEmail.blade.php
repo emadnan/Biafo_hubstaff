@@ -25,6 +25,7 @@
         }
         .button{
             margin: 0;
+            margin-left: 40%;
             position: absolute;
             top: 50%;
             -ms-transform: translateY(-50%);
