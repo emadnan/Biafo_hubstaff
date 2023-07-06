@@ -62,14 +62,14 @@ class streamsSeeder extends Seeder
                 'id' => 7,
                 'project_id' => '5',
                 'user_id' => '12',
-                'company_id'=>'7',
-                'stream_name' => 'MentorShip'
+                'company_id'=>'1',
+                'stream_name' => 'Mentorship'
               ],
               [
                 'id' => 8,
                 'project_id' => '5',
                 'user_id' => '12',
-                'company_id'=>'7',
+                'company_id'=>'1',
                 'stream_name' => 'Learning'
               ]
            ];
