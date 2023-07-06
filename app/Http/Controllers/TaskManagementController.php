@@ -27,10 +27,10 @@ class TaskManagementController extends Controller
         $task->save();
         
         $task1 = TaskManagement::
-            select('users.email as user_email', 'projects.project_name')
+            select('task_managements.*', 'users.email as user_email', 'projects.project_name')
             ->join('users', 'users.id', '=', 'task_managements.user_id')
             ->join('projects', 'projects.id', '=', 'task_managements.project_id')
-            ->where('task_managements.id', $task->id)
+            ->where('id', $task->id)
             ->with('team_lead_details')
             ->first();
         print_r($task1);
