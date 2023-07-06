@@ -78,7 +78,7 @@
               contributing to our collective success.</p>
 
           <h2>Best regards,</h2>
-          <button class="button"><a href= "http://worklog.biafotech.com/taskmanagement-assignedtask">Go To Task</a></button>
+           <a href= "http://worklog.biafotech.com/taskmanagement-assignedtask" class="button" >Go To Task</a>
           <p>{{ $data['teamLeadName'] }}<br>
                 Team Lead<br>
               [Contact Information: {{ $data['teamLeadEmail'] }}]</p>
