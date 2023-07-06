@@ -30,7 +30,7 @@ class TaskManagementController extends Controller
             select('task_managements.*', 'users.email as user_email', 'projects.project_name')
             ->join('users', 'users.id', '=', 'task_managements.user_id')
             ->join('projects', 'projects.id', '=', 'task_managements.project_id')
-            ->where('id', $task->id)
+            ->where('task_managements.id', $task->id)
             ->with('team_lead_details')
             ->first();
         print_r($task1);
