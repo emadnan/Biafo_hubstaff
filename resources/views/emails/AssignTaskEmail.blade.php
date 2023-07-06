@@ -10,14 +10,14 @@
             justify-content: center;
             align-items: center;
             height: 60vh;
-            width : 300vh;
+            width : 100vh;
         }
 
         .card {
             padding: 50px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            max-width: 300px;
+            max-width: 500px;
             text-align: center;
             width: 100%; /* Added width property */
 
