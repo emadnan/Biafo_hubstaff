@@ -26,7 +26,7 @@ class TaskManagementController extends Controller
 
         $task->save();
         
-        $task1 = TaskManagement::select('task_managements.*', 'users.email as user_email', 'projects.project_name')
+        $task = TaskManagement::select('task_managements.*', 'users.email as user_email', 'projects.project_name')
             ->join('users', 'users.id', '=', 'task_managements.user_id')
             ->join('projects', 'projects.id', '=', 'task_managements.project_id')
             ->where('task_managements.id', $task->id)
