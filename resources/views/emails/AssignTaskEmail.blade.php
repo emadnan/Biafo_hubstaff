@@ -17,7 +17,7 @@
             padding: 50px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            max-width: 500px;
+            max-width: 300px;
             text-align: center;
             width: 100%; /* Added width property */
 
@@ -27,8 +27,10 @@
 
   <body>
       <div class="card">
-          <h2> </h2>
-          <h2> </h2>
+          <h2>________________________________________________</h2>
+          <h2>________________________________________________</h2>
+          <h2>________________________________________________</h2>
+          <h2>________________________________________________</h2>
           <h2>Task Assignment</h2>
           <p>Dear {{ $data['userName'] }}!,</p>
           <p>I hope this email finds you well. I am reaching out to assign a task to you that requires your expertise and
@@ -36,9 +38,9 @@
 
           <h3>Task Details</h3>
           <ul>
-              <li>ProjectName: {{ $data['projectName'] }}</li>
-              <li>Deadline: {{ $data['deadline'] }}</li>
-              <li>Priority: {{ $data['priorities'] }}</li>
+              <p>ProjectName: {{ $data['projectName'] }}</p>
+              <p>Deadline: {{ $data['deadline'] }}</p>
+              <p>Priority: {{ $data['priorities'] }}</p>
           </ul>
 
           <h3>Description</h3>
