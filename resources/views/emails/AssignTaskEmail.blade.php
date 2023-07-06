@@ -35,6 +35,10 @@
             display: inline-block;
             font-size: 12px;
         }
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
 
     </style>
   </head>
