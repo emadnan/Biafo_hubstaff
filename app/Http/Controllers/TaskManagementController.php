@@ -34,8 +34,8 @@ class TaskManagementController extends Controller
             ->first();
 
         $mailData = [
-            'userName' => $task1->user->name,
-            'projectName' => $task1->project->project_name,
+            'userName' => $task1->name,
+            'projectName' => $task1->project_name,
             'deadline' => $task1->dead_line,
             'email' => $task1->user_email,
             'priorities' => $task1->priorites,
