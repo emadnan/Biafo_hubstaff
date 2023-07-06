@@ -27,6 +27,8 @@
 
   <body>
       <div class="card">
+          <h2> </h2>
+          <h2> </h2>
           <h2>Task Assignment</h2>
           <p>Dear {{ $data['userName'] }}!,</p>
           <p>I hope this email finds you well. I am reaching out to assign a task to you that requires your expertise and
@@ -34,9 +36,9 @@
 
           <h3>Task Details</h3>
           <ul>
-              <li><strong>ProjectName:</strong>{{ $data['projectName'] }}</li>
-              <li><strong>Deadline:</strong>{{ $data['deadline'] }}</li>
-              <li><strong>Priority:</strong> {{ $data['priorities'] }}</li>
+              <li>ProjectName: {{ $data['projectName'] }}</li>
+              <li>Deadline: {{ $data['deadline'] }}</li>
+              <li>Priority: {{ $data['priorities'] }}</li>
           </ul>
 
           <h3>Description</h3>
