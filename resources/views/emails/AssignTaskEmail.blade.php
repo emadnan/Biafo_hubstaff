@@ -61,9 +61,9 @@
               contributing to our collective success.</p>
 
           <p>Best regards,</p>
-          <p>{{ $data['team_lead_name'] }}<br>
+          <p>{{ $data['teamLeadName'] }}<br>
                 Team Lead<br>
-              [Contact Information: {{ $data['team_lead_email'] }}]</p>
+              [Contact Information: {{ $data['teamLeadEmail'] }}]</p>
       </div>
   </body>
 
