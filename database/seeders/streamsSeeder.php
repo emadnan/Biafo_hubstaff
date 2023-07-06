@@ -73,7 +73,7 @@ class streamsSeeder extends Seeder
                 'stream_name' => 'Learning'
               ],
               [
-                'id' => 8,
+                'id' => 9,
                 'project_id' => '5',
                 'user_id' => '12',
                 'company_id'=>'1',
