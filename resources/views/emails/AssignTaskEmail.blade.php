@@ -64,7 +64,7 @@
               and
               contributing to our collective success.</p>
 
-          <p>Best regards,</p>
+          <h2>Best regards,</h2>
           <p>{{ $data['teamLeadName'] }}<br>
                 Team Lead<br>
               [Contact Information: {{ $data['teamLeadEmail'] }}]</p>
