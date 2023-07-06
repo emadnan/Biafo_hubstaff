@@ -24,8 +24,11 @@
 
         }
         .button{
-            
-            align: center;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
             background-color: #008CBA; /* Green */
             border: none;
             color: white;
@@ -35,10 +38,7 @@
             display: inline-block;
             font-size: 12px;
         }
-        .button-container {
-            display: flex;
-            justify-content: center;
-        }
+        
 
     </style>
   </head>
