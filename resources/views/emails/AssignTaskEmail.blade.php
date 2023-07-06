@@ -35,11 +35,9 @@
               attention. The details of the task are as follows:</p>
 
           <h3>Task Details</h3>
-          <ul>
-              <p>ProjectName: {{ $data['projectName'] }}</p>
-              <p>Deadline: {{ $data['deadline'] }}</p>
-              <p>Priority: {{ $data['priorities'] }}</p>
-          </ul>
+            <p>ProjectName: {{ $data['projectName'] }}</p>
+            <p>Deadline:    {{ $data['deadline'] }}</p>
+            <p>Priority:    {{ $data['priorities'] }}</p>
 
           <h3>Description</h3>
           <p>{{ $data['taskDescription'] }}</p>
