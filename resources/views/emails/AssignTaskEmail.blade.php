@@ -23,6 +23,17 @@
             width: 100%; /* Added width property */
 
         }
+        .button{
+            background-color: #008CBA; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+
     </style>
   </head>
 
@@ -41,8 +52,6 @@
 
           <h3>Description</h3>
           <p>{{ $data['taskDescription'] }}</p>
-
-          <a href= "http://worklog.biafotech.com/taskmanagement-assignedtask">Click Here</a>
 
           <p>Please review the task description carefully and ensure that you have a clear understanding of the
               expectations.
@@ -63,7 +72,7 @@
               contributing to our collective success.</p>
 
           <h2>Best regards,</h2>
-          <button type="button"><a href= "http://worklog.biafotech.com/taskmanagement-assignedtask">Go To Task</a></button>
+          <button class="button"><a href= "http://worklog.biafotech.com/taskmanagement-assignedtask">Go To Task</a></button>
           <p>{{ $data['teamLeadName'] }}<br>
                 Team Lead<br>
               [Contact Information: {{ $data['teamLeadEmail'] }}]</p>
