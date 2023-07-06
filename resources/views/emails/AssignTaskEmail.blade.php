@@ -24,6 +24,8 @@
 
         }
         .button{
+            
+            align: center;
             background-color: #008CBA; /* Green */
             border: none;
             color: white;
@@ -31,7 +33,7 @@
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            font-size: 16px;
+            font-size: 12px;
         }
 
     </style>
