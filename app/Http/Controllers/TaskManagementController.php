@@ -38,7 +38,7 @@ class TaskManagementController extends Controller
             'projectName' => $task1->project->project_name,
             'deadline' => $task1->dead_line,
             'email' => $task1->user_email,
-            'priorities' => $task1->priorities,
+            'priorities' => $task1->priorites,
             'taskDescription' => $task1->task_description,
             'team_lead_name' => $task1->team_lead_details->name,
             'team_lead_email' => $task1->team_lead_details->email
