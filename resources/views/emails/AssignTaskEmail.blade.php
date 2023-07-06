@@ -28,12 +28,13 @@
   <body>
       <div class="card">
           <h2>Task Assignment</h2>
-          <p>Dear {{ $data['name'] }}!,</p>
+          <p>Dear {{ $data['userName'] }}!,</p>
           <p>I hope this email finds you well. I am reaching out to assign a task to you that requires your expertise and
               attention. The details of the task are as follows:</p>
 
           <h3>Task Details</h3>
           <ul>
+              <li><strong>ProjectName:</strong>{{ $data['projectName'] }}</li>
               <li><strong>Deadline:</strong>{{ $data['deadline'] }}</li>
               <li><strong>Priority:</strong> {{ $data['priorities'] }}</li>
           </ul>
