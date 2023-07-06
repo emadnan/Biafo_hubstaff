@@ -14,12 +14,12 @@
         }
 
         .card {
-            margin-top:200px;
+            margin-top:300px;
             padding: 50px;
             border: 1px solid #ccc;
             border-radius: 5px;
             max-width: 500px;
-            text-align: center;
+            text-align: left;
             width: 100%; /* Added width property */
 
         }
@@ -41,6 +41,8 @@
 
           <h3>Description</h3>
           <p>{{ $data['taskDescription'] }}</p>
+
+          <a href= "http://worklog.biafotech.com/taskmanagement-assignedtask">Click Here</a>
 
           <p>Please review the task description carefully and ensure that you have a clear understanding of the
               expectations.
