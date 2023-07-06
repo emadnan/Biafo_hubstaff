@@ -35,21 +35,21 @@ class TaskManagementController extends Controller
             ->first();
         // print_r($task1);
         // exit();
-        // $mailData = [
-        //     'userName' => $task1->name,
-        //     'projectName' => $task1->project_name,
-        //     'deadline' => $task1->dead_line,
-        //     'email' => $task1->user_email,
-        //     'priorities' => $task1->priorites,
-        //     'taskDescription' => $task1->task_description,
-        //     'teamLeadName' => $task1->team_lead_details->name,
-        //     'teamLeadEmail' => $task1->team_lead_details->email
-        // ];
+        $mailData = [
+            'userName' => $task1->user_name,
+            'projectName' => $task1->project_name,
+            'deadline' => $task1->dead_line,
+            'email' => $task1->user_email,
+            'priorities' => $task1->priorites,
+            'taskDescription' => $task1->task_description,
+            'teamLeadName' => $task1->team_lead_details->name,
+            'teamLeadEmail' => $task1->team_lead_details->email
+        ];
         
         // Send Email
-        // Mail::to($task->user_email)->send(new AssignTaskEmail($mailData));
+        Mail::to($task->user_email)->send(new AssignTaskEmail($mailData));
 
-        return response()->json(['message' => $task1]);
+        return response()->json(['message' => 'Task added successfully']);
     }
 
 
