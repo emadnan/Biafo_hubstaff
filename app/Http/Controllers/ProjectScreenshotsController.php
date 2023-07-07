@@ -277,9 +277,9 @@ class ProjectScreenshotsController extends Controller
     public function sumByDateWithUserId($date1,$userId)
     {
 
-        $hours = ProjectScreenshots::where('user_id', $userId)->where('date', $date1);
-        $minutes = ProjectScreenshots::where('user_id', $userId)->where('date', $date1);
-        $seconds = ProjectScreenshots::where('user_id', $userId)->where('date', $date1);
+        $hours = ProjectScreenshots::where('user_id', $userId)->where('date', $date1)->sum('hours');
+        $minutes = ProjectScreenshots::where('user_id', $userId)->where('date', $date1)->sum('minutes');
+        $seconds = ProjectScreenshots::where('user_id', $userId)->where('date', $date1)->sum('seconds');
         while ($seconds >= 60) {
             $seconds -= 60;
             $minutes += 1;
