@@ -286,10 +286,10 @@ Route::get('/get_Project_Screenshots',[ProjectScreenshotsController::class,'getP
 Route::get('/get_company_by_company_id/{id}',[CompanyController::class,'get_company_by_company_id']);
 
 //get screenshots by date
-Route::get('/get_projectscreenshot_by_date/{date1}/{date2}/{user_id}',[ProjectScreenshotsController::class,'getProjectScreenshotsByDate']);
+Route::get('/get_projectscreenshot_by_date/{date1}/{user_id}',[ProjectScreenshotsController::class,'getProjectScreenshotsByDate']);
 
 //get screenshots by date and company_id
-Route::get('/get_projectscreenshot_by_compny_id/{date1}/{date2}/{company_id}',[ProjectScreenshotsController::class,'getProjectScreenshotsByDateWithCompanyId']);
+Route::get('/get_projectscreenshot_by_compny_id/{date1}/{company_id}',[ProjectScreenshotsController::class,'getProjectScreenshotsByDateWithCompanyId']);
 
 // Add FSF API\
 Route::post('/addFunctionalSpecificationForm',[FunctionalSpecificationFormController::class,'addFunctionalSpecificationForm']);
