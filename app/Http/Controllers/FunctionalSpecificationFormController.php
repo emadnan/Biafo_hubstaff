@@ -54,8 +54,8 @@ class FunctionalSpecificationFormController extends Controller
             ->where('functional_specification_form.id',$Functional->id)
             ->with('team_lead_details','function_lead_details','getFsfInputParameter','getFsfOutputParameter')
             ->get();
-            // print_r($Functional1);
-            // exit();
+            print_r($Functional1->Module_name);
+            exit();
             $mailData = [
                 'ModuleName' => $Functional1->Module_name,
                 'ProjectName' => $Functional1->project_name,
