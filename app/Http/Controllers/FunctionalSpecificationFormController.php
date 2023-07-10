@@ -53,25 +53,24 @@ class FunctionalSpecificationFormController extends Controller
             ->join('modules','modules.id','=','functional_specification_form.module_id')
             ->where('functional_specification_form.id',$Functional->id)
             ->with('team_lead_details','function_lead_details','getFsfInputParameter','getFsfOutputParameter')
-            ->get();
-            // print_r($Functional1->Module_name);
-            // exit();
-            // $mailData = [
-            //     'ModuleName' => $Functional1->Module_name,
-            //     'ProjectName' => $Functional1->project_name,
-            //     'wricefId' => $Functional1->wricef_id,
-            //     'priorities' => $Functional1->priority,
-            //     'TypeOfDevelopment' => $Functional1->type_of_development,
-            //     'teamLeadName' => $Functional1->team_lead_details->name,
-            //     'teamLeadEmail' => $Functional1->team_lead_details->email,
-            //     'FunctionalLeadName' => $Functional1->function_lead_details->name,
-            //     'FunctionalLeadEmail' => $Functional1->function_lead_details->email
-            // ];
+            ->first();
+            
+            $mailData = [
+                'ModuleName' => $Functional1->Module_name,
+                'ProjectName' => $Functional1->project_name,
+                'wricefId' => $Functional1->wricef_id,
+                'priorities' => $Functional1->priority,
+                'TypeOfDevelopment' => $Functional1->type_of_development,
+                'teamLeadName' => $Functional1->team_lead_details->name,
+                'teamLeadEmail' => $Functional1->team_lead_details->email,
+                'FunctionalLeadName' => $Functional1->function_lead_details->name,
+                'FunctionalLeadEmail' => $Functional1->function_lead_details->email
+            ];
             
             // Send Email
-            // Mail::to($Functional1->team_lead_details->email)->send(new FunctionalSpacificationForm($mailData));
+            Mail::to($Functional1->team_lead_details->email)->send(new FunctionalSpacificationForm($mailData));
 
-        return response()->json(['message'=>'Add Functional Specificational Form Successfully','id'=>$Functional1]);
+        return response()->json(['message'=>'Add Functional Specificational Form Successfully','id'=>$Functional->id]);
 
     }
 
