@@ -469,12 +469,7 @@ class ProjectScreenshotsController extends Controller
                 $hours += 1;
             }
 
-            $project = ProjectScreenshots::
-            join('projects','projects.id','=','project_screenshots.project_id')
-            ->where('user_id', $userId)
-            ->get();
-
-        $data = compact('hours', 'minutes', 'seconds', 'project');
+        $data = compact('hours', 'minutes', 'seconds');
 
         return response()->json($data);
     }
@@ -503,7 +498,7 @@ class ProjectScreenshotsController extends Controller
             ->get();
 
         $data = compact('hours', 'minutes', 'seconds', 'projects');
-        
+
         return response()->json($data);
     }
 }
