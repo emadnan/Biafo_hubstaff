@@ -378,6 +378,9 @@ Route::get('/calculateDailyActivity/{userId}',[ProjectScreenshotsController::cla
 // calculating monthly worked and time
 Route::get('/calculateMonthlyActivity/{userId}',[ProjectScreenshotsController::class,'calculateMonthlyActivity']);
 
+// calculating over all worked and time
+Route::get('/calculateOverAllActivity/{userId}',[ProjectScreenshotsController::class,'calculateOverAllActivity']);
+
 // devlopment Logic into Fsf Form
 Route::post('/addDevelopmentLogicIntoFsfForm',[FunctionalSpecificationFormController::class,'addDevelopmentLogicIntoFsfForm']);
 
