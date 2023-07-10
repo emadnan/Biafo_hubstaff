@@ -8,6 +8,8 @@ use App\Models\FsfHasOutputParameter;
 use App\Models\FsfAssignToUser;
 use App\Models\Module;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FunctionalSpacificationForm;
 
 
 use Illuminate\Http\Request;
@@ -44,7 +46,32 @@ class FunctionalSpecificationFormController extends Controller
 
         $Functional->save();
 
+        // Email 
+        $Functional1 = FunctionalSpecificationForm::
+            select('modules.*','projects.*','modules.name as Module_name','functional_specification_form.*')
+            ->join('projects','projects.id','=','functional_specification_form.project_id')
+            ->join('modules','modules.id','=','functional_specification_form.module_id')
+            ->where('functional_specification_form.id',$Functional->id)
+            ->with('team_lead_details','function_lead_details','getFsfInputParameter','getFsfOutputParameter')
+            ->get();
+
+            $mailData = [
+                'ModuleName' => $Functional1->Module_name,
+                'ProjectName' => $Functional1->project_name,
+                'wricefId' => $Functional1->wricef_id,
+                'priorities' => $Functional1->priority,
+                'TypeOfDevelopment' => $Functional1->type_of_development,
+                'teamLeadName' => $Functional1->team_lead_details->name,
+                'teamLeadEmail' => $Functional1->team_lead_details->email,
+                'FunctionalLeadName' => $Functional1->function_lead_details->name,
+                'FunctionalLeadEmail' => $Functional1->function_lead_details->email
+            ];
+            
+            // Send Email
+            Mail::to($Functional1->team_lead_details->email)->send(new FunctionalSpacificationForm($mailData));
+
         return response()->json(['message'=>'Add Functional Specificational Form Successfully','id'=>$Functional->id]);
+
     }
 
     function updateFunctionalSpecificationForm(){
