@@ -55,6 +55,7 @@
             <p>wricef Id:               {{ $data['wricefId'] }}</p>
             <p>Type Of Development:     {{ $data['TypeOfDevelopment'] }}</p>
             <p>Project Name:            {{ $data['ProjectName'] }}</p>
+            <p>Module Name:            {{ $data['ModuleName'] }}</p>
             <p>Priority:                {{ $data['priorities'] }}</p>
 
 
