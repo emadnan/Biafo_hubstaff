@@ -348,6 +348,9 @@ Route::get('/getFsfAssignToUsersByFsfId/{fsf_id}',[FunctionalSpecificationFormCo
 //get sum of hours, minuts and seconds  
 Route::get('/getSumByDateWithUserId/{date1}/{userId}',[ProjectScreenshotsController::class,'sumByDateWithUserId']);
 
+//get sum of hours, minuts and seconds  
+Route::get('/getSumByDatesWithUserId/{date1}/{date2}/{userId}',[ProjectScreenshotsController::class,'sumByDateWithUserId']);
+
 //get all Tasks 
 Route::get('/getTasks',[TaskManagementController::class,'getTasks']);
 

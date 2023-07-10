@@ -475,6 +475,34 @@ class ProjectScreenshotsController extends Controller
             ->get();
 
         $data = compact('hours', 'minutes', 'seconds', 'project');
+
+        return response()->json($data);
+    }
+
+    public function sumByDatesWithUserId($date1, $date2,$userId)
+    {
+
+        $hours = ProjectScreenshots::where('user_id', $userId)->whereBetween('date', [$date1, $date2])->sum('hours');
+        $minutes = ProjectScreenshots::where('user_id', $userId)->whereBetween('date', [$date1, $date2])->sum('minutes');
+        $seconds = ProjectScreenshots::where('user_id', $userId)->whereBetween('date', [$date1, $date2])->sum('seconds');
+
+        while ($seconds >= 60) {
+            $seconds -= 60;
+            $minutes += 1;
+        }
+    
+        while ($minutes >= 60) {
+            $minutes -= 60;
+            $hours += 1;
+        }
+        
+        $projects = ProjectScreenshots::
+            join('projects','projects.id','=','project_screenshots.project_id')
+            ->where('user_id', $userId)
+            ->whereBetween('date', [$date1, $date2])
+            ->get();
+
+        $data = compact('hours', 'minutes', 'seconds', 'projects');
         
         return response()->json($data);
     }
