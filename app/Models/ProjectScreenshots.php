@@ -14,7 +14,8 @@ class ProjectScreenshots extends Model
     protected $fillable = ['user_id', 'stream_name','longitude', 'latitude', 'project_id','date', 'hours', 'minutes', 'seconds'];
 
     function getTimings(){
-        return $this->hasMany('App\Models\ProjectScreenshotsTiming', 'project_screenshorts_id', 'id');
+        return $this->hasMany('App\Models\ProjectScreenshotsTiming', 'project_screenshorts_id', 'id')
+        ->orderBy('id','DESC');
     }
 
 }
