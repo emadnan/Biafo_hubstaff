@@ -70,7 +70,7 @@
               contributing to our collective success.</p>
 
           <h2>Best regards,</h2>
-           <a href= "http://worklog.biafotech.com/fsf" class="button" >Go To FSF</a>
+           <!-- <a href= "http://worklog.biafotech.com/fsf" class="button" >Go To FSF</a> -->
           <p>{{ $data['FunctionalLeadName'] }}<br>
             Functional Lead<br>
               {{ $data['FunctionalLeadEmail'] }}</p>
