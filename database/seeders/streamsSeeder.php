@@ -253,6 +253,20 @@ class streamsSeeder extends Seeder
                 'user_id' => '12',
                 'company_id'=>'1',
                 'stream_name' => 'Consultancy'
+              ],
+              [
+                'id' => 35,
+                'project_id' => '35',
+                'user_id' => '12',
+                'company_id'=>'47',
+                'stream_name' => 'Data-center'
+              ],
+              [
+                'id' => 36,
+                'project_id' => '36',
+                'user_id' => '12',
+                'company_id'=>'5',
+                'stream_name' => 'testing'
               ]
            ];
      
