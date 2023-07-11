@@ -14,7 +14,7 @@
         }
 
         .card {
-            margin-top:150px;
+            margin-top:30px;
             padding: 50px;
             border: 1px solid #ccc;
             border-radius: 5px;
