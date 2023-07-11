@@ -131,7 +131,7 @@ class ProjectScreenshotsController extends Controller
             ->join('company', 'company.id','=','users.company_id')
             ->where('date', date('Y-m-d'))
             ->with('getTimings', 'getTimings.getattechments')
-            ->orderBy('id', 'DESC')
+            ->orderBy('project_screenshots.id', 'DESC')
             ->get();
 
         $totalTime = $projectscreenshot->sum(function ($screenshot) {
@@ -178,7 +178,7 @@ class ProjectScreenshotsController extends Controller
         ->where('date', $date1)
         ->where('user_id',$user_id)
         ->with('getTimings', 'getTimings.getattechments')
-        ->orderBy('id', 'DESC')
+        ->orderBy('project_screenshots.id', 'DESC')
         ->get();
         
 
@@ -271,7 +271,7 @@ class ProjectScreenshotsController extends Controller
         ->where('date', $date1)
         ->where('company.id',$company_id)
         ->with('getTimings', 'getTimings.getattechments')
-        ->orderBy('id', 'DESC')
+        ->orderBy('project_screenshots.id', 'DESC')
         ->get();
         
         return response()->json($projectscreenshot);
