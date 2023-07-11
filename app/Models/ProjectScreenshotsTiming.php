@@ -17,6 +17,7 @@ class ProjectScreenshotsTiming extends Model
     ];
 
     function getattechments(){
-        return $this->hasMany('App\Models\ProjectScreenshotsAttechments', 'project_screenshorts_timing_id', 'id');
+        return $this->hasMany('App\Models\ProjectScreenshotsAttechments', 'project_screenshorts_timing_id', 'id')
+        ->orderBy('id','DESC');
     }
 }
