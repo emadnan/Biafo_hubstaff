@@ -42,6 +42,11 @@ class StreamsController extends Controller
         return response()->json(['streams' => $stream]);
     }
 
+    public function getStreamById($id)  {
+
+        $stream = Streams::where('id',$id)->get();
+        return response()->json(['streams' => $stream]);
+    }
 
     public function getStreams()
     {

@@ -282,6 +282,9 @@ Route::post('/updateStream',[StreamsController::class,'updateStream']);
 //Delete stream API
 Route::post('/deleteStream',[StreamsController::class,'deleteStream']);
 
+//get all streams by company id
+Route::get('/getStreamById/{id}',[StreamsController::class,'getStreamById']);
+
 //get all streams 
 Route::get('/getStreamByCompanyId/{id}',[StreamsController::class,'getStreamByCompanyId']);
 
@@ -416,7 +419,6 @@ Route::get('/getTaskByProjectId/{projectId}',[TaskManagementController::class,'g
 
 //get task by project id and user id
 Route::get('/getTaskByUserIdAndProjectId/{userId}/{projectId}',[TaskManagementController::class,'getTaskByUserIdAndProjectId']);
-
 
 // add subscription 
 Route::post('/addSubscription',[SubscriptionController::class,'addSubscription']);
