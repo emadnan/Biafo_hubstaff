@@ -6,44 +6,44 @@ use Illuminate\Http\Request;
 
 class StreamsController extends Controller
 {
-    function add_permissions()  {
+    function addStreams()  {
 
-        $permission = new Streams();
-        $permission->name = \Request::input('name');
-        $permission->guard_name = 'APi11';
-        $permission->save();
-        return response()->json(['message'=>'Add Permission successfully']);
+        $stream = new Streams();
+        $stream->company_id = \Request::input('company_id');
+        $stream->stream_name = \Request::input('stream_name');
+        $stream->save();
+        return response()->json(['message'=>'Add stream successfully']);
 
     }
 
-    function updatepermission() {
+    function updateStream() {
 
         $id = \Request::input('id');
-        $permission = Streams::where('id',$id)
+        $stream = Streams::where('id',$id)
         ->update([
-            'name' => \Request::input('name'),
-            'guard_name' => 'API'
+            'company_id' => \Request::input('company_id'),
+            'stream_name' => \Request::input('stream_name'),
         ]);
 
-        return response()->json(['Message' => 'Permission Updated']);
+        return response()->json(['Message' => 'stream Updated']);
     }
 
-    function delete_permission()    {
-        
+    function deleteStream()    {
+
         $id = \Request::input('id');
-        $permission = Streams::where('id',$id)->delete();
+        $stream = Streams::where('id',$id)->delete();
 
-        return response()->json(['message'=>'delete permission successfully']);
+        return response()->json(['message'=>'delete stream successfully']);
     }
 
-    public function get_permissions_by_id($id)  {
+    public function getStreamById($id)  {
 
-        $permission = Streams::where('id',$id)->get();
-        return response()->json(['permissions' => $permission]);
+        $stream = Streams::where('id',$id)->get();
+        return response()->json(['streams' => $stream]);
     }
 
 
-    public function get_streams()
+    public function getStreams()
     {
         $streams = Streams::get();
         return response()->json(['Streams' => $streams]);

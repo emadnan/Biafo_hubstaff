@@ -270,8 +270,20 @@ Route::get('/get_assign_project_by_project_id/{project_id}/{stream_id}',[AssignP
 //get project by users 
 Route::get('/get-project-by-user-id/{id}',[projectController::class,'get_project_by_user_id']);
 
+//Add stream API
+Route::post('/addStreams',[StreamsController::class,'addStreams']);
+
+//Update stream API
+Route::post('/updateStream',[StreamsController::class,'updateStream']);
+
+//Delete stream API
+Route::post('/deleteStream',[StreamsController::class,'deleteStream']);
+
 //get all streams 
-Route::get('/get-streams',[StreamsController::class,'get_streams']);
+Route::get('/getStreamById/{id}',[StreamsController::class,'getStreamById']);
+
+//get all streams 
+Route::get('/get-streams',[StreamsController::class,'getStreams']);
 
 // Add screenshots API\
 Route::post('/Add_project_screenshots',[ProjectScreenshotsController::class,'addProjectScreenshot']);
