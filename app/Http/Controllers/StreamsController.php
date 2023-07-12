@@ -36,9 +36,9 @@ class StreamsController extends Controller
         return response()->json(['message'=>'delete stream successfully']);
     }
 
-    public function getStreamById($id)  {
+    public function getStreamByCompanyId($id)  {
 
-        $stream = Streams::where('id',$id)->get();
+        $stream = Streams::where('company_id',$id)->get();
         return response()->json(['streams' => $stream]);
     }
 

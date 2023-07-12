@@ -144,6 +144,9 @@ Route::get('/getcompany',[CompanyController::class,'get_company']);
 //Get company by id API
 Route::get('/get_company_by_id/{id}',[CompanyController::class,'get_company_by_id']);
 
+//Get company by user id API
+Route::get('/getCompanyByUserId/{user_id}',[CompanyController::class,'getCompanyByUserId']);
+
 //Add screen_shots API
 Route::post('/screen_shot',[ScreenShotsController::class,'add_screen_shots']);
 
@@ -280,7 +283,7 @@ Route::post('/updateStream',[StreamsController::class,'updateStream']);
 Route::post('/deleteStream',[StreamsController::class,'deleteStream']);
 
 //get all streams 
-Route::get('/getStreamById/{id}',[StreamsController::class,'getStreamById']);
+Route::get('/getStreamByCompanyId/{id}',[StreamsController::class,'getStreamByCompanyId']);
 
 //get all streams 
 Route::get('/get-streams',[StreamsController::class,'getStreams']);
