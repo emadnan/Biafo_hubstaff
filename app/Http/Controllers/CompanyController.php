@@ -60,9 +60,9 @@ class CompanyController extends Controller
         
         return response()->json(['users' => $user]);
     }
-    public function getCompanyByUserId($id){
+    public function getCompanyByUserId($user_id){
         
-        $company = User::where('id',$id)->join('company','company.id','users.company_id')
+        $company = User::where('id',$user_id)->join('company','company.id','users.company_id')
         ->get();
         return response()->json(['companyDetails' => $company]);
     }
