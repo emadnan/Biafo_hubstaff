@@ -85,7 +85,7 @@ class ProjectController extends Controller
 
     public function get_project_by_user_id($user_id)    {
 
-        $project = AssignProject::select('assign_projects.*','assign_projects.project_id as assign_projects_project_id','projects.*','projects.id as project_id','streams.*','streams.user_id as streams_user_id','streams.project_id as streams_project_id')
+        $project = AssignProject::select('assign_projects.*','assign_projects.project_id as assign_projects_project_id','projects.*','projects.id as project_id','streams.*')
         ->join('projects','projects.id','=','assign_projects.project_id')
         ->join('streams','streams.id','=','assign_projects.stream_id') 
         ->where('assign_projects.user_id',$user_id)
