@@ -22,7 +22,7 @@ class FunctionalSpecificationFormController extends Controller
         $Functional->reference_id = \Request::input('reference_id');
         $Functional->module_id = \Request::input('module_id');
         $Functional->project_id = \Request::input('project_id');
-        $Functional->compant_id = \Request::input('company_id');
+        $Functional->company_id = \Request::input('company_id');
         $Functional->type_of_development = \Request::input('type_of_development');
         $Functional->wricef_id = \Request::input('wricef_id');
         $Functional->functional_lead_id = \Request::input('functional_lead_id');
