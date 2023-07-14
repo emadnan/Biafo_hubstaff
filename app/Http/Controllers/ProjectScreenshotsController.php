@@ -8,9 +8,8 @@ use App\Models\ProjectScreenshotsTiming;
 use App\Models\ProjectScreenshotsAttechments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 use Illuminate\Database\Eloquent\Model;
-
+use Image;
 class ProjectScreenshotsController extends Controller
 {
     public function addProjectScreenshot(Request $request)
@@ -106,14 +105,20 @@ class ProjectScreenshotsController extends Controller
     public function addProjectScreenshotAttechment($id)
     {
         $screenShots = \Request::input('screenShots');
-
+    
         if (!empty($screenShots)) {
             foreach ($screenShots as $image) {
-
+    
                 $image = str_replace('data:image/png;base64,', '', $image);
                 $image = str_replace(' ', '+', $image);
                 $imageName = uniqid() . '.' . 'png';
-                \File::put(public_path() . '/screenshots/' . $imageName, base64_decode($image));
+    
+                // Reduce the image size to maximum 30KB
+                $image = Image::make(base64_decode($image))
+                    ->resize(830, 630)
+                    ->encode('png');
+    
+                \File::put(public_path() . '/screenshots/' . $imageName, $image);
                 $path_url = new ProjectScreenshotsAttechments();
                 $path_url->project_screenshorts_timing_id = $id;
                 $path_url->path_url = $imageName;
