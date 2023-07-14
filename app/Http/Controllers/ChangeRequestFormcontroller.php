@@ -62,7 +62,7 @@ class ChangeRequestFormcontroller extends Controller
         $id = \Request::input('id');
         $CRForm = ChangeRequestForm::
             where('id',$id)->
-            get();
+            first();
 
         return response()->json(['CRForm'=>$CRForm]);
     }
