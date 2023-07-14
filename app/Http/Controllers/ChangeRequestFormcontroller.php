@@ -14,7 +14,6 @@ class ChangeRequestFormcontroller extends Controller
         $CRForm->module_id = \Request::input('module_id');
         $CRForm->fsf_id = \Request::input('fsf_id');
         $CRForm->company_id = \Request::input('company_id');
-        $CRForm->wricef_id = \Request::input('wricef_id');
         $CRForm->implementation_partner = \Request::input('implementation_partner');
         $CRForm->issuance_date = \Request::input('issuance_date');
         $CRForm->author = \Request::input('author');
@@ -34,7 +33,6 @@ class ChangeRequestFormcontroller extends Controller
             'module_id' => \Request::input('module_id'),
             'fsf_id' => \Request::input('fsf_id'),
             'company_id' => \Request::input('company_id'),
-            'wricef_id' => \Request::input('wricef_id'),
             'issuance_date' => \Request::input('issuance_date'),
             'implementation_partner' => \Request::input('implementation_partner'),
             'author' => \Request::input('author'),
