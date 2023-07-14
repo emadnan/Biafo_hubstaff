@@ -18,11 +18,20 @@ class ChangeRequestFormcontroller extends Controller
         $CRForm->issuance_date = \Request::input('issuance_date');
         $CRForm->author = \Request::input('author');
         $CRForm->doc_ref_no = \Request::input('doc_ref_no');
-        $CRForm->save();
+    
+        $latestCRF = ChangeRequestForm::orderBy('crf_version', 'desc')->first();
 
-        
-        return response()->json(['message'=>'Add Change Request Form']);
+        if ($latestCRF) {
+            $CRForm->crf_version = $latestCRF->crf_version + 1;
+        } else {
+            $CRForm->crf_version = 1;
+        }
+    
+        $CRForm->save();
+    
+        return response()->json(['message' => 'Add Change Request Form']);
     }
+    
 
     function updateChangeRequestForm(){
 
