@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ChangeRequestForm extends Model
 {
     use HasFactory;
-    protected $table="company";
+    protected $table="change_request_forms";
     protected $primaryKey="id";
 }
