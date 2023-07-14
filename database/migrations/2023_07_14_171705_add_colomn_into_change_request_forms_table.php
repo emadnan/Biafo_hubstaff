@@ -14,7 +14,7 @@ class AddColomnIntoChangeRequestFormsTable extends Migration
     public function up()
     {
         Schema::table('change_request_forms', function (Blueprint $table) {
-            $table->string('crf_version');
+            $table->string('crf_version')->after('doc_ref_no');
         });
     }
 
