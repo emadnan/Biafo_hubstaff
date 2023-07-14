@@ -53,8 +53,7 @@ class ChangeRequestFormcontroller extends Controller
     function getChangeRequestForm(){
         
         $CRForm = ChangeRequestForm::
-            with('getFsfInputParameter')
-            ->get();
+            get();
 
         return response()->json(['CRForm'=>$CRForm]);
     }
