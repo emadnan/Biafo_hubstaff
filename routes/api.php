@@ -20,6 +20,7 @@ use App\Http\Controllers\ProjectScreenshotsController;
 use App\Http\Controllers\FunctionalSpecificationFormController;
 use App\Http\Controllers\TaskManagementController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\ChangeRequestFormcontroller;
 
 
 /*
@@ -443,3 +444,15 @@ Route::post('/deleteSubscriptionInvoice/{id}',[SubscriptionController::class,'de
 
 // //get All subscription invoice
 Route::get('/getAllSubscriptionInvoice',[SubscriptionController::class,'getAllSubscriptionInvoice']);
+
+// Add Request Change Form
+Route::post('/addChangeRequestForm',[ChangeRequestFormcontroller::class,'addChangeRequestForm']);
+
+// get Change Request Form
+Route::get('/getChangeRequestForm',[ChangeRequestFormcontroller::class,'getChangeRequestForm']);
+
+// update Change Request Form
+Route::post('/updateChangeRequestForm',[ChangeRequestFormcontroller::class,'updateChangeRequestForm']);
+
+// delete Change Request Form
+Route::post('/deleteChangeRequestForm',[ChangeRequestFormcontroller::class,'deleteChangeRequestForm']);
