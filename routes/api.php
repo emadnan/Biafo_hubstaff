@@ -455,7 +455,7 @@ Route::get('/getChangeRequestForm',[ChangeRequestFormcontroller::class,'getChang
 Route::get('/getChangeRequestFormById/{id}',[ChangeRequestFormcontroller::class,'getChangeRequestFormById']);
 
 // get Change Request Form By company id
-Route::get('/getChangeRequestFormByCompanyId/{id}',[ChangeRequestFormcontroller::class,'getChangeRequestFormByCompanyId']);
+Route::get('/getChangeRequestFormByCompanyId/{company_id}',[ChangeRequestFormcontroller::class,'getChangeRequestFormByCompanyId']);
 
 // update Change Request Form
 Route::post('/updateChangeRequestForm',[ChangeRequestFormcontroller::class,'updateChangeRequestForm']);
