@@ -66,4 +66,13 @@ class ChangeRequestFormcontroller extends Controller
 
         return response()->json(['CRForm'=>$CRForm]);
     }
+    function getChangeRequestFormByCompanyId(){
+        $company_id = \Request::input('id');
+
+        $CRForm = ChangeRequestForm::
+            where('company_id',$company_id)->
+            get();
+
+        return response()->json(['CRForm'=>$CRForm]);
+    }
 }
