@@ -115,7 +115,7 @@ class ProjectScreenshotsController extends Controller
     
                 // Reduce the image size to maximum 30KB
                 $image = Image::make(base64_decode($image))
-                    ->resize(830, 630)
+                    ->resize(830, 530)
                     ->encode('png');
     
                 \File::put(public_path() . '/screenshots/' . $imageName, $image);
