@@ -457,6 +457,9 @@ Route::get('/getChangeRequestForm',[ChangeRequestFormcontroller::class,'getChang
 // get Change Request Form By Id
 Route::get('/getChangeRequestFormById/{id}',[ChangeRequestFormcontroller::class,'getChangeRequestFormById']);
 
+// get Change Request Form By project_id , module_id and Fsf_id
+Route::get('/getCrfByProjectIdModuleIdAndFsfId/{project_id}/{module_id}/{fsf_id}',[ChangeRequestFormcontroller::class,'getCrfByProjectIdModuleIdAndFsfId']);
+
 // get Change Request Form By company id
 Route::get('/getChangeRequestFormByCompanyId/{company_id}',[ChangeRequestFormcontroller::class,'getChangeRequestFormByCompanyId']);
 

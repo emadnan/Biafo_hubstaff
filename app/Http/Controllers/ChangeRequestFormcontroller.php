@@ -85,4 +85,15 @@ class ChangeRequestFormcontroller extends Controller
 
         return response()->json(['CRForm'=>$CRForm]);
     }
+
+    function getCrfByProjectIdModuleIdAndFsfId($project_id,$module_id,$fsf_id){
+
+        $Crf = ChangeRequestForm::
+            where('project_id',$project_id)
+            ->where('module_id',$module_id)
+            ->where('fsf_id',$fsf_id)
+            ->get();
+
+        return response()->json(['Crfs'=>$Crf]);
+    }
 }
