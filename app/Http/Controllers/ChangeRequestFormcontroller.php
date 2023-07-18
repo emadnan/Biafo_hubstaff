@@ -43,6 +43,7 @@ class ChangeRequestFormcontroller extends Controller
             'module_id' => \Request::input('module_id'),
             'fsf_id' => \Request::input('fsf_id'),
             'company_id' => \Request::input('company_id'),
+            'reference' => \Request::input('reference'),
             'issuance_date' => \Request::input('issuance_date'),
             'implementation_partner' => \Request::input('implementation_partner'),
             'author' => \Request::input('author'),
