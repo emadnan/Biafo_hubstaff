@@ -94,6 +94,7 @@ class ChangeRequestFormcontroller extends Controller
             where('project_id',$project_id)
             ->where('module_id',$module_id)
             ->where('fsf_id',$fsf_id)
+            ->with('FSF_details')
             ->get();
 
         return response()->json(['Crfs'=>$Crf]);
