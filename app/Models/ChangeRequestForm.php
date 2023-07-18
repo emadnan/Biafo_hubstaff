@@ -21,10 +21,10 @@ class ChangeRequestForm extends Model
     }
 
     function company_details(){
-        return $this->hasMany('App\Models\Company', 'company_id', 'id');
+        return $this->BelongsTo('App\Models\Company', 'company_id', 'id');
     }
 
     function FSF_details(){
-        return $this->hasMany('App\Models\FunctionalSpecificationForm', 'fsf_id', 'id');
+        return $this->BelongsTo('App\Models\FunctionalSpecificationForm', 'fsf_id', 'id');
     }
 }
