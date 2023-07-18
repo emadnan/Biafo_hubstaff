@@ -329,7 +329,7 @@ Route::post('/deleteFunctionalSpecificationForm',[FunctionalSpecificationFormCon
 Route::get('/getFunctionalSpecificationForm',[FunctionalSpecificationFormController::class,'getFunctionalSpecificationForm']);
 
 // get All FSF by module_id and project_id API\
-Route::get('/getFsfByProjectIdAndModuleId',[FunctionalSpecificationFormController::class,'getFsfByProjectIdAndModuleId']);
+Route::get('/getFsfByProjectIdAndModuleId/{project_id}/{module_id}',[FunctionalSpecificationFormController::class,'getFsfByProjectIdAndModuleId']);
 
 // get FSF By Id API\
 Route::get('/getFunctionalSpecificationFormById/{fsf}',[FunctionalSpecificationFormController::class,'getFunctionalSpecificationFormById']);
