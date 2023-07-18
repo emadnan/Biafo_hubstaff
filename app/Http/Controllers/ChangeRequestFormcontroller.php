@@ -14,6 +14,7 @@ class ChangeRequestFormcontroller extends Controller
         $CRForm->module_id = \Request::input('module_id');
         $CRForm->fsf_id = \Request::input('fsf_id');
         $CRForm->company_id = \Request::input('company_id');
+        $CRForm->reference = \Request::input('reference');
         $CRForm->implementation_partner = \Request::input('implementation_partner');
         $CRForm->issuance_date = \Request::input('issuance_date');
         $CRForm->author = \Request::input('author');
