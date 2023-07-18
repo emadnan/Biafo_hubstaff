@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ChangeRequestSummary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\FunctionalSpecificationFormController;
 use App\Http\Controllers\TaskManagementController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ChangeRequestFormcontroller;
+use App\Http\Controllers\ChangeRequestSummarycontroller;
 
 
 /*
@@ -468,3 +470,18 @@ Route::post('/updateChangeRequestForm',[ChangeRequestFormcontroller::class,'upda
 
 // delete Change Request Form
 Route::post('/deleteChangeRequestForm',[ChangeRequestFormcontroller::class,'deleteChangeRequestForm']);
+
+// Add Request Change Summary
+Route::post('/addChangeRequestSummary',[ChangeRequestSummarycontroller::class,'addChangeRequestSummary']);
+
+// get Change Request Summary By Id
+Route::get('/getChangeRequestSummaryById/{id}',[ChangeRequestSummarycontroller::class,'getChangeRequestSummaryById']);
+
+// get Change Request Summary By Id
+Route::get('/getChangeRequestSummary',[ChangeRequestSummarycontroller::class,'getChangeRequestSummary']);
+
+// update Change Request Summary
+Route::post('/updateChangeRequestSummary',[ChangeRequestSummarycontroller::class,'updateChangeRequestSummary']);
+
+// delete Change Request Summary
+Route::post('/deleteChangeRequestSummary',[ChangeRequestSummarycontroller::class,'deleteChangeRequestSummary']);
