@@ -452,7 +452,7 @@ class FunctionalSpecificationFormController extends Controller
         }
     }
     
-    function getFunctionalSpecificationFormByProjectIdAndModuleId($project_id,$module_id){
+    function getFsfByProjectIdAndModuleId($project_id,$module_id){
 
         $fsf = FunctionalSpecificationForm::
             where('project_id',$project_id)
