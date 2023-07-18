@@ -19,7 +19,7 @@ class ChangeRequestFormcontroller extends Controller
         $CRForm->author = \Request::input('author');
         $CRForm->doc_ref_no = \Request::input('doc_ref_no');
     
-        $latestCRF = ChangeRequestForm::where('project_id',$CRForm->project_id)->where('module_id',$CRForm->module_id)->orderBy('crf_version', 'desc')->first();
+        $latestCRF = ChangeRequestForm::where('project_id',$CRForm->project_id)->where('module_id',$CRForm->module_id)->where('fsf_id',$CRForm->fsf_id)->orderBy('crf_version', 'desc')->first();
 
         if ($latestCRF) {
             $CRForm->crf_version = $latestCRF->crf_version + 1;
