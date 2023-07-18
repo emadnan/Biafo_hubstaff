@@ -46,6 +46,14 @@ class FunctionalSpecificationFormController extends Controller
 
             }
 
+        $latestFSF = FunctionalSpecificationForm::where('project_id',$Functional->project_id)->where('module_id',$Functional->module_id)->orderBy('fsf_version', 'desc')->first();
+
+            if ($latestFSF) {
+                $Functional->fsf_version = $latestFSF->fsf_version + 1;
+            } else {
+                $Functional->fsf_version = 1;
+            }
+
         $Functional->save();
 
         // Email 
