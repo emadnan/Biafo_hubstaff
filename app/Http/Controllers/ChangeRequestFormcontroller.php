@@ -79,8 +79,9 @@ class ChangeRequestFormcontroller extends Controller
     function getChangeRequestFormByCompanyId($company_id){
 
         $CRForm = ChangeRequestForm::
-            where('company_id',$company_id)->
-            get();
+            where('company_id',$company_id)
+            ->with('project_details','module_details','company_details','FSF_details')
+            ->get();
 
         return response()->json(['CRForm'=>$CRForm]);
     }
