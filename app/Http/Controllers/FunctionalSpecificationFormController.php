@@ -451,5 +451,15 @@ class FunctionalSpecificationFormController extends Controller
             return response()->json(['message'=>'output_screen Not Found']);
         }
     }
+    
+    function getFunctionalSpecificationFormByProjectIdAndModuleId($project_id,$module_id){
+
+        $fsf = FunctionalSpecificationForm::
+            where('project_id',$project_id)
+            ->where('module_id',$module_id)
+            ->get();
+
+        return response()->json(['FSFs'=>$fsf]);
+    }
 
 }
