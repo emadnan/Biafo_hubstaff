@@ -14,7 +14,7 @@ class AddColomnReferenceIntoChangeRequestFormsTable extends Migration
     public function up()
     {
         Schema::table('change_request_forms', function (Blueprint $table) {
-            $table->string('reference')->after('company_id');
+            $table->string('reference')->after('company_id')->nullable();
         });
     }
 
