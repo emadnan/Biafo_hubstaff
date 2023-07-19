@@ -11,4 +11,8 @@ class ChangeRequestSummary extends Model
 
     protected $table="change_request_summary";
     protected $primaryKey="id";
+
+    function crfDdetails(){
+        return $this->BelongsTo('App\Models\change_request_forms','crf_id','id');
+    }
 }

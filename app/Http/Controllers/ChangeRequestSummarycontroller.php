@@ -59,7 +59,7 @@ class ChangeRequestSummarycontroller extends Controller
 
         $CRSummary = ChangeRequestSummary::
         where('id', $id)
-        ->with('project_details','module_details','company_details','FSF_details')
+        ->with('crfDdetails')
         ->get();
 
         return response()->json(['CRSummary'=>$CRSummary]);
