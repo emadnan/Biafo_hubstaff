@@ -73,7 +73,7 @@ class ChangeRequestFormcontroller extends Controller
 
         $CRForm = ChangeRequestForm::
         where('id', $id)
-        ->with('project_details','module_details','company_details','FSF_details')
+        ->with('project_details','module_details','company_details','FSF_details','crsDdetails')
         ->get();
 
         return response()->json(['CRForm'=>$CRForm]);
