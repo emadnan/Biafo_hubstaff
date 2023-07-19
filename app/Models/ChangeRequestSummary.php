@@ -13,6 +13,6 @@ class ChangeRequestSummary extends Model
     protected $primaryKey="id";
 
     function crfDdetails(){
-        return $this->BelongsTo('App\Models\change_request_forms','crf_id','id');
+        return $this->BelongsTo('App\Models\change_request_summary','crf_id','id');
     }
 }
