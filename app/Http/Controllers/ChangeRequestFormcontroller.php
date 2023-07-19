@@ -30,7 +30,7 @@ class ChangeRequestFormcontroller extends Controller
     
         $CRForm->save();
     
-        return response()->json(['message' => 'Add Change Request Form', 'crf'=>$CRForm->id]);
+        return response()->json(['message' => 'Add Change Request Form', 'doc_ref_no'=>$CRForm->doc_ref_no]);
     }
     
 
