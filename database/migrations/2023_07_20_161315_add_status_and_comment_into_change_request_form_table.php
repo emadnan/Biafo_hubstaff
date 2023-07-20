@@ -13,7 +13,7 @@ class AddStatusAndCommentIntoChangeRequestFormTable extends Migration
      */
     public function up()
     {
-        Schema::table('change_request_form', function (Blueprint $table) {
+        Schema::table('change_request_forms', function (Blueprint $table) {
             $table->string('status')->after('crf_version')->nullable();
             $table->string('comment')->after('status')->nullable();
         });
@@ -26,7 +26,7 @@ class AddStatusAndCommentIntoChangeRequestFormTable extends Migration
      */
     public function down()
     {
-        Schema::table('change_request_form', function (Blueprint $table) {
+        Schema::table('change_request_forms', function (Blueprint $table) {
             $table->dropColumn('status');
             $table->dropColumn('comment');
         });
