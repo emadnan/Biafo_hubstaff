@@ -24,6 +24,25 @@ class TaskManagementController extends Controller
         $task->priorites = \Request::input('priorites');
         $task->team_lead_id = $userId;
 
+        $screenShots = \Request::input('attachment');
+
+            if (!empty($screenShots)) {
+                $image = str_replace('data:image/png;base64,', '', $screenShots);
+                $image = str_replace(' ', '+', $image);
+                $imageName = uniqid() . '.' . 'png';
+                \File::put(public_path() . '/development_logics/' . $imageName, base64_decode($image));
+                $task->attachment = $imageName;
+
+            }
+
+        $latestTM = TaskManagement::where('project_id',$task->project_id)->where('user_id',$task->user_id)->orderBy('ticket_no', 'desc')->first();
+
+        if ($latestTM) {
+            $task->ticket_no = $latestTM->ticket_no + 1;
+        } else {
+            $task->ticket_no = 1;
+        }
+
         $task->save();
         
         $task1 = TaskManagement::
@@ -104,6 +123,33 @@ class TaskManagementController extends Controller
             'comment' => \Request::input('comment')
         ]);
         
+        if($task->status=='complete'){
+            
+            $task1 = TaskManagement::
+            select('task_managements.*', 'users.name as user_name','users.email as user_email', 'projects.project_name','users.id as users_id','projects.id as projects_id')
+            ->join('users', 'users.id', '=', 'task_managements.user_id')
+            ->join('projects', 'projects.id', '=', 'task_managements.project_id')
+            ->where('task_managements.id', $task->id)
+            ->with('team_lead_details')
+            ->first();
+            // print_r($task1);
+            // exit();
+            $mailData = [
+                'userName' => $task1->user_name,
+                'projectName' => $task1->project_name,
+                'deadline' => $task1->dead_line,
+                'email' => $task1->user_email,
+                'priorities' => $task1->priorites,
+                'taskDescription' => $task1->task_description,
+                'teamLeadName' => $task1->team_lead_details->name,
+                'teamLeadEmail' => $task1->team_lead_details->email
+            ];
+            
+            // Send Email
+            Mail::to($task1->user_email)->send(new AssignTaskEmail($mailData));
+
+        }
+
         return response()->json(['message'=>'Update Status and comment of task Successfully']);
     }
 
