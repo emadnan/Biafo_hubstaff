@@ -148,6 +148,8 @@ class TaskManagementController extends Controller
             // Send Email
             Mail::to($task1->user_email)->send(new AssignTaskEmail($mailData));
 
+            return response()->json(['message'=>'Update Status and comment of task Successfully']);
+
         }
 
         return response()->json(['message'=>'Update Status and comment of task Successfully']);
