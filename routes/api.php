@@ -485,3 +485,6 @@ Route::post('/updateChangeRequestSummary',[ChangeRequestSummarycontroller::class
 
 // delete Change Request Summary
 Route::post('/deleteChangeRequestSummary',[ChangeRequestSummarycontroller::class,'deleteChangeRequestSummary']);
+
+//update status and comment into CRF
+Route::post('/updateStatusAndComment',[ChangeRequestFormcontroller::class,'updateStatusAndComment']);
