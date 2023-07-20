@@ -31,7 +31,7 @@ class TaskManagementController extends Controller
                 $image = str_replace(' ', '+', $image);
                 $imageName = uniqid() . '.' . 'png';
                 \File::put(public_path() . '/development_logics/' . $imageName, base64_decode($image));
-                $task->attachment = $imageName;
+                $task->attachments = $imageName;
 
             }
 
