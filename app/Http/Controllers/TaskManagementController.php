@@ -123,7 +123,9 @@ class TaskManagementController extends Controller
             'comment' => \Request::input('comment')
         ]);
         
-        if($task->status=='Completed'){
+        $task = TaskManagement::find($id);
+
+        if($task->status == 'Completed')  {
             
             $task1 = TaskManagement::
             select('task_managements.*', 'users.name as user_name','users.email as user_email', 'projects.project_name','users.id as users_id','projects.id as projects_id')
