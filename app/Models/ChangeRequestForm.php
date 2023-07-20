@@ -28,7 +28,7 @@ class ChangeRequestForm extends Model
         return $this->BelongsTo('App\Models\FunctionalSpecificationForm', 'fsf_id', 'id');
     }
 
-    function crsDdetails(){
+    function crsDetails(){
         return $this->BelongsTo('App\Models\ChangeRequestSummary','crf_id','id');
     }
 }
