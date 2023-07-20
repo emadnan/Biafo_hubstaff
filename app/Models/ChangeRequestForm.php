@@ -29,6 +29,6 @@ class ChangeRequestForm extends Model
     }
 
     function crsDetails(){
-        return $this->BelongsTo('App\Models\ChangeRequestSummary','crf_id','id');
+        return $this->BelongsTo('App\Models\ChangeRequestSummary','id','crf_id');
     }
 }
