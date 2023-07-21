@@ -491,3 +491,6 @@ Route::post('/updateStatusAndComment',[ChangeRequestFormcontroller::class,'updat
 
 //update comment into CRF
 Route::post('/updateComment',[ChangeRequestFormcontroller::class,'updateComment']);
+
+//update CRF And Crs
+Route::post('/updateCrfAndCrs',[ChangeRequestFormcontroller::class,'updateCrfAndCrs']);
