@@ -13,7 +13,7 @@ class AddFunctionalIdIntoChangeRequestFormTable extends Migration
      */
     public function up()
     {
-        Schema::table('change_request_form', function (Blueprint $table) {
+        Schema::table('change_request_forms', function (Blueprint $table) {
             $table->integer('functional_id')->after('project_manager');
         });
     }
@@ -25,7 +25,7 @@ class AddFunctionalIdIntoChangeRequestFormTable extends Migration
      */
     public function down()
     {
-        Schema::table('change_request_form', function (Blueprint $table) {
+        Schema::table('change_request_forms', function (Blueprint $table) {
             $table->dropColumn('functional_id');
         });
     }
