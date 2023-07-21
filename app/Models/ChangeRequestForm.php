@@ -31,4 +31,8 @@ class ChangeRequestForm extends Model
     function crsDetails(){
         return $this->BelongsTo('App\Models\ChangeRequestSummary','id','crf_id');
     }
+
+    function projectManagerDetails(){
+        return $this->BelongsTo('App\Models\User', 'project_manager', 'id');
+    }
 }

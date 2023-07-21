@@ -14,6 +14,7 @@ class ChangeRequestFormcontroller extends Controller
         $CRForm->module_id = \Request::input('module_id');
         $CRForm->fsf_id = \Request::input('fsf_id');
         $CRForm->company_id = \Request::input('company_id');
+        $CRForm->project_manager = \Request::input('project_manager');
         $CRForm->reference = \Request::input('reference');
         $CRForm->implementation_partner = \Request::input('implementation_partner');
         $CRForm->issuance_date = \Request::input('issuance_date');
@@ -43,6 +44,7 @@ class ChangeRequestFormcontroller extends Controller
             'module_id' => \Request::input('module_id'),
             'fsf_id' => \Request::input('fsf_id'),
             'company_id' => \Request::input('company_id'),
+            'project_manager' => \Request::input('project_manager'),
             'reference' => \Request::input('reference'),
             'issuance_date' => \Request::input('issuance_date'),
             'implementation_partner' => \Request::input('implementation_partner'),
@@ -64,7 +66,8 @@ class ChangeRequestFormcontroller extends Controller
     function getChangeRequestForm(){
         
         $CRForm = ChangeRequestForm::
-        get();
+        with('projectManagerDetails')
+        ->get();
 
         return response()->json(['CRForm'=>$CRForm]);
     }
@@ -73,7 +76,7 @@ class ChangeRequestFormcontroller extends Controller
 
         $CRForm = ChangeRequestForm::
         where('id', $id)
-        ->with('project_details','module_details','company_details','FSF_details','crsDetails')
+        ->with('project_details','module_details','company_details','FSF_details','crsDetails','projectManagerDetails')
         ->get();
 
         return response()->json(['CRForm'=>$CRForm]);
@@ -83,6 +86,7 @@ class ChangeRequestFormcontroller extends Controller
 
         $CRForm = ChangeRequestForm::
             where('company_id',$company_id)
+            ->with('projectManagerDetails')
             ->get();
 
         return response()->json(['CRForm'=>$CRForm]);
@@ -94,7 +98,7 @@ class ChangeRequestFormcontroller extends Controller
             where('project_id',$project_id)
             ->where('module_id',$module_id)
             ->where('fsf_id',$fsf_id)
-            ->with('FSF_details')
+            ->with('FSF_details','projectManagerDetails')
             ->get();
 
         return response()->json(['Crfs'=>$Crf]);
