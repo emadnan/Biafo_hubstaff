@@ -14,7 +14,7 @@ class AddStatusAndCommentIntoChangeRequestFormTable extends Migration
     public function up()
     {
         Schema::table('change_request_forms', function (Blueprint $table) {
-            $table->string('status')->after('crf_version')->nullable();
+            $table->enum('status', ['Pending', 'Accepted','Change_request'])->default('Pending  ')->after('crf_version')->nullable();
             $table->string('comment')->after('status')->nullable();
         });
     }
