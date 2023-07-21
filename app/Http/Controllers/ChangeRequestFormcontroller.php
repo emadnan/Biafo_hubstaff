@@ -115,4 +115,15 @@ class ChangeRequestFormcontroller extends Controller
         
         return response()->json(['message'=>'Update Status And Comment Successfully']);
     }
+
+    function updateComment(){
+
+        $id = \Request::input('id');
+        $CRForm = ChangeRequestForm::where('id',$id)
+        ->update([
+            'comment' => \Request::input('comment')
+        ]);
+        
+        return response()->json(['message'=>'Update Comment Successfully']);
+    }
 }
