@@ -54,12 +54,10 @@ class ChangeRequestFormcontroller extends Controller
         $latestCRF = ChangeRequestForm::where('project_id', $CRForm->project_id)
             ->where('module_id', $CRForm->module_id)
             ->where('fsf_id', $CRForm->fsf_id)
-            ->orderBy('crf_version', 'desc')
+            ->orderBy('crf_version_float', 'desc')
             ->first();
     
         if ($latestCRF) {
-            print_r("aa gya");
-            exit;
             $CRForm->crf_version_float = $latestCRF->crf_version_float + 1;
             $CRForm->crf_version = $latestCRF->crf_version;
 
