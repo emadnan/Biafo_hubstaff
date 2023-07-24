@@ -117,7 +117,7 @@ class ChangeRequestFormcontroller extends Controller
     function getChangeRequestForm(){
         
         $CRForm = ChangeRequestForm::
-        with('projectManagerDetails')
+        with('projectManagerDetails','crsDetails')
         ->get();
 
         return response()->json(['CRForm'=>$CRForm]);
