@@ -8,33 +8,6 @@ use Illuminate\Http\Request;
 
 class ChangeRequestFormcontroller extends Controller
 {
-    // function addChangeRequestForm(){
-
-    //     $CRForm = new ChangeRequestForm();
-    //     $CRForm->project_id = \Request::input('project_id');
-    //     $CRForm->module_id = \Request::input('module_id');
-    //     $CRForm->fsf_id = \Request::input('fsf_id');
-    //     $CRForm->company_id = \Request::input('company_id');
-    //     $CRForm->functional_id = \Request::input('functional_id');
-    //     $CRForm->project_manager = \Request::input('project_manager');
-    //     $CRForm->reference = \Request::input('reference');
-    //     $CRForm->implementation_partner = \Request::input('implementation_partner');
-    //     $CRForm->issuance_date = \Request::input('issuance_date');
-    //     $CRForm->author = \Request::input('author');
-    //     $CRForm->doc_ref_no = \Request::input('doc_ref_no');
-    
-    //     $latestCRF = ChangeRequestForm::where('project_id',$CRForm->project_id)->where('module_id',$CRForm->module_id)->where('fsf_id',$CRForm->fsf_id)->orderBy('crf_version', 'desc')->first();
-
-    //     if ($latestCRF) {
-    //         $CRForm->crf_version = $latestCRF->crf_version + 1;
-    //     } else {
-    //         $CRForm->crf_version = 1;
-    //     }
-        
-    //     $CRForm->save();
-    
-    //     return response()->json(['message' => 'Add Change Request Form', 'crf'=>$CRForm->id]);
-    // }
     
     function addChangeRequestForm()
     {
