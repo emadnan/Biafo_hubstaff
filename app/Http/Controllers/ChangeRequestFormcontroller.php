@@ -58,7 +58,8 @@ class ChangeRequestFormcontroller extends Controller
             ->first();
     
         if ($latestCRF) {
-
+            print_r("aa gya");
+            exit;
             $CRForm->crf_version_float = $latestCRF->crf_version_float + 1;
             $CRForm->crf_version = $latestCRF->crf_version;
 
