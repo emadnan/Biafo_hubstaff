@@ -36,8 +36,8 @@ class ChangeRequestFormcontroller extends Controller
     //     return response()->json(['message' => 'Add Change Request Form', 'crf'=>$CRForm->id]);
     // }
     
-        function addChangeRequestForm()    {
-            
+    function addChangeRequestForm()
+    {
         $CRForm = new ChangeRequestForm();
         $CRForm->project_id = \Request::input('project_id');
         $CRForm->module_id = \Request::input('module_id');
@@ -50,42 +50,44 @@ class ChangeRequestFormcontroller extends Controller
         $CRForm->issuance_date = \Request::input('issuance_date');
         $CRForm->author = \Request::input('author');
         $CRForm->doc_ref_no = \Request::input('doc_ref_no');
-
+    
         // Check if a ChangeRequestForm with the given project_id, module_id, and fsf_id exists
         $latestCRF = ChangeRequestForm::where('project_id', $CRForm->project_id)
             ->where('module_id', $CRForm->module_id)
             ->where('fsf_id', $CRForm->fsf_id)
             ->orderBy('crf_version', 'desc')
             ->first();
-
+    
         if ($latestCRF) {
             // If a ChangeRequestForm with the given project_id, module_id, and fsf_id exists,
             // increment $CRForm->crf_version_float by 1
             $CRForm->crf_version_float = $latestCRF->crf_version_float + 1;
+            // Set $CRForm->crf_version to the default value obtained from the database
+            $CRForm->crf_version = $latestCRF->crf_version;
         } else {
             // If a ChangeRequestForm with the given project_id and module_id exists, but fsf_id is not found,
-            // increment $CRForm->crf_version by 1
+            // increment $CRForm->crf_version by 1 and set $CRForm->crf_version_float to 0
             $existingCRF = ChangeRequestForm::where('project_id', $CRForm->project_id)
                 ->where('module_id', $CRForm->module_id)
                 ->orderBy('crf_version', 'desc')
                 ->first();
-
+    
             if ($existingCRF) {
                 $CRForm->crf_version = $existingCRF->crf_version + 1;
             } else {
                 // If no ChangeRequestForm with the given project_id and module_id exists,
-                // set $CRForm->crf_version to 1
+                // set both $CRForm->crf_version and $CRForm->crf_version_float to 1
                 $CRForm->crf_version = 1;
             }
-
-            // Set $CRForm->crf_version_float to 0
+    
             $CRForm->crf_version_float = 0;
         }
-
+    
         $CRForm->save();
-
+    
         return response()->json(['message' => 'Add Change Request Form', 'crf' => $CRForm->id]);
     }
+    
 
 
     function updateChangeRequestForm(){
