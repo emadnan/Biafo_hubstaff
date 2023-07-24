@@ -65,7 +65,7 @@ class ChangeRequestFormcontroller extends Controller
 
             $existingCRF = ChangeRequestForm::where('project_id', $CRForm->project_id)
                 ->where('module_id', $CRForm->module_id)
-                ->orderBy('crf_version_float', 'desc')
+                ->orderBy('crf_version', 'desc')
                 ->first();
     
             if ($existingCRF) {
