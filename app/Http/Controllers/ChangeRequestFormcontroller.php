@@ -52,7 +52,6 @@ class ChangeRequestFormcontroller extends Controller
             $CRForm->crf_version_float = 0;
         }
         
-        $CRForm->save();
 
         $CRSummary = new ChangeRequestSummary();
         $CRSummary->crf_id = $CRForm->id;
@@ -66,6 +65,8 @@ class ChangeRequestFormcontroller extends Controller
         $CRSummary->priority = \Request::input('priority');
         $CRSummary->with_in_project_scope = \Request::input('with_in_project_scope');
     
+        
+        $CRForm->save();
         $CRSummary->save();
     
         return response()->json(['message' => 'Add Change Request Form']);
