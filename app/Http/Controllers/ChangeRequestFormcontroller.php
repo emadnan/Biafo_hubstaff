@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 
 class ChangeRequestFormcontroller extends Controller
 {
-    
-    
-    use Illuminate\Http\Request;
 
     function addChangeRequestForm(Request $request)
     {
