@@ -52,10 +52,23 @@ class ChangeRequestFormcontroller extends Controller
             $CRForm->crf_version_float = 0;
         }
         
-    
         $CRForm->save();
+
+        $CRSummary = new ChangeRequestSummary();
+        $CRSummary->crf_id = $CRForm->id;
+        $CRSummary->requirement = \Request::input('requirement');
+        $CRSummary->required_time_no = \Request::input('required_time_no');
+        $CRSummary->required_time_type = \Request::input('required_time_type');
+        $CRSummary->functional_resource = \Request::input('functional_resource');
+        $CRSummary->Technical_resource = \Request::input('Technical_resource');
+        $CRSummary->crf_title = \Request::input('crf_title');
+        $CRSummary->type_of_requirement = \Request::input('type_of_requirement');
+        $CRSummary->priority = \Request::input('priority');
+        $CRSummary->with_in_project_scope = \Request::input('with_in_project_scope');
     
-        return response()->json(['message' => 'Add Change Request Form', 'crf' => $CRForm->id]);
+        $CRSummary->save();
+    
+        return response()->json(['message' => 'Add Change Request Form']);
     }
     
 
