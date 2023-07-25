@@ -10,67 +10,95 @@ class ChangeRequestFormcontroller extends Controller
 {
     
     
-    function addChangeRequestForm()
+    use Illuminate\Http\Request;
+
+    function addChangeRequestForm(Request $request)
     {
-        $CRForm = new ChangeRequestForm();
-        $CRForm->project_id = \Request::input('project_id');
-        $CRForm->module_id = \Request::input('module_id');
-        $CRForm->fsf_id = \Request::input('fsf_id');
-        $CRForm->company_id = \Request::input('company_id');
-        $CRForm->functional_id = \Request::input('functional_id');
-        $CRForm->project_manager = \Request::input('project_manager');
-        $CRForm->reference = \Request::input('reference');
-        $CRForm->implementation_partner = \Request::input('implementation_partner');
-        $CRForm->issuance_date = \Request::input('issuance_date');
-        $CRForm->author = \Request::input('author');
-        $CRForm->doc_ref_no = \Request::input('doc_ref_no');
-    
-        $latestCRF = ChangeRequestForm::where('project_id', $CRForm->project_id)
-            ->where('module_id', $CRForm->module_id)
-            ->where('fsf_id', $CRForm->fsf_id)
+        // Get the input values from the request
+        $project_id = $request->input('project_id');
+        $module_id = $request->input('module_id');
+        $fsf_id = $request->input('fsf_id');
+        $company_id = $request->input('company_id');
+        $functional_id = $request->input('functional_id');
+        $project_manager = $request->input('project_manager');
+        $reference = $request->input('reference');
+        $implementation_partner = $request->input('implementation_partner');
+        $issuance_date = $request->input('issuance_date');
+        $author = $request->input('author');
+        $doc_ref_no = $request->input('doc_ref_no');
+        $requirement = $request->input('requirement');
+        $required_time_no = $request->input('required_time_no');
+        $required_time_type = $request->input('required_time_type');
+        $functional_resource = $request->input('functional_resource');
+        $Technical_resource = $request->input('Technical_resource');
+        $crf_title = $request->input('crf_title');
+        $type_of_requirement = $request->input('type_of_requirement');
+        $priority = $request->input('priority');
+        $with_in_project_scope = $request->input('with_in_project_scope');
+
+        // Determine the CRF version
+        $latestCRF = ChangeRequestForm::where('project_id', $project_id)
+            ->where('module_id', $module_id)
+            ->where('fsf_id', $fsf_id)
             ->orderBy('crf_version_float', 'desc')
             ->first();
-    
+
         if ($latestCRF) {
-            $CRForm->crf_version_float = $latestCRF->crf_version_float + 1;
-            $CRForm->crf_version = $latestCRF->crf_version;
-
+            $crf_version_float = $latestCRF->crf_version_float + 1;
+            $crf_version = $latestCRF->crf_version;
         } else {
-
-            $existingCRF = ChangeRequestForm::where('project_id', $CRForm->project_id)
-                ->where('module_id', $CRForm->module_id)
+            $existingCRF = ChangeRequestForm::where('project_id', $project_id)
+                ->where('module_id', $module_id)
                 ->orderBy('crf_version', 'desc')
                 ->first();
-    
-            if ($existingCRF) {
-                $CRForm->crf_version = $existingCRF->crf_version + 1;
-            } else {
-                
-                $CRForm->crf_version = 1;
-            }
-    
-            $CRForm->crf_version_float = 0;
-        }
-        
 
-        $CRSummary = new ChangeRequestSummary();
-        $CRSummary->crf_id = $CRForm->id;
-        $CRSummary->requirement = \Request::input('requirement');
-        $CRSummary->required_time_no = \Request::input('required_time_no');
-        $CRSummary->required_time_type = \Request::input('required_time_type');
-        $CRSummary->functional_resource = \Request::input('functional_resource');
-        $CRSummary->Technical_resource = \Request::input('Technical_resource');
-        $CRSummary->crf_title = \Request::input('crf_title');
-        $CRSummary->type_of_requirement = \Request::input('type_of_requirement');
-        $CRSummary->priority = \Request::input('priority');
-        $CRSummary->with_in_project_scope = \Request::input('with_in_project_scope');
-    
-        
-        $CRForm->save();
-        $CRSummary->save();
-    
-        return response()->json(['message' => 'Add Change Request Form']);
+            if ($existingCRF) {
+                $crf_version = $existingCRF->crf_version + 1;
+            } else {
+                $crf_version = 1;
+            }
+
+            $crf_version_float = 0;
+        }
+
+        // Create a new ChangeRequestForm instance and set the properties
+        $changeRequestForm = new ChangeRequestForm();
+        $changeRequestForm->project_id = $project_id;
+        $changeRequestForm->module_id = $module_id;
+        $changeRequestForm->fsf_id = $fsf_id;
+        $changeRequestForm->company_id = $company_id;
+        $changeRequestForm->functional_id = $functional_id;
+        $changeRequestForm->project_manager = $project_manager;
+        $changeRequestForm->reference = $reference;
+        $changeRequestForm->implementation_partner = $implementation_partner;
+        $changeRequestForm->issuance_date = $issuance_date;
+        $changeRequestForm->author = $author;
+        $changeRequestForm->doc_ref_no = $doc_ref_no;
+        $changeRequestForm->crf_version_float = $crf_version_float;
+        $changeRequestForm->crf_version = $crf_version;
+
+        // Save the ChangeRequestForm to the database
+        $changeRequestForm->save();
+
+        // Create a new ChangeRequestSummary instance and set the properties
+        $changeRequestSummary = new ChangeRequestSummary();
+        $changeRequestSummary->crf_id = $changeRequestForm->id;
+        $changeRequestSummary->requirement = $requirement;
+        $changeRequestSummary->required_time_no = $required_time_no;
+        $changeRequestSummary->required_time_type = $required_time_type;
+        $changeRequestSummary->functional_resource = $functional_resource;
+        $changeRequestSummary->Technical_resource = $Technical_resource;
+        $changeRequestSummary->crf_title = $crf_title;
+        $changeRequestSummary->type_of_requirement = $type_of_requirement;
+        $changeRequestSummary->priority = $priority;
+        $changeRequestSummary->with_in_project_scope = $with_in_project_scope;
+
+        // Save the ChangeRequestSummary to the database
+        $changeRequestSummary->save();
+
+        return response()->json(['message' => 'Change Request Form added successfully']);
     }
+
     
 
 
