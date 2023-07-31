@@ -23,6 +23,7 @@ use App\Http\Controllers\TaskManagementController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ChangeRequestFormcontroller;
 use App\Http\Controllers\ChangeRequestSummarycontroller;
+use App\Http\Controllers\ChatBoxController;
 
 
 /*
@@ -492,5 +493,11 @@ Route::post('/updateStatusAndComment',[ChangeRequestFormcontroller::class,'updat
 //update comment into CRF
 Route::post('/updateComment',[ChangeRequestFormcontroller::class,'updateComment']);
 
-//update CRF And Crs
+//update CRF And CRS
 Route::post('/updateCrfAndCrs',[ChangeRequestFormcontroller::class,'updateCrfAndCrs']);
+
+// Send Message API
+Route::post('/sendMessage',[ChatBoxController::class,'sendMessage']);
+
+// get All Messages API
+Route::get('/getAllMessage',[ChatBoxController::class,'getAllMessage']);
