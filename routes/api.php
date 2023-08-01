@@ -503,4 +503,4 @@ Route::post('/sendMessage',[ChatBoxController::class,'sendMessage']);
 Route::get('/getAllMessage',[ChatBoxController::class,'getAllMessage']);
 
 // get All Messages By Crf Id API
-Route::get('/getAllMessageByCrfId/{$crfId}',[ChatBoxController::class,'getAllMessageByCrfId']);
+Route::get('/getAllMessageByCrfId/{crfId}',[ChatBoxController::class,'getAllMessageByCrfId']);
