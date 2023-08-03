@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ChatBox;
 use App\Models\ChatBoxFsf;
+use App\Models\ChatBoxFsfToUser;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -92,7 +93,7 @@ class ChatBoxController extends Controller
         
         // Assuming you have imported the necessary classes here.
     
-        $chat = new ChatBoxFsf();
+        $chat = new ChatBoxFsfToUser();
         $chat->fsf_id = \Request::input('fsf_id');
         $chat->sender_id = \Request::input('sender_id');
         $chat->messages = \Request::input('messages');
@@ -108,7 +109,7 @@ class ChatBoxController extends Controller
 
     public function getAllFsfToEmploeeMessage()    {
 
-        $chat = ChatBoxFsf::
+        $chat = ChatBoxFsfToUser::
         with('crfChatSenderDetailes')
         ->get();
 
@@ -117,7 +118,7 @@ class ChatBoxController extends Controller
 
     public function getAllMessageToEmploeeByFsfId($fafId)    {
 
-        $chat = ChatBoxFsf::
+        $chat = ChatBoxFsfToUser::
         where('fsf_id',$fafId)
         ->with('crfChatSenderDetailes')
         ->get();
