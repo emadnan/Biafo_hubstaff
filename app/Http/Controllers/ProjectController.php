@@ -93,7 +93,6 @@ class ProjectController extends Controller
         ->join('projects','projects.id','=','assign_projects.project_id')
         ->join('streams','streams.id','=','assign_projects.stream_id') 
         ->where('assign_projects.user_id',$user_id)
-        ->with('project_manager_details')
         ->get();
         
         return response()->json(['projects' => $project]);
