@@ -17,7 +17,7 @@ class CreateChatBoxTable extends Migration
             $table->id();
             $table->integer('crf_id');
             $table->integer('sender_id');
-            $table->string('messages');
+            $table->string('messages',1000);
             $table->dateTime('message_time');
             $table->timestamps();
         });
