@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 class Project extends Model
 {
     use HasFactory;
@@ -13,7 +13,7 @@ class Project extends Model
 
     function projectManagerDetails()  {
 
-        return $this->BelongsTo('App\Models\User','project_manager','id');
+        return $this->hasMany('App\Models\User','id','project_manager');
 
     }
 }
