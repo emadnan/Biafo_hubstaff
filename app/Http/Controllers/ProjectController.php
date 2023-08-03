@@ -63,7 +63,7 @@ class ProjectController extends Controller
         $project = Project::select('company.*','departments.*','projects.*','projects.id as project_id','projects.description as project_description')->
         join('company','company.id','=','projects.company_id')
         ->join('departments','departments.id','=','projects.department_id')
-        ->with('project_manager_details')
+        ->with('projectManagerDetails')
         ->get();
         return response()->json(['projects' => $project]);
     }

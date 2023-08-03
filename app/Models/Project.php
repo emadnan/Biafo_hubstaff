@@ -11,7 +11,7 @@ class Project extends Model
     protected $table="projects";
     protected $primaryKey="id";
 
-    function project_manager_details()  {
+    function projectManagerDetails()  {
 
         return $this->BelongsTo('App\Models\User','project_manager','id');
 
