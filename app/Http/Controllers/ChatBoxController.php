@@ -33,7 +33,7 @@ class ChatBoxController extends Controller
     public function getAllMessage()    {
 
         $chat = ChatBox::
-        join('users','users.id','=','chat_box.sender_id')
+        join('users','users.id','=','chat_box_crf.sender_id')
         ->get();
 
         return response()->json(['chat' => $chat]);
@@ -42,7 +42,7 @@ class ChatBoxController extends Controller
     public function getAllMessageByCrfId($criId)    {
 
         $chat = ChatBox::
-        join('users','users.id','=','chat_box.sender_id')
+        join('users','users.id','=','chat_box_crf.sender_id')
         ->where('crf_id',$criId)
         ->get();
 
