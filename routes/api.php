@@ -514,3 +514,12 @@ Route::get('/getAllFsfMessage',[ChatBoxController::class,'getAllFsfMessage']);
 
 // get All Messages By fsf Id API
 Route::get('/getAllMessageByFsfId/{fafId}',[ChatBoxController::class,'getAllMessageByFsfId']);
+
+// Send Message to employee in Fsf API
+Route::post('/sendFsfToEmploeeMessage',[ChatBoxController::class,'sendFsfToEmploeeMessage']);
+
+// get All Messages to employee In Fsf API
+Route::get('/getAllFsfToEmploeeMessage',[ChatBoxController::class,'getAllFsfToEmploeeMessage']);
+
+// get All Messages to employee By fsf Id API
+Route::get('/getAllMessageToEmploeeByFsfId/{fafId}',[ChatBoxController::class,'getAllMessageToEmploeeByFsfId']);
