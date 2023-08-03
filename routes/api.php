@@ -523,3 +523,12 @@ Route::get('/getAllFsfToEmploeeMessage',[ChatBoxController::class,'getAllFsfToEm
 
 // get All Messages to employee By fsf Id API
 Route::get('/getAllMessageToEmploeeByFsfId/{fafId}',[ChatBoxController::class,'getAllMessageToEmploeeByFsfId']);
+
+// Send Task Message to employee API
+Route::post('/sendTaskMessagetoEmployee',[ChatBoxController::class,'sendTaskMessagetoEmployee']);
+
+// get All task Messages to employee API
+Route::get('/getAllTaskMessageOfEmployee',[ChatBoxController::class,'getAllTaskMessageOfEmployee']);
+
+// get All task Messages to employee By fsf Id API
+Route::get('/getTaskMessageFromEmployeeByFsfId/{fafId}',[ChatBoxController::class,'getTaskMessageFromEmployeeByFsfId']);

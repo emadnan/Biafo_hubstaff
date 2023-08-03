@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ChatBox;
 use App\Models\ChatBoxFsf;
 use App\Models\ChatBoxFsfToUser;
+use App\Models\ChatBoxForTask;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -27,15 +28,11 @@ class ChatBoxController extends Controller
     
         return response()->json(['message' => 'Send Message successfully']);
     }
-    
-    
-    
-    
 
     public function getAllMessage()    {
 
         $chat = ChatBox::
-        join('users','users.id','=','chat_box_crf.sender_id')
+        with('crfChatSenderDetailes')
         ->get();
 
         return response()->json(['chat' => $chat]);
@@ -44,8 +41,8 @@ class ChatBoxController extends Controller
     public function getAllMessageByCrfId($criId)    {
 
         $chat = ChatBox::
-        join('users','users.id','=','chat_box_crf.sender_id')
-        ->where('crf_id',$criId)
+        where('crf_id',$criId)
+        ->with('crfChatSenderDetailes')
         ->get();
 
         return response()->json(['chat' => $chat]);
@@ -120,6 +117,43 @@ class ChatBoxController extends Controller
 
         $chat = ChatBoxFsfToUser::
         where('fsf_id',$fafId)
+        ->with('crfChatSenderDetailes')
+        ->get();
+
+        return response()->json(['chat' => $chat]);
+    }
+
+    function sendTaskMessagetoEmployee()  {
+        
+        // Assuming you have imported the necessary classes here.
+    
+        $chat = new ChatBoxForTask();
+        $chat->crf_id = \Request::input('crf_id');
+        $chat->sender_id = \Request::input('sender_id');
+        $chat->messages = \Request::input('messages');
+        
+        // Get the current date and time in the desired format (using Carbon).
+        $message_time = Carbon::now()->format('Y-m-d H:i:s');
+        $chat->message_time = $message_time;
+        
+        $chat->save();
+    
+        return response()->json(['message' => 'Send Message successfully']);
+    }
+
+    public function getAllTaskMessageOfEmployee()    {
+
+        $chat = ChatBoxForTask::
+        with('crfChatSenderDetailes')
+        ->get();
+
+        return response()->json(['chat' => $chat]);
+    }
+
+    public function getTaskMessageFromEmployeeByFsfId($criId)    {
+
+        $chat = ChatBoxForTask::
+        where('crf_id',$criId)
         ->with('crfChatSenderDetailes')
         ->get();
 
