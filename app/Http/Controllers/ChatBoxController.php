@@ -59,6 +59,10 @@ class ChatBoxController extends Controller
         $chat->sender_id = \Request::input('sender_id');
         $chat->messages = \Request::input('messages');
         
+        // Get the current date and time in the desired format (using Carbon).
+        $message_time = Carbon::now()->format('Y-m-d H:i:s');
+        $chat->message_time = $message_time;
+        
         $chat->save();
     
         return response()->json(['message' => 'Send Message successfully']);

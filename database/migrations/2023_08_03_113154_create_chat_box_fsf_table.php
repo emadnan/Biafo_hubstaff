@@ -18,6 +18,7 @@ class CreateChatBoxFsfTable extends Migration
             $table->integer('fsf_id');
             $table->integer('sender_id');
             $table->string('messages',1000);
+            $table->dateTime('message_time');
             $table->timestamps();
         });
     }
