@@ -81,7 +81,7 @@ class ProjectController extends Controller
         ->join('company','company.id','=','projects.company_id')
         ->join('departments','departments.id','=','projects.department_id')
         ->where('projects.id',$project_id)
-        ->with('project_manager_details')
+        ->with('projectManagerDetails')
         ->get();
         
         return response()->json(['projects' => $project]);
