@@ -185,19 +185,19 @@ Route::get('/getdepartment',[DepartmentController::class,'get_department']);
 Route::get('/getdepartment-by-id/{id}',[DepartmentController::class,'get_department_by_id']);
 
 //Get project API
-Route::get('/getproject',[projectController::class,'get_projects']);
+Route::get('/getproject',[projectController::class,'getProjects']);
 
 //Add project API
-Route::post('/add_project',[projectController::class,'add_project']);
+Route::post('/add_project',[projectController::class,'addProject']);
 
 //update project API
-Route::post('/update-project',[projectController::class,'update_project']);
+Route::post('/update-project',[projectController::class,'updateProject']);
 
 //delete project API
-Route::post('/delete-project',[projectController::class,'delete_project']);
+Route::post('/delete-project',[projectController::class,'deleteProject']);
 
 //Get project API
-Route::get('/get-project-by-project-id/{project_id}',[projectController::class,'get_project_by_project_id']);
+Route::get('/get-project-by-project-id/{project_id}',[projectController::class,'getProjectByProjectId']);
 
 //Add User API
 Route::post('/add_user',[UserController::class,'add_user']);
@@ -275,7 +275,7 @@ Route::post('/update_assign_projects',[AssignProjectController::class,'update_as
 Route::get('/get_assign_project_by_project_id/{project_id}/{stream_id}',[AssignProjectController::class,'get_assign_project_by_project_id']);
 
 //get project by users 
-Route::get('/get-project-by-user-id/{id}',[projectController::class,'get_project_by_user_id']);
+Route::get('/get-project-by-user-id/{id}',[projectController::class,'getProjectByUserId']);
 
 //Add stream API
 Route::post('/addStreams',[StreamsController::class,'addStreams']);

@@ -10,11 +10,12 @@ use Carbon\Carbon;
 class ProjectController extends Controller
 {
 
-    function add_project()  {
+    function addProject()  {
 
         $project = new Project();
         $project->department_id = \Request::input('department_id');
         $project->company_id = \Request::input('company_id');
+        $project->project_manager = \Request::input('project_manager');
         $project->project_name = \Request::input('project_name');
         $project->description = \Request::input('description');
         $project->start_date = \Request::input('start_date');
@@ -37,13 +38,14 @@ class ProjectController extends Controller
     }
 
 
-    function update_project()   {
+    function updateProject()   {
 
         $id = \Request::input('id');
         $project = Project::where('id',$id)
         ->update([
             'department_id' => \Request::input('department_id'),
             'company_id' => \Request::input('company_id'),
+            'project_manager' => \Request::input('project_manager'),
             'project_name' => \Request::input('project_name'),
             'description' => \Request::input('description'),
             'budget' => \Request::input('budget'),
@@ -56,39 +58,42 @@ class ProjectController extends Controller
         return response()->json(['Message' => 'Project Updated']);
     }
 
-    public function get_projects()  {
+    public function getProjects()  {
 
         $project = Project::select('company.*','departments.*','projects.*','projects.id as project_id','projects.description as project_description')->
         join('company','company.id','=','projects.company_id')
         ->join('departments','departments.id','=','projects.department_id')
+        ->with('project_manager_details')
         ->get();
         return response()->json(['projects' => $project]);
     }
 
-    function delete_project()   {
+    function deleteProject()   {
         $id = \Request::input('id');
         $project = Project::where('id',$id)->delete();
 
         return response()->json(['message'=>'delete Project successfully']);
     }
 
-    public function get_project_by_project_id($project_id)  {
+    public function getProjectByProjectId($project_id)  {
         
         $project = Project::select('projects.*','projects.id as project_id','projects.description as project_description','company.*','departments.*')
         ->join('company','company.id','=','projects.company_id')
         ->join('departments','departments.id','=','projects.department_id')
         ->where('projects.id',$project_id)
+        ->with('project_manager_details')
         ->get();
         
         return response()->json(['projects' => $project]);
     }
 
-    public function get_project_by_user_id($user_id)    {
+    public function getProjectByUserId($user_id)    {
 
         $project = AssignProject::select('assign_projects.*','assign_projects.project_id as assign_projects_project_id','projects.*','projects.id as project_id','streams.*')
         ->join('projects','projects.id','=','assign_projects.project_id')
         ->join('streams','streams.id','=','assign_projects.stream_id') 
         ->where('assign_projects.user_id',$user_id)
+        ->with('project_manager_details')
         ->get();
         
         return response()->json(['projects' => $project]);
