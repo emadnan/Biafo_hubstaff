@@ -349,8 +349,7 @@ class FunctionalSpecificationFormController extends Controller
         $fsf_Assign_to_users = FunctionalSpecificationForm::where('id',$fsf_id)
         ->where('ABAP_team_lead_id',$userId)
         ->update([
-            'status' => \Request::input('status'),
-            'comment' => \Request::input('comment')
+            'status' => \Request::input('status')
         ]);
         
         return response()->json(['message'=>'Update Status of Fsf Successfully']);
