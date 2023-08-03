@@ -13,7 +13,7 @@ class CreateChatBoxTable extends Migration
      */
     public function up()
     {
-        Schema::create('chat_box', function (Blueprint $table) {
+        Schema::create('chat_box_crf', function (Blueprint $table) {
             $table->id();
             $table->integer('crf_id');
             $table->integer('sender_id');
@@ -30,6 +30,6 @@ class CreateChatBoxTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chat_box');
+        Schema::dropIfExists('chat_box_crf');
     }
 }
