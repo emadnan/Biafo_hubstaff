@@ -9,6 +9,6 @@ class ChatBox extends Model
 {
     use HasFactory;
     
-    protected $table="chat_box";
+    protected $table="chat_box_crf";
     protected $primaryKey="id";
 }
