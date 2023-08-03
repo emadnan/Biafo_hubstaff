@@ -507,10 +507,10 @@ Route::get('/getAllMessage',[ChatBoxController::class,'getAllMessage']);
 Route::get('/getAllMessageByCrfId/{crfId}',[ChatBoxController::class,'getAllMessageByCrfId']);
 
 // Send Message in Fsf API
-Route::post('/sendFsfMessage',[ChatBoxFsfController::class,'sendFsfMessage']);
+Route::post('/sendFsfMessage',[ChatBoxController::class,'sendFsfMessage']);
 
 // get All Messages In Fsf API
-Route::get('/getAllFsfMessage',[ChatBoxFsfController::class,'getAllFsfMessage']);
+Route::get('/getAllFsfMessage',[ChatBoxController::class,'getAllFsfMessage']);
 
 // get All Messages By fsf Id API
-Route::get('/getAllMessageByFsfId/{fafId}',[ChatBoxFsfController::class,'getAllMessageByFsfId']);
+Route::get('/getAllMessageByFsfId/{fafId}',[ChatBoxController::class,'getAllMessageByFsfId']);
