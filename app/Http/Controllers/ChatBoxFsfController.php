@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 class ChatBoxFsfController extends Controller
 {
-    function sendMessage()  {
+    function sendFsfMessage()  {
         
         // Assuming you have imported the necessary classes here.
     
@@ -25,7 +25,7 @@ class ChatBoxFsfController extends Controller
         return response()->json(['message' => 'Send Message successfully']);
     }
 
-    public function getAllMessage()    {
+    public function getAllFsfMessage()    {
 
         $chat = ChatBoxFsf::
         with('crfChatSenderDetailes')
@@ -34,10 +34,10 @@ class ChatBoxFsfController extends Controller
         return response()->json(['chat' => $chat]);
     }
 
-    public function getAllMessageByCrfId($criId)    {
+    public function getAllMessageByFsfId($fafId)    {
 
         $chat = ChatBoxFsf::
-        where('crf_id',$criId)
+        where('fsf_id',$fafId)
         ->with('crfChatSenderDetailes')
         ->get();
 

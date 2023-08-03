@@ -504,3 +504,12 @@ Route::get('/getAllMessage',[ChatBoxController::class,'getAllMessage']);
 
 // get All Messages By Crf Id API
 Route::get('/getAllMessageByCrfId/{crfId}',[ChatBoxController::class,'getAllMessageByCrfId']);
+
+// Send Message in Fsf API
+Route::post('/sendFsfMessage',[ChatBoxController::class,'sendFsfMessage']);
+
+// get All Messages In Fsf API
+Route::get('/getAllFsfMessage',[ChatBoxController::class,'getAllFsfMessage']);
+
+// get All Messages By fsf Id API
+Route::get('/getAllMessageByFsfId/{fafId}',[ChatBoxController::class,'getAllMessageByFsfId']);
