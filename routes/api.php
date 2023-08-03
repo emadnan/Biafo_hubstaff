@@ -24,6 +24,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ChangeRequestFormcontroller;
 use App\Http\Controllers\ChangeRequestSummarycontroller;
 use App\Http\Controllers\ChatBoxController;
+use App\Http\Controllers\ChatBoxFsfController;
 
 
 /*
@@ -506,10 +507,10 @@ Route::get('/getAllMessage',[ChatBoxController::class,'getAllMessage']);
 Route::get('/getAllMessageByCrfId/{crfId}',[ChatBoxController::class,'getAllMessageByCrfId']);
 
 // Send Message in Fsf API
-Route::post('/sendFsfMessage',[ChatBoxController::class,'sendFsfMessage']);
+Route::post('/sendFsfMessage',[ChatBoxFsfController::class,'sendFsfMessage']);
 
 // get All Messages In Fsf API
-Route::get('/getAllFsfMessage',[ChatBoxController::class,'getAllFsfMessage']);
+Route::get('/getAllFsfMessage',[ChatBoxFsfController::class,'getAllFsfMessage']);
 
 // get All Messages By fsf Id API
-Route::get('/getAllMessageByFsfId/{fafId}',[ChatBoxController::class,'getAllMessageByFsfId']);
+Route::get('/getAllMessageByFsfId/{fafId}',[ChatBoxFsfController::class,'getAllMessageByFsfId']);
