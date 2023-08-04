@@ -280,26 +280,33 @@ class FunctionalSpecificationFormController extends Controller
         $user_ids = $request->user_ids;
         $fsf_id = $request->input('fsf_id');
         $dead_line = $request->input('dead_line');
-
-        // Check if the fsf_id and user_id already exist
-        $existingAssignments = FsfAssignToUser::where('fsf_id', $fsf_id)
-                                            ->whereIn('user_id', $user_ids)
-                                            ->get();
-
-        // Remove existing user_ids from the list of user_ids to be inserted
-        $user_idsToInsert = array_diff($user_ids, $existingAssignments->pluck('user_id')->toArray());
-
-        // Insert new data for the remaining user_ids
-        foreach ($user_idsToInsert as $user_id) {
-            $assign = new FsfAssignToUser;
-            $assign->fsf_id = $fsf_id;
-            $assign->user_id = $user_id;
-            $assign->dead_line = $dead_line;
-            $assign->save();
+    
+        // Fetch all existing assignments for the given fsf_id
+        $existingAssignments = FsfAssignToUser::where('fsf_id', $fsf_id)->get();
+    
+        // Get the user_ids of existing assignments
+        $existingUserIds = $existingAssignments->pluck('user_id')->toArray();
+    
+        // Identify user_ids to delete (those not in the new user_ids list)
+        $userIdsToDelete = array_diff($existingUserIds, $user_ids);
+    
+        // Delete old data for user_ids that are not in the new list
+        FsfAssignToUser::where('fsf_id', $fsf_id)->whereIn('user_id', $userIdsToDelete)->delete();
+    
+        // Insert new data for user_ids that don't already exist
+        foreach ($user_ids as $user_id) {
+            if (!in_array($user_id, $existingUserIds)) {
+                $assign = new FsfAssignToUser;
+                $assign->fsf_id = $fsf_id;
+                $assign->user_id = $user_id;
+                $assign->dead_line = $dead_line;
+                $assign->save();
+            }
         }
-
+    
         return response()->json(['message' => 'FSF Assign To Users Successfully']);
     }
+    
 
 
 
