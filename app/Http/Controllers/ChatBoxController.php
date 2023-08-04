@@ -78,8 +78,8 @@ class ChatBoxController extends Controller
     public function getAllMessageByFsfId($fafId)    {
 
         $chat = ChatBoxFsf::
-        join('users','usres.id','=','chat_box_fsf.sender_id')
-        ->where('fsf_id',$fafId)
+        where('fsf_id',$fafId)
+        ->with('crfChatSenderDetailes')
         ->get();
 
         return response()->json(['chat' => $chat]);

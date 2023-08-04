@@ -13,6 +13,6 @@ class ChatBoxFsf extends Model
     protected $primaryKey="id";
 
     function crfChatSenderDetailes(){
-        return $this->hasMany('App\Models\User','id','fsf_id');
+        return $this->hasMany('App\Models\User','id','sender_id');
     }
 }
