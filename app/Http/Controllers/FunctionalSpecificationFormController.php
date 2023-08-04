@@ -305,6 +305,7 @@ class FunctionalSpecificationFormController extends Controller
         $userId = Auth::id();
         $Functional = FunctionalSpecificationForm::select('fsf_assign_to_users.*','functional_specification_form.*')
         ->join('fsf_assign_to_users','fsf_assign_to_users.fsf_id','=','functional_specification_form.id')
+        ->join('users','users.id','=','fsf_assign_to_users.user_id')
         
         ->where('fsf_assign_to_users.user_id',$userId)
         ->with('team_lead_details','function_lead_details','getFsfInputParameter')
