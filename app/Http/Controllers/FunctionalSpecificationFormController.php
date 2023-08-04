@@ -303,7 +303,7 @@ class FunctionalSpecificationFormController extends Controller
     function getFunctionalSpecificationFormBylogin(){
         
         $userId = Auth::id();
-        $Functional = FunctionalSpecificationForm::select('fsf_assign_to_users.*')
+        $Functional = FunctionalSpecificationForm::select('fsf_assign_to_users.*','functional_specification_form*','fsf_assign_to_users.status as assign_status')
         ->join('fsf_assign_to_users','fsf_assign_to_users.fsf_id','=','functional_specification_form.id')
         ->join('users','users.id','=','fsf_assign_to_users.user_id')
         
