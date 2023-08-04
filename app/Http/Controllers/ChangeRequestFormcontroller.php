@@ -206,7 +206,8 @@ class ChangeRequestFormcontroller extends Controller
             'issuance_date' => \Request::input('issuance_date'),
             'implementation_partner' => \Request::input('implementation_partner'),
             'author' => \Request::input('author'),
-            'doc_ref_no' => \Request::input('doc_ref_no')
+            'doc_ref_no' => \Request::input('doc_ref_no'),
+            'status' => ('Pending')
         ]);
 
         $CRSummary = ChangeRequestSummary::where('crf_id',$id)
