@@ -275,22 +275,34 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['Functional'=>$Functional]);
     }
 
-    public function fsfAssignToUsers(Request $request){
-           
+    public function fsfAssignToUsers(Request $request)
+    {
         $user_ids = $request->user_ids;
-        $fsf_id = \Request::input('fsf_id');
-        $dead_line = \Request::input('dead_line');
-        $assign = FsfAssignToUser::where('fsf_id',$fsf_id)->delete();
-        foreach($user_ids as $user_id)
-        {
+        $fsf_id = $request->input('fsf_id');
+        $dead_line = $request->input('dead_line');
+
+        // Check if the fsf_id and user_id already exist
+        $existingAssignments = FsfAssignToUser::where('fsf_id', $fsf_id)
+                                            ->whereIn('user_id', $user_ids)
+                                            ->get();
+
+        // If any existing assignments found, don't delete or insert
+        if ($existingAssignments->count() > 0) {
+            return response()->json(['message' => 'Assignment already exists']);
+        }
+
+        // If no existing assignments found, insert the new data
+        foreach ($user_ids as $user_id) {
             $assign = new FsfAssignToUser;
             $assign->fsf_id = $fsf_id;
             $assign->user_id = $user_id;
             $assign->dead_line = $dead_line;
             $assign->save();
         }
-        return response()->json(['message'=>' FSF Assign To Users Successfully']);
+
+        return response()->json(['message' => 'FSF Assign To Users Successfully']);
     }
+
 
     function getFsfAssignToUsersByFsfId($fsf_id){
 
