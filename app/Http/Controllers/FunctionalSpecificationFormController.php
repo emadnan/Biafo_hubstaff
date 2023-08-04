@@ -286,13 +286,11 @@ class FunctionalSpecificationFormController extends Controller
                                             ->whereIn('user_id', $user_ids)
                                             ->get();
 
-        // If any existing assignments found, don't delete or insert
-        if ($existingAssignments->count() > 0) {
-            return response()->json(['message' => 'Assignment already exists']);
-        }
+        // Remove existing user_ids from the list of user_ids to be inserted
+        $user_idsToInsert = array_diff($user_ids, $existingAssignments->pluck('user_id')->toArray());
 
-        // If no existing assignments found, insert the new data
-        foreach ($user_ids as $user_id) {
+        // Insert new data for the remaining user_ids
+        foreach ($user_idsToInsert as $user_id) {
             $assign = new FsfAssignToUser;
             $assign->fsf_id = $fsf_id;
             $assign->user_id = $user_id;
@@ -302,6 +300,7 @@ class FunctionalSpecificationFormController extends Controller
 
         return response()->json(['message' => 'FSF Assign To Users Successfully']);
     }
+
 
 
     function getFsfAssignToUsersByFsfId($fsf_id){
