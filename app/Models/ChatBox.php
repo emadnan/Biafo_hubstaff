@@ -11,4 +11,8 @@ class ChatBox extends Model
     
     protected $table="chat_box_crf";
     protected $primaryKey="id";
+
+    function crfChatSenderDetailes(){
+        return $this->hasMany('App\Models\User','id','fsf_id');
+    }
 }
