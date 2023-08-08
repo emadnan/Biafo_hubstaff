@@ -100,7 +100,7 @@ class ChangeRequestFormcontroller extends Controller
         ->get();
 
         $mailData = [
-            'issueDate' => $CRForm->issuance_date,
+            // 'issueDate' => $CRForm->issuance_date,
             'managerName' => $CRForm->projectManagerDetails->name,
             'email' => $CRForm->projectManagerDetails->email,
             'functionalLeadName' => $CRForm->functionalLeadDetails->name,
