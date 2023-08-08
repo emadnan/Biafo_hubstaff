@@ -99,7 +99,7 @@ class ChangeRequestFormcontroller extends Controller
         where('id', $changeRequestForm->id)
         ->with('project_details','module_details','company_details','FSF_details','crsDetails','projectManagerDetails','functionalLeadDetails')
         ->first();
-        // return response()->json($CRForm);
+        return response()->json($CRForm);
 
         $mailData = [
             'issueDate' => $CRForm->issuance_date,
