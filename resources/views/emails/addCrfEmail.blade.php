@@ -54,8 +54,8 @@
         <p>{{ $data['crf_title'] }}</p>
 
         <h3>Crf Details</h3>
-        <p>Time Required: {{ $data['required_time_no'] }}{{-}}{{$data['required_time_type']}}</p>
-        <p>Document Reference No: {{ $data['doc_ref_no'] }}{{-}}{{$data['crf_version']}}{{.}}{{$data['crf_version_float']}}</p>
+        <p>Time Required: {{ $data['required_time_no'] }}-{{$data['required_time_type']}}</p>
+        <p>Document Reference No: {{ $data['doc_ref_no'] }}-{{$data['crf_version']}}.{{$data['crf_version_float']}}</p>
 
         <h3>Requirement</h3>
         <p>Type Of Requirement :{{ $data['type_of_requirement'] }}</p>
