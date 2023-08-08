@@ -6,6 +6,7 @@ use App\Models\ChangeRequestForm;
 use App\Models\ChangeRequestSummary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\addCrfMail;
 
 class ChangeRequestFormcontroller extends Controller
 {
