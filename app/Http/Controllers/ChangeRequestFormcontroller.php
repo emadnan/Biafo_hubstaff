@@ -119,7 +119,7 @@ class ChangeRequestFormcontroller extends Controller
         ];
         
         // Send Email
-        Mail::to($CRForm->email)->send(new addCrfMail($mailData));
+        Mail::to($CRForm->projectManagerDetails->email)->send(new addCrfMail($mailData));
 
         return response()->json(['message' => 'Change Request Form added successfully']);
     }
