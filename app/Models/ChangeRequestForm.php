@@ -35,4 +35,8 @@ class ChangeRequestForm extends Model
     function projectManagerDetails(){
         return $this->BelongsTo('App\Models\User', 'project_manager', 'id');
     }
+
+    function functionalLeadDetails(){
+        return $this->BelongsTo('App\Models\User', 'functional_id', 'id');
+    }
 }

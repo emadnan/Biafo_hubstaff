@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ChangeRequestForm;
 use App\Models\ChangeRequestSummary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ChangeRequestFormcontroller extends Controller
 {
@@ -92,6 +93,31 @@ class ChangeRequestFormcontroller extends Controller
 
         // Save the ChangeRequestSummary to the database
         $changeRequestSummary->save();
+
+        $CRForm = ChangeRequestForm::
+        where('id', $changeRequestForm->id)
+        ->with('project_details','module_details','company_details','FSF_details','crsDetails','projectManagerDetails','functionalLeadDetails')
+        ->get();
+
+        $mailData = [
+            'issueDate' => $CRForm->issuance_date,
+            'managerName' => $CRForm->projectManagerDetails->name,
+            'email' => $CRForm->projectManagerDetails->email,
+            'functionalLeadName' => $CRForm->functionalLeadDetails->name,
+            'functionalLeadEmail' => $CRForm->functionalLeadDetails->email,
+            'requirement' => $CRForm->crsDetails->$requirement,
+            'required_time_no' =>$CRForm->crsDetails->$required_time_no,
+            'required_time_type' =>$CRForm->crsDetails->$required_time_type,
+            'crf_title' => $CRForm->crsDetails->crf_title,
+            'doc_ref_no' => $CRForm->doc_ref_no,
+            'crf_version' => $CRForm->crf_version,
+            'crf_version_float' => $CRForm->crf_version_float,
+            'priority' => $CRForm->crsDetails->priority,
+            'type_of_requirement' => $CRForm->crsDetails->type_of_requirement
+        ];
+        
+        // Send Email
+        Mail::to($CRForm->email)->send(new addCrfMail($mailData));
 
         return response()->json(['message' => 'Change Request Form added successfully']);
     }
