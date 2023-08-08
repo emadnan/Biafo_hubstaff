@@ -98,6 +98,8 @@ class ChangeRequestFormcontroller extends Controller
         where('id', $changeRequestForm->id)
         ->with('project_details','module_details','company_details','FSF_details','crsDetails','projectManagerDetails','functionalLeadDetails')
         ->get();
+        print_r($CRForm);
+        exit();
 
         $mailData = [
             // 'issueDate' => $CRForm->issuance_date,
