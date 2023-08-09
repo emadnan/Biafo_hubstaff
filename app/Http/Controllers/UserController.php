@@ -214,8 +214,8 @@ class UserController extends Controller
 
     public function get_users()
     {
-        $user = User::get();
-        return response()->json(['Users' => $user]);
+        $users = User::orderBy('name', 'asc')->get();
+        return response()->json(['Users' => $users]);
     }
     
     function delete_user(){
