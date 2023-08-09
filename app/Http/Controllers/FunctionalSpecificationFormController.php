@@ -280,60 +280,65 @@ class FunctionalSpecificationFormController extends Controller
     
     public function fsfAssignToUsers(Request $request)
     {
-        $user_ids = $request->user_ids;
-        $fsf_id = $request->input('fsf_id');
-        $dead_line = $request->input('dead_line');
+        $validatedData = $request->validate([
+            'user_ids' => 'required|array',
+            'fsf_id' => 'required',
+            'dead_line' => 'required',
+        ]);
     
-        // Fetch all existing assignments for the given fsf_id
-        $existingAssignments = FsfAssignToUser::where('fsf_id', $fsf_id)->get();
+        $userIds = $validatedData['user_ids'];
+        $fsfId = $validatedData['fsf_id'];
+        $deadLine = $validatedData['dead_line'];
     
-        // Get the user_ids of existing assignments
-        $existingUserIds = $existingAssignments->pluck('user_id')->toArray();
+        $existingUserIds = FsfAssignToUser::where('fsf_id', $fsfId)->pluck('user_id')->toArray();
+        $userIdsToDelete = array_diff($existingUserIds, $userIds);
     
-        // Identify user_ids to delete (those not in the new user_ids list)
-        $userIdsToDelete = array_diff($existingUserIds, $user_ids);
+        FsfAssignToUser::where('fsf_id', $fsfId)->whereIn('user_id', $userIdsToDelete)->delete();
     
-        // Delete old data for user_ids that are not in the new list
-        FsfAssignToUser::where('fsf_id', $fsf_id)->whereIn('user_id', $userIdsToDelete)->delete();
+        $newAssignments = [];
+        foreach ($userIds as $userId) {
+            if (!in_array($userId, $existingUserIds)) {
+                $newAssignments[] = [
+                    'fsf_id' => $fsfId,
+                    'user_id' => $userId,
+                    'dead_line' => $deadLine,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+        }
+        FsfAssignToUser::insert($newAssignments);
     
-        // Insert new data for user_ids that don't already exist
-        foreach ($user_ids as $user_id) {
-            if (!in_array($user_id, $existingUserIds)) {
-                $assign = new FsfAssignToUser;
-                $assign->fsf_id = $fsf_id;
-                $assign->user_id = $user_id;
-                $assign->dead_line = $dead_line;
-                $assign->save();
+        foreach ($userIds as $userId) {
+            if (!in_array($userId, $existingUserIds)) {
+                $member = FsfAssignToUser::with('functionalSpecificationForm.project', 'functionalSpecificationForm.module', 'teamLeadDetails', 'functionLeadDetails', 'memberDetails')
+                    ->find($fsfId);
     
-                // Send email notification
-                $user = user::find($user_id); // Replace with the logic to get the user's email
-                if ($user) {
-                    $member = FsfAssignToUser::
-                        join('functional_specification_form','functional_specification_form.id','=','fsf_assign_to_users.fsf_id')
-                        ->join('projects','projects.id','=','functional_specification_form.project_id')
-                        ->join('modules','modules.id','=','functional_specification_form.module_id')
-                        ->where('fsf_assign_to_users.id',$assign->id)
-                        ->with('team_lead_details','function_lead_details','memberDetails')
-                        ->first();
-                        // return response()->json($member);
-                        $mailData = [
-                            'ModuleName' => $member->Module_name,
-                            'ProjectName' => $member->project_name,
-                            'wricefId' => $member->wricef_id,
-                            'priorities' => $member->priority,
-                            'TypeOfDevelopment' => $member->type_of_development,
-                            'teamLeadName' => $member->team_lead_details->name,
-                            'teamLeadEmail' => $member->team_lead_details->email,
-                            'memberName' => $member->memberDetails->name,
-                            'memberEmail' => $member->memberDetails->email
-                        ];
-                    Mail::to($member->memberDetails->email)->send(new sendFsfMaliTeamLeadToTeamMembers($mailData));
+                if ($member) {
+                    $mailData = [
+                        'ModuleName' => $member->functionalSpecificationForm->module->Module_name,
+                        'ProjectName' => $member->functionalSpecificationForm->project->project_name,
+                        'wricefId' => $member->functionalSpecificationForm->wricef_id,
+                        'priorities' => $member->functionalSpecificationForm->priority,
+                        'TypeOfDevelopment' => $member->functionalSpecificationForm->type_of_development,
+                        'teamLeadName' => $member->teamLeadDetails->name,
+                        'teamLeadEmail' => $member->teamLeadDetails->email,
+                        'memberName' => $member->memberDetails->name,
+                        'memberEmail' => $member->memberDetails->email,
+                    ];
+    
+                    try {
+                        Mail::to($member->memberDetails->email)->send(new sendFsfMaliTeamLeadToTeamMembers($mailData));
+                    } catch (\Exception $e) {
+                        // Handle email sending error, if necessary
+                    }
                 }
             }
         }
     
         return response()->json(['message' => 'FSF Assign To Users Successfully']);
     }
+    
     
     
 
