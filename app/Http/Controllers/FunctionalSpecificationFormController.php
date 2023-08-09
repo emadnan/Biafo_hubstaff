@@ -313,7 +313,7 @@ class FunctionalSpecificationFormController extends Controller
             if (!in_array($userId, $existingUserIds)) {
                 $member = FsfAssignToUser::with('functionalSpecificationForm.project', 'functionalSpecificationForm.module', 'teamLeadDetails', 'functionLeadDetails', 'memberDetails')
                     ->find($fsfId);
-    
+                    return response()->json($member);
                 if ($member) {
                     $mailData = [
                         'ModuleName' => $member->functionalSpecificationForm->module->Module_name,
