@@ -306,7 +306,7 @@ class FunctionalSpecificationFormController extends Controller
                 $assign->save();
     
                 // Send email notification
-                $user = FsfAssignToUser::find($assign->id); // Replace with the logic to get the user's email
+                $user = user::find($assign->id); // Replace with the logic to get the user's email
                 if ($user) {
                     $member = FunctionalSpecificationForm::
                         select('modules.*','projects.*','modules.name as Module_name','functional_specification_form.*')
