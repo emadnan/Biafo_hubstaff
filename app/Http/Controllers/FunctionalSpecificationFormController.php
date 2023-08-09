@@ -306,14 +306,14 @@ class FunctionalSpecificationFormController extends Controller
                 $assign->save();
     
                 // Send email notification
-                $user = user::find($assign->id); // Replace with the logic to get the user's email
+                $user = user::find($user_id); // Replace with the logic to get the user's email
                 if ($user) {
                     $member = FunctionalSpecificationForm::
                         select('modules.*','projects.*','modules.name as Module_name','functional_specification_form.*')
                         ->join('projects','projects.id','=','functional_specification_form.project_id')
                         ->join('modules','modules.id','=','functional_specification_form.module_id')
                         ->where('functional_specification_form.id',$user->id)
-                        ->with('team_lead_details','function_lead_details')
+                        ->with('team_lead_details','function_lead_details','memberDetails')
                         ->first();
                         
                         $mailData = [
@@ -324,8 +324,8 @@ class FunctionalSpecificationFormController extends Controller
                             'TypeOfDevelopment' => $member->type_of_development,
                             'teamLeadName' => $member->team_lead_details->name,
                             'teamLeadEmail' => $member->team_lead_details->email,
-                            'memberName' => $member->function_lead_details->name,
-                            'memberEmail' => $member->function_lead_details->email
+                            'memberName' => $member->memberDetails->name,
+                            'memberEmail' => $member->memberDetails->email
                         ];
                     Mail::to($user->email)->send(new sendFsfMaliTeamLeadToTeamMembers($mailData));
                 }
