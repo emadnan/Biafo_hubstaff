@@ -305,7 +305,7 @@ class FunctionalSpecificationFormController extends Controller
                 $assign->dead_line = $dead_line;
                 $assign->save();
     
-                    $member = FsfAssignToUser::select('modules.name as modules_name','projects.*','users.*','functional_specification_form.*')
+                    $member = FsfAssignToUser::select('fsf_assign_to_users.*','modules.name as modules_name','projects.*','users.*','functional_specification_form.*')
                         ->join('functional_specification_form','functional_specification_form.id','=','fsf_assign_to_users.fsf_id')
                         ->join('projects','projects.id','=','functional_specification_form.project_id')
                         ->join('modules','modules.id','=','functional_specification_form.module_id')
