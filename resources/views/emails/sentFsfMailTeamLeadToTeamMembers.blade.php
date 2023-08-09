@@ -74,7 +74,7 @@
           <p>{{ $data['teamLeadName'] }}<br>
             Team Lead<br>
               {{ $data['teamLeadEmail'] }}</p>
-              <img src="/biafotechlogos/biafoLogo.PNG" alt="Image Description">
+              <img src="{{asset('biafotechlogos/biafoLogo.PNG')}}" alt="Image Description">
       </div>
   </body>
 
