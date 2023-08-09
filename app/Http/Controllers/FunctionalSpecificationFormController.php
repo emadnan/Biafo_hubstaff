@@ -306,26 +306,26 @@ class FunctionalSpecificationFormController extends Controller
                 $assign->save();
     
                 // Send email notification
-                $user = User::find($assign->id); // Replace with the logic to get the user's email
+                $user = FsfAssignToUser::find($assign->id); // Replace with the logic to get the user's email
                 if ($user) {
-                    $Functional1 = FunctionalSpecificationForm::
+                    $member = FunctionalSpecificationForm::
                         select('modules.*','projects.*','modules.name as Module_name','functional_specification_form.*')
                         ->join('projects','projects.id','=','functional_specification_form.project_id')
                         ->join('modules','modules.id','=','functional_specification_form.module_id')
                         ->where('functional_specification_form.id',$user->id)
-                        ->with('team_lead_details','function_lead_details','getFsfInputParameter','getFsfOutputParameter')
+                        ->with('team_lead_details','function_lead_details')
                         ->first();
                         
                         $mailData = [
-                            'ModuleName' => $Functional1->Module_name,
-                            'ProjectName' => $Functional1->project_name,
-                            'wricefId' => $Functional1->wricef_id,
-                            'priorities' => $Functional1->priority,
-                            'TypeOfDevelopment' => $Functional1->type_of_development,
-                            'teamLeadName' => $Functional1->team_lead_details->name,
-                            'teamLeadEmail' => $Functional1->team_lead_details->email,
-                            'FunctionalLeadName' => $Functional1->function_lead_details->name,
-                            'FunctionalLeadEmail' => $Functional1->function_lead_details->email
+                            'ModuleName' => $member->Module_name,
+                            'ProjectName' => $member->project_name,
+                            'wricefId' => $member->wricef_id,
+                            'priorities' => $member->priority,
+                            'TypeOfDevelopment' => $member->type_of_development,
+                            'teamLeadName' => $member->team_lead_details->name,
+                            'teamLeadEmail' => $member->team_lead_details->email,
+                            'memberName' => $member->function_lead_details->name,
+                            'memberEmail' => $member->function_lead_details->email
                         ];
                     Mail::to($user->email)->send(new sendFsfMaliTeamLeadToTeamMembers($mailData));
                 }

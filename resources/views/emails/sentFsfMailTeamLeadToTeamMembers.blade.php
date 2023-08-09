@@ -47,7 +47,7 @@
       <div class="card">
 
           <h2>Functional Specification Form</h2>
-          <p>Dear {{ $data['teamLeadName'] }}!,</p>
+          <p>Dear {{ $data['memberName'] }}!,</p>
           <p>I hope this email finds you well. I am reaching out to assign a FSF to you that requires your expertise and
               attention. The details of the FSF are as follows:</p>
 
@@ -71,9 +71,9 @@
 
           <h2>Best regards,</h2>
            <!-- <a href= "http://worklog.biafotech.com/fsf" class="button" >Go To FSF</a> -->
-          <p>{{ $data['FunctionalLeadName'] }}<br>
-            Functional Lead<br>
-              {{ $data['FunctionalLeadEmail'] }}</p>
+          <p>{{ $data['teamLeadName'] }}<br>
+            Team Lead<br>
+              {{ $data['teamLeadEmail'] }}</p>
               <img src="/biafotechlogos/biafo_logo.png" alt="Image Description">
       </div>
   </body>
