@@ -47,7 +47,7 @@
       <div class="card">
 
           <h2>Functional Specification Form</h2>
-          <p>Dear {{ $data['memberName'] }}!,</p>
+          <p>Dear {{ $data['memberName'] }},</p>
           <p>I hope this email finds you well. I am reaching out to assign a FSF to you that requires your expertise and
               attention. The details of the FSF are as follows:</p>
 
