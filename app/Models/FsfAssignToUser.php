@@ -16,10 +16,6 @@ class FsfAssignToUser extends Model
         return $this->BelongsTo('App\Models\User','user_id','id');
     }
 
-    function team_lead_details(){
-        return $this->BelongsTo('App\Models\User','user_id','id');
-    }
-
     function getFsfInputParameter(){
         return $this->hasMany('App\Models\FsfHasParameter', 'fsf_id', 'id');
     }

@@ -309,8 +309,9 @@ class FunctionalSpecificationFormController extends Controller
                         join('functional_specification_form','functional_specification_form.id','=','fsf_assign_to_users.fsf_id')
                         ->join('projects','projects.id','=','functional_specification_form.project_id')
                         ->join('modules','modules.id','=','functional_specification_form.module_id')
+                        ->join('users','users.id','=','functional_specification_form.ABAP_team_lead_id')
                         ->where('fsf_assign_to_users.id',$assign->id)
-                        ->with('team_lead_details','function_lead_details','memberDetails')
+                        ->with('function_lead_details','memberDetails')
                         ->first();
                         return response()->json($member);
                         $mailData = [
