@@ -7,9 +7,11 @@ use App\Models\FsfHasParameter;
 use App\Models\FsfHasOutputParameter;
 use App\Models\FsfAssignToUser;
 use App\Models\Module;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FunctionalSpacificationForm;
+use App\Mail\sendFsfMaliTeamLeadToTeamMembers;
 
 
 use Illuminate\Http\Request;
@@ -275,6 +277,7 @@ class FunctionalSpecificationFormController extends Controller
         return response()->json(['Functional'=>$Functional]);
     }
 
+    
     public function fsfAssignToUsers(Request $request)
     {
         $user_ids = $request->user_ids;
@@ -301,11 +304,37 @@ class FunctionalSpecificationFormController extends Controller
                 $assign->user_id = $user_id;
                 $assign->dead_line = $dead_line;
                 $assign->save();
+    
+                // Send email notification
+                $user = User::find($assign->id); // Replace with the logic to get the user's email
+                if ($user) {
+                    $Functional1 = FunctionalSpecificationForm::
+                        select('modules.*','projects.*','modules.name as Module_name','functional_specification_form.*')
+                        ->join('projects','projects.id','=','functional_specification_form.project_id')
+                        ->join('modules','modules.id','=','functional_specification_form.module_id')
+                        ->where('functional_specification_form.id',$user->id)
+                        ->with('team_lead_details','function_lead_details','getFsfInputParameter','getFsfOutputParameter')
+                        ->first();
+                        
+                        $mailData = [
+                            'ModuleName' => $Functional1->Module_name,
+                            'ProjectName' => $Functional1->project_name,
+                            'wricefId' => $Functional1->wricef_id,
+                            'priorities' => $Functional1->priority,
+                            'TypeOfDevelopment' => $Functional1->type_of_development,
+                            'teamLeadName' => $Functional1->team_lead_details->name,
+                            'teamLeadEmail' => $Functional1->team_lead_details->email,
+                            'FunctionalLeadName' => $Functional1->function_lead_details->name,
+                            'FunctionalLeadEmail' => $Functional1->function_lead_details->email
+                        ];
+                    Mail::to($user->email)->send(new sendFsfMaliTeamLeadToTeamMembers($mailData));
+                }
             }
         }
     
         return response()->json(['message' => 'FSF Assign To Users Successfully']);
     }
+    
     
 
 
