@@ -50,7 +50,7 @@ class StreamsController extends Controller
 
     public function getStreams()
     {
-        $streams = Streams::get();
+        $streams = Streams::orderBy('stream_name', 'asc')->get();
         return response()->json(['Streams' => $streams]);
     }
 }
