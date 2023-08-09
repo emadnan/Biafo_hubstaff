@@ -28,6 +28,7 @@ class AssignProjectController extends Controller
         ->join('users','users.id','=','assign_projects.user_id')
         ->join('projects','projects.id','=','assign_projects.project_id')
         ->join('streams','streams.id','=','assign_projects.stream_id')
+        ->orderBy('projects.project_name', 'asc')
         ->get();
         return response()->json(['Project_Assigns' => $assign]);
     }
