@@ -313,7 +313,7 @@ class FunctionalSpecificationFormController extends Controller
                         ->where('fsf_assign_to_users.id',$assign->id)
                         ->with('function_lead_details','memberDetails')
                         ->first();
-                        // return response()->json($member);
+                        return response()->json($member);
                         $mailData = [
                             'ModuleName' => $member->Module_name,
                             'ProjectName' => $member->project_name,
