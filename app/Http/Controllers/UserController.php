@@ -234,7 +234,8 @@ class UserController extends Controller
 
     function getUsersByRoleId($role_id){
 
-        $user = User::where('role',$role_id)->get();
+        $user = User::where('role',$role_id)
+        ->orderBy('name', 'asc')->get();
 
         return response()->json(['User' => $user]);
     }
