@@ -532,3 +532,6 @@ Route::get('/getAllTaskMessageOfEmployee',[ChatBoxController::class,'getAllTaskM
 
 // get All task Messages to employee By fsf Id API
 Route::get('/getTaskMessageFromEmployeeByFsfId/{fafId}',[ChatBoxController::class,'getTaskMessageFromEmployeeByFsfId']);
+
+// Add idle Time
+Route::post('/addidleTime',[ProjectController::class,'addidleTime']);
