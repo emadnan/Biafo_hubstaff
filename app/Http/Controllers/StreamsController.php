@@ -62,7 +62,9 @@ class StreamsController extends Controller
 
     public function getStreams()
     {
-        $streams = Streams::orderBy('stream_name', 'asc')->get();
+        $streams = Streams::orderBy('stream_name', 'asc')
+        ->with('projectDetails')
+        ->get();
         return response()->json(['Streams' => $streams]);
     }
 }
