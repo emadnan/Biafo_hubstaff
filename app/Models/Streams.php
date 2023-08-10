@@ -13,6 +13,6 @@ class Streams extends Model
     protected $primaryKey="id";
 
     function projectDetails(){
-        return $this->BelongsTo('App\Models\projects','project_id','id');
+        return $this->BelongsTo('App\Models\Project','project_id','id');
     }
 }
