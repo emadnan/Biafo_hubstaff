@@ -14,8 +14,7 @@ class AddUserProjectIdsAndStartEndTimeIntoStreamsTable extends Migration
     public function up()
     {
         Schema::table('streams', function (Blueprint $table) {
-            $table->integer('user_id')->after('company_id')->nullable();
-            $table->integer('project_id')->after('user_id')->nullable();
+            $table->integer('project_id')->after('company_id')->nullable();
             $table->dateTime('start_time')->after('stream_name')->nullable();
             $table->dateTime('end_time')->after('start_time')->nullable();
 
@@ -30,7 +29,6 @@ class AddUserProjectIdsAndStartEndTimeIntoStreamsTable extends Migration
     public function down()
     {
         Schema::table('streams', function (Blueprint $table) {
-            $table->dropColumn('user_id');
             $table->dropColumn('project_id');
             $table->dropColumn('start_time');
             $table->dropColumn('end_time');
