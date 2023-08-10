@@ -11,6 +11,12 @@ class StreamsController extends Controller
         $stream = new Streams();
         $stream->company_id = \Request::input('company_id');
         $stream->stream_name = \Request::input('stream_name');
+        $stream->user_id = \Request::input('user_id');
+        $stream->project_id = \Request::input('project_id');
+        $stream->start_time = \Request::input('start_time');
+        $stream->end_time = \Request::input('end_time');
+
+
         $stream->save();
         return response()->json(['message'=>'Add stream successfully']);
 
@@ -23,6 +29,10 @@ class StreamsController extends Controller
         ->update([
             'company_id' => \Request::input('company_id'),
             'stream_name' => \Request::input('stream_name'),
+            'user_id' => \Request::input('user_id'),
+            'project_id' => \Request::input('project_id'),
+            'start_time' => \Request::input('start_time'),
+            'end_time' => \Request::input('end_time')
         ]);
 
         return response()->json(['Message' => 'stream Updated']);
