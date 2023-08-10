@@ -46,13 +46,17 @@ class StreamsController extends Controller
 
     public function getStreamByCompanyId($id)  {
 
-        $stream = Streams::where('company_id',$id)->get();
+        $stream = Streams::where('company_id',$id)
+        ->with('projectDetails')
+        ->get();
         return response()->json(['streams' => $stream]);
     }
 
     public function getStreamById($id)  {
 
-        $stream = Streams::where('id',$id)->get();
+        $stream = Streams::where('id',$id)
+        ->with('projectDetails')
+        ->get();
         return response()->json(['streams' => $stream]);
     }
 
