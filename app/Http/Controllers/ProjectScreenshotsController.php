@@ -509,4 +509,44 @@ class ProjectScreenshotsController extends Controller
 
         return response()->json($data);
     }
+
+    function addidleTime(Request $request){
+
+        $user_id = $request->user_id;
+        $project_id = $request->project_id;
+        $stream_name = $request->stream_name;
+        $hours = $request->hours;
+        $minutes = $request->minutes;
+        $seconds = $request->seconds;
+        $todayDate = Carbon::today();
+        // Retrieve the existing record from the database
+        $update1 = ProjectScreenshots::where('user_id', $user_id)
+            ->where('project_id', $project_id)
+            ->where('date', $todayDate)
+            ->where('stream_name', $stream_name)
+            ->first();
+    
+        if ($update1) {
+            // Update the seconds and minutes attributes with the new calculated values
+            $update1->seconds = $update1->seconds+$seconds;
+            $update1->minutes = $update1->minutes+$minutes;
+            $update1->hours   = $update1->hours+$hours;
+
+            while ($update1->seconds >= 60) {
+                $update1->seconds -= 60;
+                $update1->minutes += 1;
+            }
+        
+            while ($update1->minutes >= 60) {
+                $update1->minutes -= 60;
+                $update1->hours += 1;
+            }
+    
+            // Save the updated object back to the database
+            $update1->save();
+        }
+    
+        return response()->json(['data' => $update1, 'message' => 'Add project screenshots successfully']);
+    }
+    
 }
