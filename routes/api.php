@@ -535,3 +535,6 @@ Route::get('/getTaskMessageFromEmployeeByFsfId/{fafId}',[ChatBoxController::clas
 
 // Add idle Time
 Route::post('/addidleTime',[ProjectScreenshotsController::class,'addidleTime']);
+
+// Assign streams to multiple users with assigning types
+Route::post('/assignStreams',[StreamsController::class,'assignStreams']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Streams;
+use App\Models\StreamsHasUser;
 use Illuminate\Http\Request;
 
 class StreamsController extends Controller
@@ -67,4 +68,34 @@ class StreamsController extends Controller
         ->get();
         return response()->json(['Streams' => $streams]);
     }
+
+    public function assignStreams(Request $request) {
+        $stream_id = $request->stream_id;
+        $assignments = [];
+        // $request = json_decode(request()->getContent(), true);
+        print_r($request->all());
+        exit;
+        StreamsHasUser::where('user_id', $request->user_id)
+        ->where('stream_id', $request->stream_id)
+        ->delete();
+
+        foreach ($request->assignments as $key => $value) {
+            $user_id = $value['user_id'];
+            $assigning_type = $value['assigning_type'];
+    
+            $assign = new StreamsHasUser;
+            $assign->assigning_type = $assigning_type;
+            $assign->stream_id = $stream_id;
+            $assign->user_id = $user_id;
+            $assign->save();
+    
+            $assignments[] = [
+                'user_id' => $user_id,
+                'assigning_type' => $assigning_type,
+            ];
+        }
+    
+        return response()->json(['message' => 'Assign Streams Successfully', 'assignments' => $assignments]);
+    }    
+    
 }
