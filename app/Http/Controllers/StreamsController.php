@@ -87,16 +87,61 @@ class StreamsController extends Controller
         return response()->json(['message'=>'Assign streams to users Successfully']);
     }
 
-    public function assignStreamsTypes(Request $request) {
-    
-        $assign = new Streams();
-        $assign->stream_id = \Request::input('stream_id');
-        $assign->user_id = \Request::input('user_id');
-        $assign->assinging_type = \Request::input('assinging_type');
-        $assign->save();
+    // public function assignStreamsTypes(Request $request) {
 
-        return response()->json(['message' => 'Assign streams to users Successfully']);
+    //     $assign = new StreamsHasUser();
+    //     $assign->stream_id = \Request::input('stream_id');
+    //     $assign->user_id = \Request::input('user_id');
+    //     $assign->assinging_type = \Request::input('assinging_type');
+        
+    //     $assingingtype = StreamsHasUser::where('user_id', $assign->userId)->sum('assinging_type');
+
+    //     if(!($assingingtype))  {
+             
+    //         $assign->save();
+    //     }
+    //     elseif($assingingtype<3){
+
+    //     }
+
+        
+
+    //     return response()->json(['message' => 'Assign streams to users Successfully']);
+    // }
+    public function assignStreamsTypes(Request $request) {
+
+        $assign = new StreamsHasUser();
+        $assign->stream_id = $request->input('stream_id');
+        $assign->user_id = $request->input('user_id');
+        $assign->assigning_type_id = $request->input('assigning_type_id');
+        
+        $user_id = $assign->user_id;
+        $assigning_type_id = $assign->assinging_type_id;
+    
+        // Calculate the sum of assigning_type_id for the given user_id
+        $totalAssigningTypeId = StreamsHasUser::where('user_id', $user_id)->sum('assigning_type_id');
+    
+        // Check if adding this assigning_type_id exceeds the limit
+        if ($totalAssigningTypeId + $assigning_type_id <= 3) {
+            // Check specific rules based on assigning_type value
+            $assigning_type = \Request::input('assigning_type');
+            
+            if ($assigning_type == 1 || $assigning_type == 2) {
+                $allowedCount = 3; // Allow adding assinging_type_id when assigning_type is 1 or 2
+                if ($totalAssigningTypeId + $assigning_type_id <= $allowedCount) {
+                    $assign->save();
+                    return response()->json(['message' => 'Assign streams to users successfully']);
+                } else {
+                    return response()->json(['message' => 'Your limit of assigning is about to end'], 422);
+                }
+            } else {
+                return response()->json(['message' => 'Cannot assign streams to users'], 422);
+            }
+        } else {
+            return response()->json(['message' => 'Your limit of assigning is about to end'], 422);
+        }
     }
+    
 
     function getUsersByStreamsId($streamId){
         $stream = StreamsHasUser::where('stream_id',$streamId)

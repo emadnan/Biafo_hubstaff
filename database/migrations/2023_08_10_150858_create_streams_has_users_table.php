@@ -17,7 +17,7 @@ class CreateStreamsHasUsersTable extends Migration
             $table->id();
             $table->integer('stream_id');
             $table->integer('user_id');
-            $table->integer('assinging_type_id');;
+            $table->integer('assigning_type_id');;
             $table->timestamps();
         });
     }
