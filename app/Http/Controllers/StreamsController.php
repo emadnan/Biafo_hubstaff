@@ -95,4 +95,10 @@ class StreamsController extends Controller
         return response()->json(['Streams' => $stream]);
     }
     
+    function getAssigningStreamsUsers(){
+        
+        $stream = StreamsHasUser::get();
+
+        return response()->json(['Streams' => $stream]);
+    }
 }
