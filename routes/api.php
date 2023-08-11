@@ -540,4 +540,4 @@ Route::post('/addidleTime',[ProjectScreenshotsController::class,'addidleTime']);
 Route::post('/assignStreams',[StreamsController::class,'assignStreams']);
 
 // get All assign streams by stream id
-Route::get('/assignStreams/{streamId}',[StreamsController::class,'assignStreams']);
+Route::get('/getUsersByStreamsId/{streamId}',[StreamsController::class,'getUsersByStreamsId']);
