@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Streams;
 use App\Models\StreamsHasUser;
 use Illuminate\Http\Request;
+use DB;
 
 class StreamsController extends Controller
 {
@@ -69,33 +70,29 @@ class StreamsController extends Controller
         return response()->json(['Streams' => $streams]);
     }
 
-    public function assignStreams(Request $request) {
+    public function assignStreams(Request $request){
+        
         $stream_id = $request->stream_id;
-        $assignments = [];
-        // $request = json_decode(request()->getContent(), true);
-        print_r($request->all());
-        exit;
+        $user_ids = $request->user_ids;
         StreamsHasUser::where('user_id', $request->user_id)
         ->where('stream_id', $request->stream_id)
         ->delete();
+        foreach($user_ids as $user_id)  {
 
-        foreach ($request->assignments as $key => $value) {
-            $user_id = $value['user_id'];
-            $assigning_type = $value['assigning_type'];
-    
             $assign = new StreamsHasUser;
-            $assign->assigning_type = $assigning_type;
             $assign->stream_id = $stream_id;
             $assign->user_id = $user_id;
             $assign->save();
-    
-            $assignments[] = [
-                'user_id' => $user_id,
-                'assigning_type' => $assigning_type,
-            ];
         }
-    
-        return response()->json(['message' => 'Assign Streams Successfully', 'assignments' => $assignments]);
-    }    
+
+        return response()->json(['message'=>'Assign streams to users Successfully']);
+    }
+
+    function getUsersByStreamsId($streamId){
+        $stream = StreamsHasUser::where('stream_id',$streamId)
+        ->get();
+
+        return response()->json(['Streams' => $stream]);
+    }
     
 }

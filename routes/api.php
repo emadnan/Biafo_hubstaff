@@ -538,3 +538,6 @@ Route::post('/addidleTime',[ProjectScreenshotsController::class,'addidleTime']);
 
 // Assign streams to multiple users with assigning types
 Route::post('/assignStreams',[StreamsController::class,'assignStreams']);
+
+// get All assign streams by stream id
+Route::get('/assignStreams/{streamId}',[StreamsController::class,'assignStreams']);
