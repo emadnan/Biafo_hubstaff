@@ -87,22 +87,15 @@ class StreamsController extends Controller
         return response()->json(['message'=>'Assign streams to users Successfully']);
     }
 
-    public function assignAssignType(Request $request){
-        
-        $stream_id = $request->stream_id;
-        $user_ids = $request->user_ids;
-        StreamsHasUser::where('user_id', $request->user_id)
-        ->where('stream_id', $request->stream_id)
-        ->delete();
-        foreach($user_ids as $user_id)  {
+    public function assignStreamsTypes(Request $request) {
+    
+        $assign = new Streams();
+        $assign->stream_id = \Request::input('stream_id');
+        $assign->user_id = \Request::input('user_id');
+        $assign->assinging_type = \Request::input('assinging_type');
+        $assign->save();
 
-            $assign = new StreamsHasUser;
-            $assign->stream_id = $stream_id;
-            $assign->user_id = $user_id;
-            $assign->save();
-        }
-
-        return response()->json(['message'=>'Assign streams to users Successfully']);
+        return response()->json(['message' => 'Assign streams to users Successfully']);
     }
 
     function getUsersByStreamsId($streamId){

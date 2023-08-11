@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStreamsHasUsersTable extends Migration
+class CreateAssignedTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateStreamsHasUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('streams_has_users', function (Blueprint $table) {
+        Schema::create('assigned_types', function (Blueprint $table) {
             $table->id();
-            $table->integer('stream_id');
-            $table->integer('user_id');
-            $table->integer('assinging_type_id');;
+            $table->string('assign_type_name');
+            $table->double('time_duration');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateStreamsHasUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('streams_has_users');
+        Schema::dropIfExists('assigned_types');
     }
 }
