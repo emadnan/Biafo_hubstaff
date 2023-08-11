@@ -537,7 +537,7 @@ Route::get('/getTaskMessageFromEmployeeByFsfId/{fafId}',[ChatBoxController::clas
 Route::post('/addidleTime',[ProjectScreenshotsController::class,'addidleTime']);
 
 // Assign streams to multiple users with assigning types
-Route::post('/assignStreams',[StreamsController::class,'assignStreams']);
+Route::post('/assignStreamsToUsers',[StreamsController::class,'assignStreamsToUsers']);
 
 // get All assign streams by stream id
 Route::get('/getUsersByStreamsId/{streamId}',[StreamsController::class,'getUsersByStreamsId']);
