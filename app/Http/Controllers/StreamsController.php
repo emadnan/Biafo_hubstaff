@@ -74,8 +74,7 @@ class StreamsController extends Controller
         
         $stream_id = $request->stream_id;
         $user_ids = $request->user_ids;
-        $delete=StreamsHasUser::where('user_id', $user_ids)
-        ->where('stream_id', $stream_id)
+        $delete=StreamsHasUser::where('stream_id', $stream_id)
         ->delete();
         foreach($user_ids as $user_id)  {
 
