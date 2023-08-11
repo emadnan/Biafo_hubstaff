@@ -17,7 +17,7 @@ class CreateStreamsHasUsersTable extends Migration
             $table->id();
             $table->integer('stream_id');
             $table->integer('user_id');
-            $table->enum('assinging_type', ['Partially', 'Fulltime'])->default('Fulltime');
+            $table->enum('assinging_type', ['Partially', 'Fulltime']);
             $table->timestamps();
         });
     }
