@@ -122,11 +122,10 @@ class StreamsController extends Controller
         $totalAssigningTypeId = StreamsHasUser::where('user_id', $user_id)->sum('assigning_type_id');
     
         // Check if adding this assigning_type_id exceeds the limit
-        if ($totalAssigningTypeId + $assigning_type_id <= 3) {
+        if (($totalAssigningTypeId + $assigning_type_id) < 3) {
             // Check specific rules based on assigning_type value
-            $assigning_type = \Request::input('assigning_type');
             
-            if ($assigning_type == 1 || $assigning_type == 2) {
+            if ($assigning_type_id <= 3) {
                 $allowedCount = 3; // Allow adding assinging_type_id when assigning_type is 1 or 2
                 if ($totalAssigningTypeId + $assigning_type_id <= $allowedCount) {
                     $assign->save();
