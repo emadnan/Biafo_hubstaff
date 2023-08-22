@@ -12,7 +12,7 @@ class StreamsHasUser extends Model
     protected $table="streams_has_users";
     protected $primaryKey="id";
 
-    function streamDetails(){
+    function userDetails(){
         return $this->BelongsTo('App\Models\User','user_id','id');
     }
 }
