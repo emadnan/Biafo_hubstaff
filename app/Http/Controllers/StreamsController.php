@@ -153,7 +153,9 @@ class StreamsController extends Controller
     
 
     function getUsersByStreamsId($streamId){
-        $stream = StreamsHasUser::where('stream_id',$streamId)
+        $stream = StreamsHasUser::
+        where('stream_id',$streamId)
+        ->with('streamDetails')
         ->get();
 
         return response()->json(['Streams' => $stream]);
