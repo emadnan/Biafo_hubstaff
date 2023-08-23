@@ -70,8 +70,8 @@ class StreamsController extends Controller
         return response()->json(['Streams' => $streams]);
     }
 
-    public function assignStreamsToUsers(Request $request)  {
-        
+    public function assignStreamsToUsers(Request $request)
+    {
         $stream_id = $request->input('stream_id');
         $user_ids = $request->input('user_ids');
     
@@ -101,6 +101,8 @@ class StreamsController extends Controller
                 $assign->stream_id = $stream_id;
                 $assign->user_id = $user_id;
                 $assign->save();
+            } else {
+                return response()->json(['message' => 'You have reached the maximum limit of assigned streams'], 422);
             }
         }
     
