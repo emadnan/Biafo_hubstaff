@@ -174,6 +174,6 @@ class StreamsController extends Controller
         $assignedType = StreamsHasUser::where('id', $id)
             ->first(); 
     
-        return response()->json(['Assigned Type Id' => $assignedType]);
+        return response()->json(['Assigned_Type_Id' => $assignedType]);
     }
 }
