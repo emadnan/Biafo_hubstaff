@@ -118,28 +118,31 @@ class StreamsController extends Controller
 
     //     return response()->json(['message' => 'Assign streams to users Successfully']);
     // }
-    public function assignStreamsTypes(Request $request) {
-
-        $assign = new StreamsHasUser();
-        $assign->stream_id = $request->input('stream_id');
-        $assign->user_id = $request->input('user_id');
-        $assign->assigning_type_id = $request->input('assigning_type_id');
-        
-        $user_id = $assign->user_id;
-        $assigning_type_id = $assign->assinging_type_id;
+    public function updateAssignedStreamType(Request $request, $assignId) {
+        $assign = StreamsHasUser::find($assignId);
     
-        // Calculate the sum of assigning_type_id for the given user_id
-        $totalAssigningTypeId = StreamsHasUser::where('user_id', $user_id)->sum('assigning_type_id');
+        if (!$assign) {
+            return response()->json(['message' => 'Assignment not found'], 404);
+        }
+    
+        $assigning_type_id = $request->input('assigning_type_id');
+        
+        // Calculate the sum of assigning_type_id for the user excluding the current record
+        $totalAssigningTypeId = StreamsHasUser::where('user_id', $assign->user_id)
+            ->where('id', '<>', $assignId)
+            ->sum('assigning_type_id');
     
         // Check if adding this assigning_type_id exceeds the limit
         if (($totalAssigningTypeId + $assigning_type_id) < 3) {
             // Check specific rules based on assigning_type value
             
             if ($assigning_type_id <= 3) {
-                $allowedCount = 3; // Allow adding assinging_type_id when assigning_type is 1 or 2
+                $allowedCount = 3; // Allow adding assigning_type_id when assigning_type is 1 or 2
                 if ($totalAssigningTypeId + $assigning_type_id <= $allowedCount) {
+                    // Update the assigning_type_id value and save changes
+                    $assign->assigning_type_id = $assigning_type_id;
                     $assign->save();
-                    return response()->json(['message' => 'Assign streams to users successfully']);
+                    return response()->json(['message' => 'Assigning type updated successfully']);
                 } else {
                     return response()->json(['message' => 'Your limit of assigning is about to end'], 422);
                 }
