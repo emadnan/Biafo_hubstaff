@@ -15,4 +15,8 @@ class StreamsHasUser extends Model
     function userDetails(){
         return $this->BelongsTo('App\Models\User','user_id','id');
     }
+
+    function assignTypeDetails(){
+        return $this->BelongsTo('App\Models\StreamsHasUser','assigning_type_id','id');
+    }
 }

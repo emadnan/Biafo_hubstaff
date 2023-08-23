@@ -156,6 +156,7 @@ class StreamsController extends Controller
         $stream = StreamsHasUser::
         where('stream_id',$streamId)
         ->with('userDetails')
+        ->with('assignTypeDetails')
         ->get();
 
         return response()->json(['Streams' => $stream]);
