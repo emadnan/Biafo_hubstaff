@@ -547,3 +547,6 @@ Route::get('/getAssigningStreamsUsers',[StreamsController::class,'getAssigningSt
 
 // Assign assigning types
 Route::post('/assignStreamsTypes',[StreamsController::class,'assignStreamsTypes']);
+
+//get assigning type id through table id
+Route::get('/getAssignedTypeId',[StreamsController::class,'getAssignedTypeId']);

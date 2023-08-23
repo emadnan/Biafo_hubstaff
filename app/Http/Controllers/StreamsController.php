@@ -168,4 +168,14 @@ class StreamsController extends Controller
 
         return response()->json(['Streams' => $stream]);
     }
+
+    function getAssignedTypeId(Request $request) {
+        $id = $request->input('id');
+    
+        $assignedType = StreamsHasUser::where('id', $id)
+            ->pluck('assigning_type_id')
+            ->first(); 
+    
+        return response()->json(['Assigned Type Id' => $assignedType]);
+    }
 }
