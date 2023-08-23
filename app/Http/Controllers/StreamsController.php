@@ -104,7 +104,8 @@ class StreamsController extends Controller
         $assign = StreamsHasUser::where('user_id', $userId)
             ->where('stream_id', $streamId)
             ->first();
-    
+        print_r($assign);
+        exit();
         if (!$assign) {
             return response()->json(['message' => 'Assignment not found'], 404);
         }
