@@ -72,14 +72,16 @@ class StreamsController extends Controller
 
     public function assignStreamsToUsers(Request $request)  {
         
-          // Delete any existing assignments for the given stream and user
-          StreamsHasUser::where('stream_id', $stream_id)
-          ->where('user_id', $user_id)
-          ->delete();
+         
 
         $stream_id = $request->input('stream_id');
         $user_ids = $request->input('user_ids');
         
+         // Delete any existing assignments for the given stream and user
+         StreamsHasUser::where('stream_id', $stream_id)
+         ->where('user_id', $user_ids)
+         ->delete();
+
         if (is_string($user_ids)) {
             $user_ids = explode(',', $user_ids);
         }
