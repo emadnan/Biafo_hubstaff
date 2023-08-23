@@ -74,40 +74,46 @@ class StreamsController extends Controller
     {
         $stream_id = $request->input('stream_id');
         $user_ids = $request->input('user_ids');
-    
+        $replace = $request->input('replace', false); // Default to false if not provided
+        
         if (is_string($user_ids)) {
             $user_ids = explode(',', $user_ids);
         }
-    
+        
         if ($user_ids === null) {
             return response()->json(['message' => 'No user IDs provided'], 400);
         }
-    
+        
         $maxAssignments = 3;
-    
+        
         foreach ($user_ids as $user_id) {
             // Calculate the current number of streams assigned to this user
             $currentAssignments = StreamsHasUser::where('user_id', $user_id)->count();
-    
-            // Check if adding this assignment would exceed the limit
-            if ($currentAssignments < $maxAssignments) {
-                // Delete any existing assignments for the given stream and user
-                StreamsHasUser::where('stream_id', $stream_id)
-                    ->where('user_id', $user_id)
-                    ->delete();
-    
+            
+            // Check if replacing the stream and if not exceeding the limit
+            if ($replace && $currentAssignments <= $maxAssignments) {
+                // Delete any existing assignments for the given user
+                StreamsHasUser::where('user_id', $user_id)->delete();
+                
                 // Create a new assignment
                 $assign = new StreamsHasUser;
                 $assign->stream_id = $stream_id;
                 $assign->user_id = $user_id;
                 $assign->save();
-            } else {
+            } elseif (!$replace && $currentAssignments < $maxAssignments) {
+                // Create a new assignment only if not exceeding the limit
+                $assign = new StreamsHasUser;
+                $assign->stream_id = $stream_id;
+                $assign->user_id = $user_id;
+                $assign->save();
+            } elseif ($currentAssignments >= $maxAssignments) {
                 return response()->json(['message' => 'You have reached the maximum limit of assigned streams'], 422);
             }
         }
-    
+        
         return response()->json(['message' => 'Assign streams to users successfully']);
     }
+    
     
 
     public function updateAssignedStreamType(Request $request) {
