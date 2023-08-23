@@ -99,8 +99,8 @@ class StreamsController extends Controller
 
     public function updateAssignedStreamType(Request $request) {
 
-        $userId = \Request::input('userId');
-        $streamId = \Request::input('streamId');
+        $userId = \Request::input('user_id');
+        $streamId = \Request::input('stream_id');
         $assign = StreamsHasUser::where('user_id', $userId)
             ->where('stream_id', $streamId)
             ->first();
