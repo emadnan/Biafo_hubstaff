@@ -102,7 +102,6 @@ class StreamsController extends Controller
         $userId = \Request::input('user_id');
         $streamId = \Request::input('stream_id');
         $assign = StreamsHasUser::where('user_id', $userId)
-            ->where('stream_id', $streamId)
             ->first();
             
         if (!$assign) {
