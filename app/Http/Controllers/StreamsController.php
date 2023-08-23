@@ -70,32 +70,43 @@ class StreamsController extends Controller
         return response()->json(['Streams' => $streams]);
     }
 
-    public function assignStreamsToUsers(Request $request)   {
-
-        $stream_id = $request->stream_id;
-    $user_ids = $request->user_ids;
-
+    public function assignStreamsToUsers(Request $request)  {
+        
+        $stream_id = $request->input('stream_id');
+        $user_ids = $request->input('user_ids');
+    
         if (is_string($user_ids)) {
             $user_ids = explode(',', $user_ids);
         }
+    
         if ($user_ids === null) {
-
-            // Handle the case when user_ids is null or not sent
             return response()->json(['message' => 'No user IDs provided'], 400);
         }
     
-        $delete = StreamsHasUser::where('stream_id', $stream_id)->delete();
-        
+        $maxAssignments = 3;
+    
         foreach ($user_ids as $user_id) {
-
-            $assign = new StreamsHasUser;
-            $assign->stream_id = $stream_id;
-            $assign->user_id = $user_id;
-            $assign->save();
+            // Calculate the current number of streams assigned to this user
+            $currentAssignments = StreamsHasUser::where('user_id', $user_id)->count();
+    
+            // Check if adding this assignment would exceed the limit
+            if ($currentAssignments < $maxAssignments) {
+                // Delete any existing assignments for the given stream and user
+                StreamsHasUser::where('stream_id', $stream_id)
+                    ->where('user_id', $user_id)
+                    ->delete();
+    
+                // Create a new assignment
+                $assign = new StreamsHasUser;
+                $assign->stream_id = $stream_id;
+                $assign->user_id = $user_id;
+                $assign->save();
+            }
         }
     
-        return response()->json(['message' => 'Assign streams to users Successfully']);
+        return response()->json(['message' => 'Assign streams to users successfully']);
     }
+    
 
     public function updateAssignedStreamType(Request $request) {
 
