@@ -172,7 +172,6 @@ class StreamsController extends Controller
     function getAssignedTypeId($id) {
 
         $assignedType = StreamsHasUser::where('id', $id)
-            ->pluck('assigning_type_id')
             ->first(); 
     
         return response()->json(['Assigned Type Id' => $assignedType]);
