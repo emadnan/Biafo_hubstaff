@@ -70,8 +70,13 @@ class StreamsController extends Controller
         return response()->json(['Streams' => $streams]);
     }
 
-    public function assignStreamsToUsers(Request $request)
-    {
+    public function assignStreamsToUsers(Request $request)  {
+        
+          // Delete any existing assignments for the given stream and user
+          StreamsHasUser::where('stream_id', $stream_id)
+          ->where('user_id', $user_id)
+          ->delete();
+
         $stream_id = $request->input('stream_id');
         $user_ids = $request->input('user_ids');
         
@@ -90,12 +95,7 @@ class StreamsController extends Controller
             $currentAssignments = StreamsHasUser::where('user_id', $user_id)->count();
     
             // Check if adding this assignment would exceed the limit
-            if ($currentAssignments <= $maxAssignments) {
-                // Delete any existing assignments for the given stream and user
-                StreamsHasUser::where('stream_id', $stream_id)
-                    ->where('user_id', $user_id)
-                    ->delete();
-    
+            if ($currentAssignments < $maxAssignments) {
                 // Create a new assignment
                 $assign = new StreamsHasUser;
                 $assign->stream_id = $stream_id;
@@ -133,7 +133,7 @@ class StreamsController extends Controller
         if (($totalAssigningTypeId + $assigning_type_id) < 3) {
             // Check specific rules based on assigning_type value
             
-            if ($assigning_type_id < 3) {
+            if ($assigning_type_id <= 3) {
                 $allowedCount = 3; // Allow adding assigning_type_id when assigning_type is 1 or 2
                 if ($totalAssigningTypeId + $assigning_type_id <= $allowedCount) {
                     // Update the assigning_type_id value and save changes
