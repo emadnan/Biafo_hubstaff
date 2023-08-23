@@ -97,29 +97,13 @@ class StreamsController extends Controller
         return response()->json(['message' => 'Assign streams to users Successfully']);
     }
 
-    // public function assignStreamsTypes(Request $request) {
+    public function updateAssignedStreamType(Request $request) {
 
-    //     $assign = new StreamsHasUser();
-    //     $assign->stream_id = \Request::input('stream_id');
-    //     $assign->user_id = \Request::input('user_id');
-    //     $assign->assinging_type = \Request::input('assinging_type');
-        
-    //     $assingingtype = StreamsHasUser::where('user_id', $assign->userId)->sum('assinging_type');
-
-    //     if(!($assingingtype))  {
-             
-    //         $assign->save();
-    //     }
-    //     elseif($assingingtype<3){
-
-    //     }
-
-        
-
-    //     return response()->json(['message' => 'Assign streams to users Successfully']);
-    // }
-    public function updateAssignedStreamType(Request $request, $assignId) {
-        $assign = StreamsHasUser::find($assignId);
+        $userId = \Request::input('userId');
+        $streamId = \Request::input('streamId');
+        $assign = StreamsHasUser::where('user_id', $userId)
+            ->where('stream_id', $streamId)
+            ->first();
     
         if (!$assign) {
             return response()->json(['message' => 'Assignment not found'], 404);
@@ -127,9 +111,10 @@ class StreamsController extends Controller
     
         $assigning_type_id = $request->input('assigning_type_id');
         
-        // Calculate the sum of assigning_type_id for the user excluding the current record
-        $totalAssigningTypeId = StreamsHasUser::where('user_id', $assign->user_id)
-            ->where('id', '<>', $assignId)
+        // Calculate the sum of assigning_type_id for the user and stream excluding the current record
+        $totalAssigningTypeId = StreamsHasUser::where('user_id', $userId)
+            ->where('stream_id', $streamId)
+            ->where('id', '<>', $assign->id)
             ->sum('assigning_type_id');
     
         // Check if adding this assigning_type_id exceeds the limit
@@ -153,6 +138,7 @@ class StreamsController extends Controller
             return response()->json(['message' => 'Your limit of assigning is about to end'], 422);
         }
     }
+    
     
 
     function getUsersByStreamsId($streamId){
