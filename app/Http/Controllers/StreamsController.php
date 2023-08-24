@@ -74,6 +74,14 @@ class StreamsController extends Controller
 
         $stream_id = $request->input('stream_id');
         $user_ids = $request->input('user_ids');
+
+        $existingAssignments = StreamsHasUser::where('stream_id', $stream_id)->get();
+    
+        $existingUserIds = $existingAssignments->pluck('user_id')->toArray();
+    
+        $userIdsToDelete = array_diff($existingUserIds, $user_ids);
+    
+        StreamsHasUser::where('stream_id', $stream_id)->whereIn('user_id', $userIdsToDelete)->delete();
     
         // Validation
         if (!$stream_id || empty($user_ids)) {
@@ -84,13 +92,6 @@ class StreamsController extends Controller
             $user_ids = explode(',', $user_ids);
         }
         
-        $existingAssignments = StreamsHasUser::where('stream_id', $stream_id)->get();
-    
-        $existingUserIds = $existingAssignments->pluck('user_id')->toArray();
-    
-        $userIdsToDelete = array_diff($existingUserIds, $user_ids);
-    
-        StreamsHasUser::where('stream_id', $stream_id)->whereIn('user_id', $userIdsToDelete)->delete();
 
         DB::beginTransaction(); // Start a database transaction
     
