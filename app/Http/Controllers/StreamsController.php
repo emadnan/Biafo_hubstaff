@@ -71,33 +71,35 @@ class StreamsController extends Controller
     }
 
     public function assignStreamsToUsers(Request $request)  {
-
+        
         $stream_id = $request->input('stream_id');
         $user_ids = $request->input('user_ids');
-
+    
         $existingAssignments = StreamsHasUser::where('stream_id', $stream_id)->get();
-    
         $existingUserIds = $existingAssignments->pluck('user_id')->toArray();
-    
+        
         $userIdsToDelete = array_diff($existingUserIds, $user_ids);
     
-        StreamsHasUser::whereIn('user_id', $userIdsToDelete)->delete();
-    
-        // Validation
-        if (!$stream_id || empty($user_ids)) {
-            return response()->json(['message' => 'Invalid input data'], 400);
-        }
-    
-        if (!is_array($user_ids)) {
-            $user_ids = explode(',', $user_ids);
-        }
-        
-
         DB::beginTransaction(); // Start a database transaction
     
         try {
+            foreach ($existingAssignments as $assignment) {
+                if (in_array($assignment->user_id, $userIdsToDelete)) {
+                    $assignment->delete();
+                }
+            }
+    
+            // Validation
+            if (!$stream_id || empty($user_ids)) {
+                DB::rollBack(); // Roll back the transaction
+                return response()->json(['message' => 'Invalid input data'], 400);
+            }
+    
+            if (!is_array($user_ids)) {
+                $user_ids = explode(',', $user_ids);
+            }
+    
             foreach ($user_ids as $user_id) {
-
                 $currentAssignments = StreamsHasUser::where('user_id', $user_id)->count();
     
                 if ($currentAssignments >= 3) {
