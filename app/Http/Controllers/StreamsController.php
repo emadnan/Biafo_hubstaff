@@ -139,8 +139,6 @@ class StreamsController extends Controller
         
         // Calculate the sum of assigning_type_id for the user and stream excluding the current record
         $totalAssigningTypeId = StreamsHasUser::where('user_id', $userId)
-            ->where('stream_id', $streamId)
-            ->where('id', '<>', $assign->id)
             ->sum('assigning_type_id');
     
         // Check if adding this assigning_type_id exceeds the limit
