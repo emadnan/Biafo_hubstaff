@@ -71,7 +71,7 @@ class StreamsController extends Controller
     }
 
     public function assignStreamsToUsers(Request $request)     {
-        
+
         $stream_id = $request->input('stream_id');
         $user_ids = $request->input('user_ids');
     
@@ -161,7 +161,7 @@ class StreamsController extends Controller
                     $assign->save();
                     return response()->json(['message' => 'Assigning type updated successfully']);
                 } else {
-                    return response()->json(['message' => 'Your limit of assigning is about to end'], 422);
+                    return response()->json(['message' => 'Cannot Assign this type'], 422);
                 }
             } else {
                 return response()->json(['message' => 'Cannot assign streams to users'], 422);
