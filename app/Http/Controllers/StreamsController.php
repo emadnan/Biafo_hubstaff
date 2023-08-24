@@ -70,7 +70,7 @@ class StreamsController extends Controller
         return response()->json(['Streams' => $streams]);
     }
 
-    public function assignStreamsToUsers(Request $request)     {
+    public function assignStreamsToUsers(Request $request) {
         
         $stream_id = $request->input('stream_id');
         $user_ids = $request->input('user_ids');
@@ -87,35 +87,15 @@ class StreamsController extends Controller
         DB::beginTransaction(); // Start a database transaction
     
         try {
-            // Get the user_ids of existing assignments for the given stream
-            $existingAssignments = StreamsHasUser::where('stream_id', $stream_id)->get();
-            $existingUserIds = $existingAssignments->pluck('user_id')->toArray();
-    
-            // Identify user_ids to delete (those not in the new user_ids list)
-            $userIdsToDelete = array_diff($existingUserIds, $user_ids);
-    
-            // Delete old data for user_ids that are not in the new list
-            StreamsHasUser::where('stream_id', $stream_id)->whereIn('user_id', $userIdsToDelete)->delete();
-    
-            $maxAssignments = 3;
+            // Delete existing assignments for the stream
+            StreamsHasUser::where('stream_id', $stream_id)->delete();
     
             foreach ($user_ids as $user_id) {
-                // Calculate the current number of streams assigned to this user
-                $currentAssignments = StreamsHasUser::where('user_id', $user_id)->count();
-    
-                // Check if adding this assignment would exceed the limit
-                if ($currentAssignments < $maxAssignments) {
-                    // Check if the assignment already exists, if not, create a new assignment
-                    if (!in_array($user_id, $existingUserIds)) {
-                        $assign = new StreamsHasUser;
-                        $assign->stream_id = $stream_id;
-                        $assign->user_id = $user_id;
-                        $assign->save();
-                    }
-                } else {
-                    DB::rollBack(); // Roll back the transaction
-                    return response()->json(['message' => 'You have reached the maximum limit of assigned streams'], 422);
-                }
+                // Create a new assignment
+                $assign = new StreamsHasUser;
+                $assign->stream_id = $stream_id;
+                $assign->user_id = $user_id;
+                $assign->save();
             }
     
             DB::commit(); // Commit the transaction
@@ -126,6 +106,8 @@ class StreamsController extends Controller
             return response()->json(['message' => 'An error occurred while processing your request'], 500);
         }
     }
+    
+    
     
 
     
@@ -145,6 +127,7 @@ class StreamsController extends Controller
         
         // Calculate the sum of assigning_type_id for the user and stream excluding the current record
         $totalAssigningTypeId = StreamsHasUser::where('user_id', $userId)
+            ->where('stream_id', $streamId)
             ->where('id', '<>', $assign->id)
             ->sum('assigning_type_id');
     
