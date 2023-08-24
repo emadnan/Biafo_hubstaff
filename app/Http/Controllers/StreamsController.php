@@ -83,21 +83,27 @@ class StreamsController extends Controller
         if (!is_array($user_ids)) {
             $user_ids = explode(',', $user_ids);
         }
+        
+        $existingAssignments = StreamsHasUser::where('stream_id', $stream_id)->get();
     
+        $existingUserIds = $existingAssignments->pluck('user_id')->toArray();
+    
+        $userIdsToDelete = array_diff($existingUserIds, $user_ids);
+    
+        StreamsHasUser::where('stream_id', $stream_id)->whereIn('user_id', $userIdsToDelete)->delete();
+
         DB::beginTransaction(); // Start a database transaction
     
         try {
             foreach ($user_ids as $user_id) {
-                // Calculate the current number of streams assigned to this user
+
                 $currentAssignments = StreamsHasUser::where('user_id', $user_id)->count();
     
-                // Check if adding this assignment would exceed the limit
                 if ($currentAssignments >= 3) {
                     DB::rollBack(); // Roll back the transaction
                     return response()->json(['message' => 'You have reached the maximum limit of assigned streams'], 422);
                 }
     
-                // Create a new assignment
                 $assign = new StreamsHasUser;
                 $assign->stream_id = $stream_id;
                 $assign->user_id = $user_id;
