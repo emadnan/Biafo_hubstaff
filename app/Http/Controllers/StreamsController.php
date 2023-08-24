@@ -70,25 +70,19 @@ class StreamsController extends Controller
         return response()->json(['Streams' => $streams]);
     }
 
-    public function assignStreamsToUsers(Request $request)  {
-        
+    public function assignStreamsToUsers(Request $request)  
+    {
         $stream_id = $request->input('stream_id');
         $user_ids = $request->input('user_ids');
     
         $existingAssignments = StreamsHasUser::where('stream_id', $stream_id)->get();
         $existingUserIds = $existingAssignments->pluck('user_id')->toArray();
-        
+    
         $userIdsToDelete = array_diff($existingUserIds, $user_ids);
     
         DB::beginTransaction(); // Start a database transaction
     
         try {
-            foreach ($existingAssignments as $assignment) {
-                if (in_array($assignment->user_id, $userIdsToDelete)) {
-                    $assignment->delete();
-                }
-            }
-    
             // Validation
             if (!$stream_id || empty($user_ids)) {
                 DB::rollBack(); // Roll back the transaction
@@ -100,6 +94,10 @@ class StreamsController extends Controller
             }
     
             foreach ($user_ids as $user_id) {
+                if (in_array($user_id, $existingUserIds)) {
+                    continue; // Skip already assigned users
+                }
+    
                 $currentAssignments = StreamsHasUser::where('user_id', $user_id)->count();
     
                 if ($currentAssignments >= 3) {
@@ -113,6 +111,9 @@ class StreamsController extends Controller
                 $assign->save();
             }
     
+            // Delete assignments for users not in the request
+            StreamsHasUser::whereIn('user_id', $userIdsToDelete)->where('stream_id', $stream_id)->delete();
+    
             DB::commit(); // Commit the transaction
     
             return response()->json(['message' => 'Streams assigned to users successfully']);
@@ -121,6 +122,7 @@ class StreamsController extends Controller
             return response()->json(['message' => 'An error occurred while processing your request'], 500);
         }
     }
+    
     
     public function updateAssignedStreamType(Request $request)     {
 
