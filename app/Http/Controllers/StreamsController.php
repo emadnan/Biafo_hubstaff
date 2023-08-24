@@ -81,7 +81,7 @@ class StreamsController extends Controller
     
         $userIdsToDelete = array_diff($existingUserIds, $user_ids);
     
-        StreamsHasUser::where('stream_id', $stream_id)->whereIn('user_id', $userIdsToDelete)->delete();
+        StreamsHasUser::whereIn('user_id', $userIdsToDelete)->delete();
     
         // Validation
         if (!$stream_id || empty($user_ids)) {
