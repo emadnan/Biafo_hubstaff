@@ -85,8 +85,18 @@ class StreamsController extends Controller
             }
 
             // Delete existing assignments
-            StreamsHasUser::where('stream_id', $stream_id)
-                ->delete();
+            $assigned=StreamsHasUser::where('stream_id', $stream_id)
+                ->get();
+
+                
+        // Get the user_ids of existing assignments
+        $existingUserIds = $assigned->pluck('user_id')->toArray();
+    
+        // Identify user_ids to delete (those not in the new user_ids list)
+        $userIdsToDelete = array_diff($existingUserIds, $user_ids);
+    
+        // Delete old data for user_ids that are not in the new list
+        StreamsHasUser::where('stream_id', $stream_id)->whereIn('user_id', $userIdsToDelete)->delete();
 
             $maxAssignments = 3;
 
