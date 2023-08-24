@@ -23,7 +23,7 @@ class StreamsController extends Controller
 
     }
 
-    function updateStream() {
+    function updateStream()    {
 
         $id = \Request::input('id');
         $stream = Streams::where('id',$id)
@@ -54,7 +54,7 @@ class StreamsController extends Controller
         return response()->json(['streams' => $stream]);
     }
 
-    public function getStreamById($id)  {
+    public function getStreamById($id)     {
 
         $stream = Streams::where('id',$id)
         ->with('projectDetails')
@@ -70,68 +70,68 @@ class StreamsController extends Controller
         return response()->json(['Streams' => $streams]);
     }
 
-    public function assignStreamsToUsers(Request $request)
-        {
-            $stream_id = $request->input('stream_id');
-            $user_ids = $request->input('user_ids');
+    public function assignStreamsToUsers(Request $request)     {
+        
+        $stream_id = $request->input('stream_id');
+        $user_ids = $request->input('user_ids');
 
-            // Validation
-            if (!$stream_id || empty($user_ids)) {
-                return response()->json(['message' => 'Invalid input data'], 400);
-            }
-
-            if (!is_array($user_ids)) {
-                $user_ids = explode(',', $user_ids);
-            }
-
-            // Delete existing assignments
-            $assigned=StreamsHasUser::where('stream_id', $stream_id)
-                ->get();
-
-                
-        // Get the user_ids of existing assignments
-        $existingUserIds = $assigned->pluck('user_id')->toArray();
-    
-        // Identify user_ids to delete (those not in the new user_ids list)
-        $userIdsToDelete = array_diff($existingUserIds, $user_ids);
-    
-        // Delete old data for user_ids that are not in the new list
-        StreamsHasUser::where('stream_id', $stream_id)->whereIn('user_id', $userIdsToDelete)->delete();
-
-            $maxAssignments = 3;
-
-            DB::beginTransaction(); // Start a database transaction
-
-            try {
-                foreach ($user_ids as $user_id) {
-                    // Calculate the current number of streams assigned to this user
-                    $currentAssignments = StreamsHasUser::where('user_id', $user_id)->count();
-
-                    // Check if adding this assignment would exceed the limit
-                    if ($currentAssignments < $maxAssignments) {
-                        // Create a new assignment
-                        $assign = new StreamsHasUser;
-                        $assign->stream_id = $stream_id;
-                        $assign->user_id = $user_id;
-                        $assign->save();
-                    } else {
-                        DB::rollBack(); // Roll back the transaction
-                        return response()->json(['message' => 'You have reached the maximum limit of assigned streams'], 422);
-                    }
-                }
-
-                DB::commit(); // Commit the transaction
-
-                return response()->json(['message' => 'Streams assigned to users successfully']);
-            } catch (\Exception $e) {
-                DB::rollBack(); // Roll back the transaction on error
-                return response()->json(['message' => 'An error occurred while processing your request'], 500);
-            }
+        // Validation
+        if (!$stream_id || empty($user_ids)) {
+            return response()->json(['message' => 'Invalid input data'], 400);
         }
 
+        if (!is_array($user_ids)) {
+            $user_ids = explode(',', $user_ids);
+        }
+
+        // Delete existing assignments
+        $assigned=StreamsHasUser::where('stream_id', $stream_id)
+            ->get();
+
+            
+    // Get the user_ids of existing assignments
+    $existingUserIds = $assigned->pluck('user_id')->toArray();
+
+    // Identify user_ids to delete (those not in the new user_ids list)
+    $userIdsToDelete = array_diff($existingUserIds, $user_ids);
+
+    // Delete old data for user_ids that are not in the new list
+    StreamsHasUser::where('stream_id', $stream_id)->whereIn('user_id', $userIdsToDelete)->delete();
+
+        $maxAssignments = 3;
+
+        DB::beginTransaction(); // Start a database transaction
+
+        try {
+            foreach ($user_ids as $user_id) {
+                // Calculate the current number of streams assigned to this user
+                $currentAssignments = StreamsHasUser::where('user_id', $user_id)->count();
+
+                // Check if adding this assignment would exceed the limit
+                if ($currentAssignments < $maxAssignments) {
+                    // Create a new assignment
+                    $assign = new StreamsHasUser;
+                    $assign->stream_id = $stream_id;
+                    $assign->user_id = $user_id;
+                    $assign->save();
+                } else {
+                    DB::rollBack(); // Roll back the transaction
+                    return response()->json(['message' => 'You have reached the maximum limit of assigned streams'], 422);
+                }
+            }
+
+            DB::commit(); // Commit the transaction
+
+            return response()->json(['message' => 'Streams assigned to users successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack(); // Roll back the transaction on error
+            return response()->json(['message' => 'An error occurred while processing your request'], 500);
+        }
+    }
+
     
 
-    public function updateAssignedStreamType(Request $request) {
+    public function updateAssignedStreamType(Request $request)     {
 
         $userId = \Request::input('user_id');
         $streamId = \Request::input('stream_id');
@@ -174,7 +174,8 @@ class StreamsController extends Controller
     
     
 
-    function getUsersByStreamsId($streamId){
+    function getUsersByStreamsId($streamId)    {
+
         $stream = StreamsHasUser::
         where('stream_id',$streamId)
         ->with('userDetails')
@@ -184,14 +185,14 @@ class StreamsController extends Controller
         return response()->json(['Streams' => $stream]);
     }
     
-    function getAssigningStreamsUsers(){
+    function getAssigningStreamsUsers()    {
 
         $stream = StreamsHasUser::get();
 
         return response()->json(['Streams' => $stream]);
     }
 
-    function getAssignedTypeId($id) {
+    function getAssignedTypeId($id)    {
 
         $assignedType = StreamsHasUser::where('id', $id)
             ->first(); 
