@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\ProjectScreenshots;
 use App\Models\AssignProject;
+use App\Models\FunctionalSpecificationForm;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -70,7 +71,8 @@ class ProjectController extends Controller
 
     function deleteProject()   {
         $id = \Request::input('id');
-        $project = Project::where('id',$id)->delete();
+        FunctionalSpecificationForm::where('project_id', $id)->delete();
+        Project::where('id',$id)->delete();
 
         return response()->json(['message'=>'delete Project successfully']);
     }
