@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Department;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -38,9 +39,12 @@ class DepartmentController extends Controller
 
     function delete_department(){
         $id = \Request::input('id');
-        $department = Department::where('id',$id)->delete();
-
-        return response()->json(['message' => 'Delete Department succssesfully ' ]);
+        
+        Project::where('department_id', $id)->delete();
+    
+        Department::where('id', $id)->delete();
+    
+        return response()->json(['message' => 'Delete Department and associated projects successfully']);
     }
 
     public function get_department_by_id($id)
