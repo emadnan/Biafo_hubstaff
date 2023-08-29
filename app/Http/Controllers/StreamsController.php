@@ -191,10 +191,11 @@ class StreamsController extends Controller
     }
 
     function getUserAvailability() {
-        
-        $usersWithAssigningType = StreamsHasUser::select('user_id', DB::raw('SUM(assigning_type_id) as total_assigning_type_id'))
-            ->groupBy('user_id')
-            ->with('userDetails')
+        // Retrieve all users with their assigning_type_id from the StreamsHasUser table
+        $usersWithAssigningType = User::leftJoin('streams_has_users', 'users.id', '=', 'streams_has_users.user_id')
+            ->select('users.*', DB::raw('COALESCE(SUM(streams_has_users.assigning_type_id), 0) as total_assigning_type_id'))
+            ->groupBy('users.id')
+            ->with('userDetails') // Make sure you have the relationship set up in your User model
             ->get();
     
         return response()->json([
