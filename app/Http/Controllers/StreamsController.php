@@ -140,7 +140,9 @@ class StreamsController extends Controller
         
         $totalAssigningTypeId = StreamsHasUser::where('user_id', $userId)
             ->sum('assigning_type_id');
-    
+        print_r('totalAssigningTypeId');
+        exit();
+        
         if (($totalAssigningTypeId + $assigning_type_id) < 3) {
             
             if ($assigning_type_id < 3) {
