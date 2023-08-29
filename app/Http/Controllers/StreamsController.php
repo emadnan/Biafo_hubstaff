@@ -194,7 +194,7 @@ class StreamsController extends Controller
         
         $usersWithAssigningType = StreamsHasUser::select('user_id', DB::raw('SUM(assigning_type_id) as total_assigning_type_id'))
             ->with('userDetails')
-            ->all();
+            ->get();
     
         return response()->json([
             'Users_With_Assigning_Type' => $usersWithAssigningType
