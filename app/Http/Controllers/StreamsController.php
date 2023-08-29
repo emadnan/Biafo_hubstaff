@@ -190,12 +190,13 @@ class StreamsController extends Controller
         return response()->json(['Assigned_Type_Id' => $assignedType]);
     }
 
-    function getUserAvailability() {
+    function getUserAvailability($companyId) {
         $usersWithAssigningType = User::leftJoin('streams_has_users', 'users.id', '=', 'streams_has_users.user_id')
             ->select('users.id', 'users.name', 'users.email', 'users.company_id', DB::raw('COALESCE(SUM(streams_has_users.assigning_type_id), 0) as total_assigning_type_id'))
             ->selectRaw("CASE WHEN COALESCE(SUM(streams_has_users.assigning_type_id), 0) < 3 THEN 'Available' ELSE 'Not Available' END as availability")
             ->groupBy('users.id', 'users.name', 'users.email', 'users.company_id')
             ->whereNotIn('users.role', [1, 3])
+            ->where('company_id', $companyId)
             ->orderBy('users.name', 'asc')
             ->get();
     
