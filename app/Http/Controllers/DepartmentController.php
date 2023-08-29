@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\ChangeRequestSummary;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\FunctionalSpecificationForm;
@@ -11,16 +12,19 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
-    function add_department(){
+    function add_department()   {
+
         $department = new Department();
         $department->company_id = \Request::input('company_id');
         $department->department_name = \Request::input('department_name');
         $department->description = \Request::input('description');
         $department->save();
+        
         return response()->json(['message'=>'Add Department successfully']);
     }
 
-    function update_department(){
+    function update_department()    {
+
         $id = \Request::input('id');
         $department = Department::where('id',$id)
         ->update([
@@ -33,11 +37,12 @@ class DepartmentController extends Controller
         return response()->json(['Message' => 'Department Updated']);
     }
 
-    public function get_department()
-    {
+    public function get_department()    {
+
         $department = Department::select('company.*', 'company.id as company_id','departments.*')
         ->join('company','company.id','=','departments.company_id')
         ->get();
+
         return response()->json(['Departments' => $department]);
     }
 
@@ -46,13 +51,14 @@ class DepartmentController extends Controller
         
         $projects = Project::where('department_id', $id)->get();
     
-        foreach ($projects as $project) {
+        foreach ($projects as $project)    {
             
             FunctionalSpecificationForm::where('project_id', $project->id)->delete();
             FsfHasParameter::where('fsf_id', $project->id)->delete();
             FsfHasOutputParameter::where('fsf_id', $project->id)->delete();
-            
             ChangeRequestForm::where('project_id', $project->id)->delete();
+            ChangeRequestSummary::where('project_id', $project->id)->delete();
+
         }
     
         Project::where('department_id', $id)->delete();
@@ -62,12 +68,13 @@ class DepartmentController extends Controller
     }
     
 
-    public function get_department_by_id($id)
-    {
+    public function get_department_by_id($id)   {
+
         $department = Department::select('company.*', 'company.id as company_id','departments.*','departments.id as department_id')
         ->join('company','company.id','=','departments.company_id')
         ->where('departments.id',$id)
         ->get();
+
         return response()->json(['Departments' => $department]);
     }
 
