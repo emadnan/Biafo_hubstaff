@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\Project;
+use App\Models\FunctionalSpecificationForm;
+use App\Models\ChangeRequestForm;
+use App\Models\FsfHasParameter;
+use App\Models\FsfHasOutputParameter;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -40,12 +44,23 @@ class DepartmentController extends Controller
     function delete_department(){
         $id = \Request::input('id');
         
-        Project::where('department_id', $id)->delete();
+        $projects = Project::where('department_id', $id)->get();
     
+        foreach ($projects as $project) {
+            
+            FunctionalSpecificationForm::where('project_id', $project->id)->delete();
+            FsfHasParameter::where('fsf_id', $project->id)->delete();
+            FsfHasOutputParameter::where('fsf_id', $project->id)->delete();
+            
+            ChangeRequestForm::where('project_id', $project->id)->delete();
+        }
+    
+        Project::where('department_id', $id)->delete();
         Department::where('id', $id)->delete();
     
-        return response()->json(['message' => 'Delete Department and associated projects successfully']);
+        return response()->json(['message' => 'Delete Department and associated projects and forms successfully']);
     }
+    
 
     public function get_department_by_id($id)
     {
