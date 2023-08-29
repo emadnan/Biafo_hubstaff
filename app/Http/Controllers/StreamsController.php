@@ -195,7 +195,6 @@ class StreamsController extends Controller
         $usersWithAssigningType = User::leftJoin('streams_has_users', 'users.id', '=', 'streams_has_users.user_id')
             ->select('users.id', 'users.name', 'users.email', 'users.company_id', DB::raw('COALESCE(SUM(streams_has_users.assigning_type_id), 0) as total_assigning_type_id'))
             ->groupBy('users.id', 'users.name', 'users.email', 'users.company_id')
-            ->with('userDetails') // Make sure you have the relationship set up in your User model
             ->get();
     
         return response()->json([
