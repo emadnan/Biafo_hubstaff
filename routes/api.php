@@ -550,3 +550,6 @@ Route::post('/updateAssignedStreamType',[StreamsController::class,'updateAssigne
 
 //get assigning type id through table id
 Route::get('/getAssignedTypeId/{id}',[StreamsController::class,'getAssignedTypeId']);
+
+// Retrieve all users with their assigning_type_id from the StreamsHasUser table
+Route::get('/getUserAvailability',[StreamsController::class,'getUserAvailability']);

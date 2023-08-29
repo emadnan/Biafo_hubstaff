@@ -190,4 +190,15 @@ class StreamsController extends Controller
         return response()->json(['Assigned_Type_Id' => $assignedType]);
     }
 
+    function getUserAvailability() {
+        
+        $usersWithAssigningType = StreamsHasUser::select('user_id', DB::raw('SUM(assigning_type_id) as total_assigning_type_id'))
+            ->groupBy('user_id')
+            ->get();
+    
+        return response()->json([
+            'Users_With_Assigning_Type' => $usersWithAssigningType
+        ]);
+    }
+
 }
