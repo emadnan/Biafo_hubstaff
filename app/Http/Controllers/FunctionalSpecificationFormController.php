@@ -206,7 +206,10 @@ class FunctionalSpecificationFormController extends Controller
     function deleteFunctionalSpecificationForm(){
         
         $id = \Request::input('id');
-        $Functional = FunctionalSpecificationForm::where('id',$id)->delete();
+
+        FsfHasParameter::where('fsf_id',$id)->delete();
+        FsfHasOutputParameter::where('fsf_id',$id)->delete();
+        FunctionalSpecificationForm::where('id',$id)->delete();
 
         return response()->json(['message'=>'Delete Functional Specificational Form Successfully']);
     }
