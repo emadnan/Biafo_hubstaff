@@ -151,7 +151,9 @@ class ChangeRequestFormcontroller extends Controller
     function deleteChangeRequestForm(){
         
         $id = \Request::input('id');
-        $CRForm = ChangeRequestForm::where('id',$id)->delete();
+
+        ChangeRequestSummary::where('cri_id',$id)->delete();
+        ChangeRequestForm::where('id',$id)->delete();
 
         return response()->json(['message'=>'Delete Change Request Form Successfully']);
     }
