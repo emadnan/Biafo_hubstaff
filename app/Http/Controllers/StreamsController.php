@@ -146,9 +146,11 @@ class StreamsController extends Controller
             if ($assigning_type_id < 3) {
                 $allowedCount = 3; // Allow adding assigning_type_id when assigning_type is 1 or 2
                 if ($totalAssigningTypeId + $assigning_type_id <= $allowedCount) {
-                    
-                    $assign->assigning_type_id = $assigning_type_id;
-                    $assign->save();
+                    $stream = StreamsHasUser::where('user_id',$userId)
+                    ->where('stream_id',$streamId)
+                        ->update([
+                            'assigning_type_id' => \Request::input('assigning_type_id')
+                        ]);
                     return response()->json(['message' => 'Assigning type updated successfully']);
                 } else {
                     return response()->json(['message' => 'Your limit of assigning is about to end'], 422);
