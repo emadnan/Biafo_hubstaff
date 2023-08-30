@@ -11,6 +11,7 @@ use App\Models\StreamsHasUser;
 use App\Models\FsfHasParameter;
 use App\Models\FsfHasOutputParameter;
 use App\Models\ChangeRequestSummary;
+use App\Models\TaskManagement;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -110,6 +111,7 @@ class ProjectController extends Controller
             }
             
             Streams::where('project_id', $project->id)->delete();
+            TaskManagement::where('project_id', $project->id)->delete();
         }
         
         
