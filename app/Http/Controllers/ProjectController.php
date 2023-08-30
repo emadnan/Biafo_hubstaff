@@ -75,42 +75,46 @@ class ProjectController extends Controller
         return response()->json(['projects' => $project]);
     }
 
-    function deleteProject()    {
-
+    function deleteProject()
+    {
         $id = \Request::input('id');
         
         $projects = Project::where('id', $id)->get();
-        foreach ($projects as $project)    {
+        
+        foreach ($projects as $project) {
 
-            $deletes = FunctionalSpecificationForm::where('project_id', $id)->get(); 
-            foreach ($deletes as $delete)   {
-
-                FsfHasParameter::where('fsf_id', $delete->id)->delete(); 
-                FsfHasOutputParameter::where('fsf_id', $delete->id)->delete(); 
+            $fsfDeletes = FunctionalSpecificationForm::where('project_id', $project->id)->get();
+            
+            foreach ($fsfDeletes as $fsfDelete) {
+                
+                FsfHasParameter::where('fsf_id', $fsfDelete->id)->delete();
+                FsfHasOutputParameter::where('fsf_id', $fsfDelete->id)->delete();
             }
-
+            
             FunctionalSpecificationForm::where('project_id', $project->id)->delete();
-
-            $deletes = ChangeRequestForm::where('project_id', $id)->get(); 
-            foreach ($deletes as $delete)   {
-
-                ChangeRequestSummary::where('crf_id', $delete->id)->delete();
+            
+            $crfDeletes = ChangeRequestForm::where('project_id', $project->id)->get();
+            
+            foreach ($crfDeletes as $crfDelete) {
+                
+                ChangeRequestSummary::where('crf_id', $crfDelete->id)->delete();
             }
-
+            
             ChangeRequestForm::where('project_id', $project->id)->delete();
-
-            $deletes = Streams::where('project_id', $id)->get(); 
-            foreach ($deletes as $delete)   {
-
-                StreamsHasUser::where('stream_id', $delete->id)->delete();
+            
+            $streamDeletes = Streams::where('project_id', $project->id)->get();
+            
+            foreach ($streamDeletes as $streamDelete) {
+                
+                StreamsHasUser::where('stream_id', $streamDelete->id)->delete();
             }
-
+            
             Streams::where('project_id', $project->id)->delete();
-
-        }   
-    
+        }
+        
         return response()->json(['message' => 'Project deleted successfully']);
     }
+    
     
 
     public function getProjectByProjectId($project_id)  {
