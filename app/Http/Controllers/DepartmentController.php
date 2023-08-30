@@ -10,6 +10,7 @@ use App\Models\FsfHasParameter;
 use App\Models\FsfHasOutputParameter;
 use App\Models\Streams;
 use App\Models\StreamsHasUser;
+use App\Models\TaskManagement;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -82,6 +83,7 @@ class DepartmentController extends Controller
                 StreamsHasUser::where('stream_id', $streamDelete->id)->delete();
             }
             
+            TaskManagement::where('project_id', $project->id)->delete();
             Streams::where('project_id', $project->id)->delete();
             
             $project->delete();
