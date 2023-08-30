@@ -83,9 +83,6 @@ class ProjectController extends Controller
         
         foreach ($projects as $project) {
 
-            print('ajhdjkfh');
-            exit();
-            
             $fsfDeletes = FunctionalSpecificationForm::where('project_id', $project->id)->get();
             
             foreach ($fsfDeletes as $fsfDelete) {
