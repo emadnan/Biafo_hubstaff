@@ -112,6 +112,8 @@ class ProjectController extends Controller
             Streams::where('project_id', $project->id)->delete();
         }
         
+        
+        Project::where('id', $id)->delete();
         return response()->json(['message' => 'Project deleted successfully']);
     }
     
