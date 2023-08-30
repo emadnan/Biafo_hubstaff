@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\PermissionsRole;
+use App\Models\ChatBox;
+use App\Models\ChatBoxForTask;
+use App\Models\ChatBoxFsf;
+use App\Models\ChatBoxFsfToUser;
+use App\Models\ProjectScreenshots;
+use App\Models\StreamsHasUser;
+use App\Models\ProjectScreenshotsTiming;
+use App\Models\ProjectScreenshotsAttechments;
+use App\Models\AssignProject;
+use App\Models\FsfAssignToUser;
+use App\Models\TeamHasUser;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -140,25 +151,6 @@ class UserController extends Controller
         return response()->json(['Message' => 'Password Update successfully']);
     }
 
-    //ADD USERS CRUD
-    // function add_user(){
-    //     $user = new User();
-    //     $user->company_id = \Request::input('company_id');
-    //     $user->name = \Request::input('name');
-    //     $user->email = \Request::input('email');
-    //     $user->password = Hash::make('password');
-    //     $user->role = \Request::input('role');
-    //     $user->save();
-        
-    //     $token = JWTAuth::fromUser($user, [
-    //         'name' => \Request::input('name'),
-    //         'email' => \Request::input('email'),
-            
-    //     ]);
-
-    //     return response()->json(['message'=>'Add User successfully']);
-    // }
-
     public function add_user(Request $request)
     {
         // Validate user input
@@ -218,12 +210,42 @@ class UserController extends Controller
         return response()->json(['Users' => $users]);
     }
     
-    function delete_user(){
+    function delete_user() {
         $id = \Request::input('id');
-        $user = User::where('id',$id)->delete();
+    
+        ChatBoxForTask::where('user_id', $id)->delete();
+        FsfAssignToUser::where('user_id', $id)->delete();
+        AssignProject::where('user_id', $id)->delete();
+        TeamHasUser::where('user_id', $id)->delete();
+        ChatBoxFsfToUser::where('user_id', $id)->delete();
+        ChatBoxFsf::where('user_id', $id)->delete();
+        ChatBox::where('user_id', $id)->delete();
+        StreamsHasUser::where('user_id', $id)->delete();
+    
+        ProjectScreenshotsTiming::whereIn('project_screenshot_id', function ($query) use ($id) {
+            $query->select('id')
+                ->from('project_screenshots')
+                ->where('user_id', $id);
+        })->delete();
+        
+        ProjectScreenshotsAttechments::whereIn('project_screenshot_timing_id', function ($query) use ($id) {
+            $query->select('id')
+                ->from('project_screenshots_timings')
+                ->whereIn('project_screenshot_id', function ($subQuery) use ($id) {
+                    $subQuery->select('id')
+                        ->from('project_screenshots')
+                        ->where('user_id', $id);
+                });
+        })->delete();
 
-        return response()->json(['message'=>'delete User successfully']);
+        ProjectScreenshots::where('user_id', $id)->delete();
+    
+        User::where('id', $id)->delete();
+    
+        return response()->json(['message' => 'Deleted User, related entities, ProjectScreenshots, ProjectScreenshotsTiming, and ProjectScreenshotsAttachments successfully']);
     }
+    
+    
 
     public function get_user($id)
     {
