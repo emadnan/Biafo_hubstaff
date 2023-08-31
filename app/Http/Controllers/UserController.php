@@ -214,26 +214,9 @@ class UserController extends Controller
     function delete_user() {
         $id = \Request::input('id');
     
-        ChatBoxForTask::where('user_id', $id)->delete();
-        FsfAssignToUser::where('user_id', $id)->delete();
-        AssignProject::where('user_id', $id)->delete();
-        TeamHasUser::where('user_id', $id)->delete();
-        ChatBoxFsfToUser::where('user_id', $id)->delete();
-        ChatBoxFsf::where('user_id', $id)->delete();
-        ChatBox::where('user_id', $id)->delete();
-        StreamsHasUser::where('user_id', $id)->delete();
-        
-        $PSs=ProjectScreenshots::where('user_id', $id)->get();
-        $psts=ProjectScreenshotsTiming::where('project_screenshorts_timing_id', $PSs->id)->get();
-        ProjectScreenshotsTiming::where('project_screenshorts_id', $PSs->id)->delete();
-        
-        ProjectScreenshotsAttechments::where('project_screenshorts_timing_id', $psts->id)->delete();
-
-        ProjectScreenshots::where('user_id', $id)->delete();
-    
         User::where('id', $id)->delete();
     
-        return response()->json(['message' => 'Deleted User, related entities, ProjectScreenshots, ProjectScreenshotsTiming, and ProjectScreenshotsAttachments successfully']);
+        return response()->json(['message' => 'Deleted User successfully']);
     }
 
     public function get_user($id)   {
