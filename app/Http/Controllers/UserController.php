@@ -222,22 +222,12 @@ class UserController extends Controller
         ChatBoxFsf::where('user_id', $id)->delete();
         ChatBox::where('user_id', $id)->delete();
         StreamsHasUser::where('user_id', $id)->delete();
-    
-        ProjectScreenshotsTiming::whereIn('project_screenshot_id', function ($query) use ($id) {
-            $query->select('id')
-                ->from('project_screenshots')
-                ->where('user_id', $id);
-        })->delete();
         
-        ProjectScreenshotsAttechments::whereIn('project_screenshot_timing_id', function ($query) use ($id) {
-            $query->select('id')
-                ->from('project_screenshots_timings')
-                ->whereIn('project_screenshot_id', function ($subQuery) use ($id) {
-                    $subQuery->select('id')
-                        ->from('project_screenshots')
-                        ->where('user_id', $id);
-                });
-        })->delete();
+        $PSs=ProjectScreenshots::where('user_id', $id)->get();
+        $psts=ProjectScreenshotsTiming::where('project_screenshorts_timing_id', $PSs->id)->get();
+        ProjectScreenshotsTiming::where('project_screenshorts_id', $psts->id)->delete();
+        
+        ProjectScreenshotsAttechments::where('project_screenshorts_timing_id', $PSs->id)->delete();
 
         ProjectScreenshots::where('user_id', $id)->delete();
     
