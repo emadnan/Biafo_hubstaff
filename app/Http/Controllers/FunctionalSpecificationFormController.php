@@ -295,7 +295,6 @@ class FunctionalSpecificationFormController extends Controller
     
         FsfAssignToUser::where('fsf_id', $fsf_id)->whereIn('user_id', $userIdsToDelete)->delete();
     
-        // Insert new data for user_ids that don't already exist
         foreach ($user_ids as $user_id) {
             if (!in_array($user_id, $existingUserIds)) {
                 $assign = new FsfAssignToUser;
@@ -324,7 +323,10 @@ class FunctionalSpecificationFormController extends Controller
                             'memberName' => $member->memberDetails->name,
                             'memberEmail' => $member->memberDetails->email
                         ];
-                    Mail::to($member->memberDetails->email)->send(new sendFsfMailTeamLeadToTeamMembers($mailData));
+                        
+                    Mail::to($member->memberDetails->email)->send(new sendFsfMaliTeamLeadToTeamMembers($mailData));
+
+                    
             }
             
         }
