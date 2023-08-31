@@ -11,7 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FunctionalSpacificationForm;
-use App\Mail\sendFsfMaliTeamLeadToTeamMembers;
+use App\Mail\sendFsfMailTeamLeadToTeamMembers;
 
 
 use Illuminate\Http\Request;
@@ -328,7 +328,7 @@ class FunctionalSpecificationFormController extends Controller
                             'memberName' => $member->memberDetails->name,
                             'memberEmail' => $member->memberDetails->email
                         ];
-                    Mail::to($member->memberDetails->email)->send(new sendFsfMaliTeamLeadToTeamMembers($mailData));
+                    Mail::to($member->memberDetails->email)->send(new sendFsfMailTeamLeadToTeamMembers($mailData));
             }
             
         }
