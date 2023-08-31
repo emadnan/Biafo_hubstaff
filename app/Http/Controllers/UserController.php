@@ -268,18 +268,24 @@ class UserController extends Controller
         
         $hashedRandomNumber = bcrypt($randomNumber);
         
-        $user = User::where('email', $email)
-            ->update([
+        $user = User::where('email', $email)->first(); // Retrieve the user object
+        
+        if ($user) {
+            $user->update([
                 'password' => $hashedRandomNumber
             ]);
-
-        $mail = [
-            'name' => $user->name,
-            "password" => $randomNumber,
-            "email" => $user->email
-        ];
-        Mail::to($user->email)->send(new forGetPassword($mail));
-        
-        return response()->json(['Message' => 'Password Updated']);
+            
+            $mail = [
+                'name' => $user->name,
+                "password" => $randomNumber,
+                "email" => $user->email
+            ];
+            Mail::to($user->email)->send(new forGetPassword($mail));
+            
+            return response()->json(['Message' => 'Password Updated']);
+        } else {
+            return response()->json(['Message' => 'User not found'], 404);
+        }
     }
+    
 }
