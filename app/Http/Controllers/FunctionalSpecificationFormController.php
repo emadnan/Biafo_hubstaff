@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Mail\Mailable;
 use App\Models\FunctionalSpecificationForm;
 use App\Models\FsfHasParameter;
 use App\Models\FsfHasOutputParameter;
@@ -11,8 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FunctionalSpacificationForm;
-use App\Mail\sendFsfMailTeamLeadToTeamMembers;
-
+use App\Mail\sendFsfMaliTeamLeadToTeamMembers;
 
 use Illuminate\Http\Request;
 
@@ -287,16 +287,12 @@ class FunctionalSpecificationFormController extends Controller
         $fsf_id = $request->input('fsf_id');
         $dead_line = $request->input('dead_line');
     
-        // Fetch all existing assignments for the given fsf_id
         $existingAssignments = FsfAssignToUser::where('fsf_id', $fsf_id)->get();
     
-        // Get the user_ids of existing assignments
         $existingUserIds = $existingAssignments->pluck('user_id')->toArray();
     
-        // Identify user_ids to delete (those not in the new user_ids list)
         $userIdsToDelete = array_diff($existingUserIds, $user_ids);
     
-        // Delete old data for user_ids that are not in the new list
         FsfAssignToUser::where('fsf_id', $fsf_id)->whereIn('user_id', $userIdsToDelete)->delete();
     
         // Insert new data for user_ids that don't already exist
