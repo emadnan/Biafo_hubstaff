@@ -553,3 +553,6 @@ Route::get('/getAssignedTypeId/{id}',[StreamsController::class,'getAssignedTypeI
 
 // Retrieve all users with their assigning_type_id from the StreamsHasUser table
 Route::get('/getUserAvailability/{companyId}',[StreamsController::class,'getUserAvailability']);
+
+// forget Password
+Route::Post('/forGetPassword',[UserController::class,'getUserAvailabilforGetPasswordity']);

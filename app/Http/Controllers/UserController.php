@@ -26,6 +26,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeEmail;
+use App\Mail\forGetPassword;
 
 
 class UserController extends Controller
@@ -244,21 +245,41 @@ class UserController extends Controller
     
         return response()->json(['message' => 'Deleted User, related entities, ProjectScreenshots, ProjectScreenshotsTiming, and ProjectScreenshotsAttachments successfully']);
     }
-    
-    
 
-    public function get_user($id)
-    {
+    public function get_user($id)   {
+
         $user = User::where('id',$id)->get();
 
         return response()->json(['User' => $user]);
     }
 
-    function getUsersByRoleId($role_id){
+    function getUsersByRoleId($role_id)    {
 
         $user = User::where('role',$role_id)
         ->orderBy('name', 'asc')->get();
 
         return response()->json(['User' => $user]);
+    }
+
+    function forGetPassword() {
+        $email = \Request::input('email');
+        
+        $randomNumber = mt_rand(100000, 999999);
+        
+        $hashedRandomNumber = bcrypt($randomNumber);
+        
+        $user = User::where('email', $email)
+            ->update([
+                'password' => $hashedRandomNumber
+            ]);
+
+        $mail = [
+            'name' => $user->name,
+            "password" => $randomNumber,
+            "email" => $user->email
+        ];
+        Mail::to($user->email)->send(new forGetPassword($mail));
+        
+        return response()->json(['Message' => 'Password Updated']);
     }
 }
