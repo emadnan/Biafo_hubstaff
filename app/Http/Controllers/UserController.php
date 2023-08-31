@@ -225,9 +225,9 @@ class UserController extends Controller
         
         $PSs=ProjectScreenshots::where('user_id', $id)->get();
         $psts=ProjectScreenshotsTiming::where('project_screenshorts_timing_id', $PSs->id)->get();
-        ProjectScreenshotsTiming::where('project_screenshorts_id', $psts->id)->delete();
+        ProjectScreenshotsTiming::where('project_screenshorts_id', $PSs->id)->delete();
         
-        ProjectScreenshotsAttechments::where('project_screenshorts_timing_id', $PSs->id)->delete();
+        ProjectScreenshotsAttechments::where('project_screenshorts_timing_id', $psts->id)->delete();
 
         ProjectScreenshots::where('user_id', $id)->delete();
     
