@@ -86,6 +86,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     // calculating weekly worked
     Route::get('/calculateWeeklyWork',[ProjectScreenshotsController::class,'calculateWeeklyWork']);
+    
+    // Reset Password
+    Route::Post('/resetPassword',[UserController::class,'resetPassword']);
+
 });
 
 //get total time by userId, projectId, and StreamName
@@ -107,7 +111,6 @@ Route::post('/update-role',[RoleController::class,'updateRole']);
 Route::get('/getroles',[RoleController::class,'get_roles']);
 
 //Get role by id API
-
 Route::get('/get_roles_by_id/{id}',[RoleController::class,'get_roles_by_id']);
 
 //delete role API

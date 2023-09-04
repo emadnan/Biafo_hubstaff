@@ -260,5 +260,34 @@ class UserController extends Controller
             return response()->json(['Message' => 'User not found'], 404);
         }
     }
+
+    function resetPassword() {
+
+        $id = auth()->user()->id; 
+        $oldPassword = \Request::input('oldPassword');
+        $newPassword = \Request::input('newPassword');
+        $confirmPassword = \Request::input('confirmPassword');
+
+        $user = User::find($id);
+
+        if ($user) {
+            if (password_verify($oldPassword, $user->password)) {
+                if ($newPassword === $confirmPassword) {
+                    $password = bcrypt($newPassword);
+                    $user->update([
+                        'password' => $password
+                    ]);
+
+                    return response()->json(['Message' => 'Password Updated']);
+                } else {
+                    return response()->json(['Message' => 'New password and confirm password do not match'], 400);
+                }
+            } else {
+                return response()->json(['Message' => 'Old password is incorrect'], 400);
+            }
+        } else {
+            return response()->json(['Message' => 'User not found'], 404);
+        }
+    }
     
 }
