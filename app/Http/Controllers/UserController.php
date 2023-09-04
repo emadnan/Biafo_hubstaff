@@ -278,7 +278,7 @@ class UserController extends Controller
                         'password' => $password
                     ]);
 
-                    return response()->json(['Message' => 'Password Updated']);
+                    return response()->json(['Message' => 'reset Updated successfully']);
                 } else {
                     return response()->json(['Message' => 'New password and confirm password do not match'], 400);
                 }
