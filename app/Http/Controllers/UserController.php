@@ -234,7 +234,7 @@ class UserController extends Controller
         return response()->json(['User' => $user]);
     }
 
-    function forGetPassword() {
+    function forGetPasswordSendLink() {
         $email = \Request::input('email');
         
         $randomNumber = mt_rand(100000, 999999);

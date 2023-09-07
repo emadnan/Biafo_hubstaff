@@ -88,7 +88,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/calculateWeeklyWork',[ProjectScreenshotsController::class,'calculateWeeklyWork']);
     
     // Reset Password
-    Route::Post('/forGetPassword',[UserController::class,'forGetPassword']);
+    Route::Post('/resetPassword',[UserController::class,'resetPassword']);
 
 });
 
@@ -558,4 +558,4 @@ Route::get('/getAssignedTypeId/{id}',[StreamsController::class,'getAssignedTypeI
 Route::get('/getUserAvailability/{companyId}',[StreamsController::class,'getUserAvailability']);
 
 // forget Password
-Route::Post('/forGetPassword',[UserController::class,'forGetPassword']);
+Route::Post('/forGetPasswordSendLink',[UserController::class,'forGetPasswordSendLink']);
