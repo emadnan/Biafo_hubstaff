@@ -234,7 +234,7 @@ class UserController extends Controller
         return response()->json(['User' => $user]);
     }
 
-    function forGetPasswordSendLink() {
+    function forGetPassword() {
         $email = \Request::input('email');
         
         $randomNumber = mt_rand(100000, 999999);
@@ -244,13 +244,14 @@ class UserController extends Controller
         $user = User::where('email', $email)->first(); // Retrieve the user object
         
         if ($user) {
-            // $user->update([
-            //     'password' => $hashedRandomNumber
-            // ]);
-            $link = 'http://10.3.3.80/api/resetPassword';
+            $user->update([
+                'password' => $hashedRandomNumber
+            ]);
+            
             $mail = [
-                'Link' => $link,
-                'name' => $user->name
+                'name' => $user->name,
+                "password" => $randomNumber,
+                "email" => $user->email
             ];
             Mail::to($user->email)->send(new forGetPassword($mail));
             

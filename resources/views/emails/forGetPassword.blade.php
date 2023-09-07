@@ -26,9 +26,11 @@
 <body>
     <div class="card">
         <h1>Hi {{ $data['name'] }}!</h1>
-        <p>Your Password is update when you Click on link are given below.</p>
+        <p>Your Password is updated.</p>
         
-        <p>Link: <link>{{ $data['Link'] }}</link> </p>
+        <p>Your Username and password are below:</p>
+        <p>Username: {{ $data['email'] }} </p>
+        <p>Password: {{ $data['password'] }}</p>
 
         <p><b>Please keep this information safe and secure.</b></p>
     </div>
