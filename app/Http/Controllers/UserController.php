@@ -244,14 +244,12 @@ class UserController extends Controller
         $user = User::where('email', $email)->first(); // Retrieve the user object
         
         if ($user) {
-            $user->update([
-                'password' => $hashedRandomNumber
-            ]);
-            
+            // $user->update([
+            //     'password' => $hashedRandomNumber
+            // ]);
+            $link = 'http://10.3.3.80/api/resetPassword';
             $mail = [
-                'name' => $user->name,
-                "password" => $randomNumber,
-                "email" => $user->email
+                'Link' => $link
             ];
             Mail::to($user->email)->send(new forGetPassword($mail));
             
