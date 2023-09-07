@@ -249,7 +249,8 @@ class UserController extends Controller
             // ]);
             $link = 'http://10.3.3.80/api/resetPassword';
             $mail = [
-                'Link' => $link
+                'Link' => $link,
+                'name' => $user->name
             ];
             Mail::to($user->email)->send(new forGetPassword($mail));
             
