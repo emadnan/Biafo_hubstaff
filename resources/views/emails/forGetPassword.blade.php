@@ -28,7 +28,7 @@
         <h1>Hi {{ $data['name'] }}!</h1>
         <p>Your Password is update when you Click on link are given below.</p>
         
-        <p>Link: <a>{{ $data['Link'] }}</a> </p>
+        <p>Link: <link>{{ $data['Link'] }}</link> </p>
 
         <p><b>Please keep this information safe and secure.</b></p>
     </div>
