@@ -561,4 +561,4 @@ Route::get('/getUserAvailability/{companyId}',[StreamsController::class,'getUser
 Route::post('/forGetPassword',[UserController::class,'forGetPassword']);
 
 // Genrate New  Password
-Route::get('/genrateNewPassword',[UserController::class,'genrateNewPassword']);
+Route::get('/genrateNewPassword/{id}',[UserController::class,'genrateNewPassword']);
