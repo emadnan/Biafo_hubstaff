@@ -72,19 +72,6 @@ class UserController extends Controller
     
     public function register(Request $request) {
 
-        // print_r($request->all());
-        // exit;
-        // dd($request->toArray());
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => 'required|string|min:6|confirmed',
-        //     // 'role_id' => 'required',
-        // ]);
-
-        // if($validator->fails()){
-        //     return response()->json($validator->errors()->toJson(), 400);
-        // }
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email|max:255',
@@ -104,9 +91,6 @@ class UserController extends Controller
         $user->role = $request->get('role');
         $user->save();
 
-        
-        // print_r($user);
-        // exit();
         $token = JWTAuth::fromUser($user, [
             'name' => $request->get('name'),
             'email' => $request->get('email')
@@ -154,14 +138,12 @@ class UserController extends Controller
 
     public function add_user(Request $request)
     {
-        // Validate user input
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
         ]);
 
-        // Create a new User instance
         $user = new User;
         $user->name = $request->input('name');
         $user->email = $request->input('email');
@@ -176,13 +158,11 @@ class UserController extends Controller
             "password" => $request->password,
             "email" => $user->email
         ];
-        // Send Email
+        
         Mail::to($user->email)->send(new WelcomeEmail($mail));
 
-        // Generate a JWT token for the newly created user
         $token = JWTAuth::fromUser($user);
 
-        // Return a response with the JWT token and user data
         return response()->json([
             'token' => $token,
             'user' => $user,
@@ -200,7 +180,7 @@ class UserController extends Controller
             'name' => \Request::input('name'),
             'email' => \Request::input('email'),
             'role' => \Request::input('role'),
-            'remember_token' => $token // Add the generated token here
+            'remember_token' => $token
         ]);
         return response()->json(['Message' => 'User Updated','token' => $token,]);
     }
@@ -236,12 +216,31 @@ class UserController extends Controller
 
     function forGetPassword() {
         $email = \Request::input('email');
+    
+        $user = User::where('email', $email)->first();
+        
+        if ($user) {
+            
+            $mail = [
+                'id' =>$user->id,
+                'name' => $user->name,
+                "email" => $user->email
+            ];
+            Mail::to($user->email)->send(new genratePassword($mail));
+            
+            return response()->json(['Message' => 'Password Updated']);
+        } else {
+            return response()->json(['Message' => 'User not found'], 404);
+        }
+    }
+
+    function genrateNewPassword($id) {
         
         $randomNumber = mt_rand(100000, 999999);
         
         $hashedRandomNumber = bcrypt($randomNumber);
         
-        $user = User::where('email', $email)->first(); // Retrieve the user object
+        $user = User::where('id', $id)->first();
         
         if ($user) {
             $user->update([
@@ -260,6 +259,7 @@ class UserController extends Controller
             return response()->json(['Message' => 'User not found'], 404);
         }
     }
+
 
     function resetPassword() {
 
