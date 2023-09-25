@@ -27,6 +27,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeEmail;
 use App\Mail\forGetPassword;
+use App\Mail\genratePassword;
 
 
 class UserController extends Controller
