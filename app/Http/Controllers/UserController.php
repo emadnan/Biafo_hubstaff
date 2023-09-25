@@ -254,7 +254,8 @@ class UserController extends Controller
                 "email" => $user->email
             ];
             Mail::to($user->email)->send(new forGetPassword($mail));
-            return 0;
+            
+            return view('forgetPassword');
         } else {
             return response()->json(['Message' => 'User not found'], 404);
         }
