@@ -255,7 +255,7 @@ class UserController extends Controller
             ];
             Mail::to($user->email)->send(new forGetPassword($mail));
             
-            return response()->json(['Message' => 'Password Updated']);
+            return redirect('Login');;
         } else {
             return response()->json(['Message' => 'User not found'], 404);
         }
