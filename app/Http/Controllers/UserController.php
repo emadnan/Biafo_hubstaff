@@ -255,7 +255,7 @@ class UserController extends Controller
             ];
             Mail::to($user->email)->send(new forGetPassword($mail));
             
-            return redirect('Login');;
+            return redirect('http://worklog.biafotech.com/Login');
         } else {
             return response()->json(['Message' => 'User not found'], 404);
         }
