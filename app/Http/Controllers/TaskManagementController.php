@@ -227,10 +227,9 @@ class TaskManagementController extends Controller
 
         return response()->json(['message' => 'Add Day End Report successfully']);
     }
-    public function getDayEndReportById(Request $request, $userId)
+    public function getDayEndReportById(Request $request, $userId,$selectedDate)
     {
-        // $selectedDate = $request->input('date');
-        $selectedDate = $request->date;
+
         $DayEndReport = DayEndReport::where('user_id', $userId)
             ->where('date', $selectedDate)
             ->first();

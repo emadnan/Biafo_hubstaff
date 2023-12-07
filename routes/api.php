@@ -568,4 +568,4 @@ Route::post('/addDayEndReport',[TaskManagementController::class,'addDayEndReport
 
 
 // get Day End Report
-Route::get('/getDayEndReportById/{userId}',[TaskManagementController::class,'getDayEndReportById']);
+Route::get('/getDayEndReportById/{userId}/{selectedDate}',[TaskManagementController::class,'getDayEndReportById']);
