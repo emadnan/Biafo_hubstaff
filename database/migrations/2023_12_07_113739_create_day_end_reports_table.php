@@ -18,6 +18,7 @@ class CreateDayEndReportsTable extends Migration
             $table->integer('user_id');
             $table->integer('company_id');
             $table->string('day_report',1000);
+            $table->date('date');
             $table->timestamps();
         });
     }
