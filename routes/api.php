@@ -562,3 +562,6 @@ Route::post('/forGetPassword',[UserController::class,'forGetPassword']);
 
 // Genrate New  Password
 Route::get('/genrateNewPassword/{id}',[UserController::class,'genrateNewPassword']);
+
+// Add Day End Report
+Route::post('/addDayEndReport',[TaskManagementController::class,'addDayEndReport']);

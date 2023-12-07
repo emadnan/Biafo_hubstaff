@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TaskManagement;
+use App\Models\DayEndReport;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AssignTaskEmail;
 
@@ -204,4 +206,17 @@ class TaskManagementController extends Controller
 
         return response()->json(['task'=>$task]);
     }
+
+    function addDayEndReport(){
+        $DayEndReport = new DayEndReport();
+        $DayEndReport->user_id = \Request::input('userId');
+        $company_id = User::where('id', $DayEndReport->user_id)->value('company_id');
+        $DayEndReport->company_id = $company_id;
+        $DayEndReport->day_report = \Request::input('dayReport');
+    
+        $DayEndReport->save();
+        
+        return response()->json(['message' => 'Add Day End Report successfully']);
+    }
+    
 }
