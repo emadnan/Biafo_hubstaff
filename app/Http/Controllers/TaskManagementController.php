@@ -6,7 +6,6 @@ use App\Mail\AssignTaskEmail;
 use App\Models\DayEndReport;
 use App\Models\TaskManagement;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -218,7 +217,7 @@ class TaskManagementController extends Controller
     {
         $user_id = \Request::input('userId');
         $dayReports = \Request::input('dayReport');
-        
+
         foreach ($dayReports as $dayReport) {
             $DayEndReport = new DayEndReport();
             $DayEndReport->user_id = $user_id;
@@ -236,18 +235,17 @@ class TaskManagementController extends Controller
         return response()->json(['message' => 'Add Day End Report successfully']);
     }
 
-    public function getDayEndReportById(Request $request, $userId, $selectedDate)
+    public function getDayEndReportById($id, $date)
     {
+        $dayEndReport = DayEndReport::where('id', $id)
+            ->whereDate('date', $date)
+            ->get();
 
-        $DayEndReport = DayEndReport::where('user_id', $userId)
-            ->where('date', $selectedDate)
-            ->first();
-
-        if (!$DayEndReport) {
-            return response()->json(['error' => 'DayEndReport not found'], 404);
+        if (!$dayEndReport) {
+            return response()->json(['message' => 'DayEndReport not found'], 404);
         }
 
-        return response()->json(['Day_end_report' => $DayEndReport]);
+        return response()->json(['dayEndReport' => $dayEndReport]);
     }
 
 }
