@@ -26,6 +26,11 @@ class ProjectScreenshotsController extends Controller
         $end_time = $request->end_time;
         $path_url = $request->path_url;
         $isStart = $request->is_start;
+        $platform = $request->platform;
+        $release = $request->release;
+        $type = $request->type;
+        $hostname = $request->hostname;
+        $ip = $request->ip;
 
         $screenshots = ProjectScreenshots::firstOrCreate(
             [
@@ -40,7 +45,13 @@ class ProjectScreenshotsController extends Controller
                 'latitude' => $latitude,
                 'hours' => $hours,
                 'minutes' => $minutes,
-                'seconds' => $seconds
+                'seconds' => $seconds,
+                'platform' => $platform,
+                'release' => $release,
+                'type' => $type,
+                'hostname' => $hostname,
+                'ip' => $ip
+
             ]
         );
         $update1 = ProjectScreenshots::where('user_id', $user_id)
