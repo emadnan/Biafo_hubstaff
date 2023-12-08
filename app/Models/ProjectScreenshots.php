@@ -11,7 +11,7 @@ class ProjectScreenshots extends Model
     protected $table="project_screenshots";
     protected $primaryKey="id";
 
-    protected $fillable = ['user_id', 'stream_name','longitude', 'latitude', 'project_id','date', 'hours', 'minutes', 'seconds'];
+    protected $fillable = ['user_id', 'stream_name','longitude', 'latitude', 'project_id','date', 'hours', 'minutes', 'seconds','platform','type','release','hostname','ip'];
 
     function getTimings(){
         return $this->hasMany('App\Models\ProjectScreenshotsTiming', 'project_screenshorts_id', 'id')
