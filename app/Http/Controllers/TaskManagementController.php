@@ -216,18 +216,27 @@ class TaskManagementController extends Controller
 
     public function addDayEndReport()
     {
-        $DayEndReport = new DayEndReport();
-        $DayEndReport->user_id = \Request::input('userId');
-        $company_id = User::where('id', $DayEndReport->user_id)->value('company_id');
-        $DayEndReport->company_id = $company_id;
-        $DayEndReport->day_report = \Request::input('dayReport');
-        $DayEndReport->date = today();
+        $user_id = \Request::input('userId');
+        $dayReports = \Request::input('dayReport');
+        
+        foreach ($dayReports as $dayReport) {
+            $DayEndReport = new DayEndReport();
+            $DayEndReport->user_id = $user_id;
 
-        $DayEndReport->save();
+            $company_id = User::where('id', $user_id)->value('company_id');
+            $DayEndReport->company_id = $company_id;
+
+            $DayEndReport->day_report = $dayReport;
+
+            $DayEndReport->date = today();
+
+            $DayEndReport->save();
+        }
 
         return response()->json(['message' => 'Add Day End Report successfully']);
     }
-    public function getDayEndReportById(Request $request, $userId,$selectedDate)
+
+    public function getDayEndReportById(Request $request, $userId, $selectedDate)
     {
 
         $DayEndReport = DayEndReport::where('user_id', $userId)
