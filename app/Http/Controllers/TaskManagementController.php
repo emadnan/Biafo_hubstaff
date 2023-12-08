@@ -237,7 +237,7 @@ class TaskManagementController extends Controller
 
     public function getDayEndReportById($id, $date)
     {
-        $dayEndReport = DayEndReport::where('id', $id)
+        $dayEndReport = DayEndReport::where('user_id', $id)
             ->whereDate('date', $date)
             ->get();
 
