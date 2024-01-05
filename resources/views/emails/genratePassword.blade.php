@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>For Get PAssword</title>
+    <title>New Password</title>
     <style>
         body {
             display: flex;
@@ -27,7 +27,7 @@
     <div class="card">
         <h1>Hi {{ $data['name'] }}!</h1>
         
-        <p>If you Want to forget your password then click on blow button</p>
+        <p>To recover your password, please click the button below, and you will be sent your new password via email.</p>
         <a href="http://10.3.3.80/api/genrateNewPassword/{{$data['id']}}" class="btn btn-link">Forgot Your Password?</a>
 
         <p><b>Please keep this information safe and secure.</b></p>
