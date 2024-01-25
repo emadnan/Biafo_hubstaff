@@ -54,10 +54,7 @@ class DeleteOldData extends Command
                     unlink($filePath);
                 }
             }
-            $project->delete();
         }
-        ProjectScreenshotsTiming::where('created_at', '<', $twoMonthsAgo)
-            ->delete();
         $this->info('Old data deleted successfully.');
     }
 }
