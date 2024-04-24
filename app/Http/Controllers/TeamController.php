@@ -22,9 +22,8 @@ class TeamController extends Controller
         return response()->json(['message'=>'Add Team successfully']);
     }
 
-    function updateTeam(){
+    function updateTeam($id){
 
-        $id = \Request::input('id');
         $role = Team::where('id',$id)
             ->update([
                 'team_lead_id' => \Request::input('team_lead_id'),
@@ -37,16 +36,15 @@ class TeamController extends Controller
         return response()->json(['Message' => 'team Updated']);
     }
 
-    public function get_teams()
+    public function getTeams()
     {
         $team = Team::get();
 
         return response()->json(['Teams' => $team]);
     }
 
-    function deleteTeam()   {
+    function deleteTeam($id)   {
 
-        $id = \Request::input('id');
         $team = Team::where('id',$id)->delete();
 
         return response()->json(['message'=>'delete Team successfully']);

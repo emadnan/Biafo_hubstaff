@@ -222,19 +222,19 @@ Route::get('/get_user/{id}',[UserController::class,'get_user']);
 Route::post('/add-team',[TeamController::class,'createTeam']);
 
 //Update Team API
-Route::post('/update-team',[TeamController::class,'updateTeam']);
+Route::post('/update-team/{id}',[TeamController::class,'updateTeam']);
 
 //Delete Team API
-Route::post('/delete-team',[TeamController::class,'deleteTeam']);
+Route::post('/delete-team/{id}',[TeamController::class,'deleteTeam']);
 
 //Get All Teams
-Route::get('/get_teams',[TeamController::class,'get_teams']);
+Route::get('/get-teams',[TeamController::class,'getTeams']);
 
 //Get Team by ID
-Route::get('/getTeam/{team_id}',[TeamController::class,'getTeamById']);
+Route::get('/get-team/{team_id}',[TeamController::class,'getTeamById']);
 
 //team has users
-Route::post('/teamHasUsers',[TeamController::class,'teamHasUsers']);
+Route::post('/team-has-users',[TeamController::class,'teamHasUsers']);
 
 //team has users
 Route::get('/getUsersByTeamId/{team_id}',[TeamController::class,'getUsersByTeamId']);
