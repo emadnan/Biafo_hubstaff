@@ -9,21 +9,28 @@ use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-    function add_team(Request $request){
+    function createTeam(Request $request){
+
         $team = new Team();
+        $team->company_id = \Request::input('company_id');
+        $team->department_id = \Request::input('department_id');
+        $team->team_lead_id = \Request::input('team_lead_id');
         $team->team_name = \Request::input('team_name');
-        $team->team_company_id = \Request::input('team_company_id');
         $team->description  = \Request::input('description');
         $team->save();
+
         return response()->json(['message'=>'Add Team successfully']);
     }
 
-    function updateteam(){
+    function updateTeam(){
+
         $id = \Request::input('id');
         $role = Team::where('id',$id)
             ->update([
+                'team_lead_id' => \Request::input('team_lead_id'),
+                'department_id' => \Request::input('department_id'),
                 'team_name' => \Request::input('team_name'),
-                'team_company_id' => \Request::input('team_company_id'),
+                'company_id' => \Request::input('company_id'),
                 'description' => \Request::input('description'),
             ]);
 
@@ -33,10 +40,12 @@ class TeamController extends Controller
     public function get_teams()
     {
         $team = Team::get();
+
         return response()->json(['Teams' => $team]);
     }
 
-    function delete_team(){
+    function deleteTeam()   {
+
         $id = \Request::input('id');
         $team = Team::where('id',$id)->delete();
 
@@ -47,6 +56,7 @@ class TeamController extends Controller
     {
         $team = Team::
         where('id',$team_id)->get();
+
         return response()->json(['Team' => $team]);
     }
     function teamHasUsers(Request $request) {
@@ -54,11 +64,9 @@ class TeamController extends Controller
         $userIds = $request->input('user_ids');
         $teamId = $request->input('team_id');
     
-        // Delete existing team-user relationships for the given team ID
         TeamHasUser::where('team_id', $teamId)->delete();
     
         foreach ($userIds as $userId) {
-            // Create a new team-user relationship
             $teamUser = new TeamHasUser;
             $teamUser->team_id = $teamId;
             $teamUser->user_id = $userId;
@@ -82,6 +90,13 @@ class TeamController extends Controller
         ->get();
 
         return response()->json(['Team_Leads' => $users]);
+    }
+
+    function getTeamsByDepartmentId($dipartment_id){
+        $team = Team::where('dipartment_id',$dipartment_id)
+        ->get();
+
+        return response()->json(['team' => $team]);
     }
     
 }

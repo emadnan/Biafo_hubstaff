@@ -219,13 +219,13 @@ Route::get('/get_users',[UserController::class,'get_users']);
 Route::get('/get_user/{id}',[UserController::class,'get_user']);
 
 //Add Team API
-Route::post('/add_team',[TeamController::class,'add_team']);
+Route::post('/add-team',[TeamController::class,'createTeam']);
 
 //Update Team API
-Route::post('/updateteam',[TeamController::class,'updateteam']);
+Route::post('/update-team',[TeamController::class,'updateTeam']);
 
 //Delete Team API
-Route::post('/delete_team',[TeamController::class,'delete_team']);
+Route::post('/delete-team',[TeamController::class,'deleteTeam']);
 
 //Get All Teams
 Route::get('/get_teams',[TeamController::class,'get_teams']);
