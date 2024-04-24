@@ -16,7 +16,8 @@ class AddTeamLeadAdnDepartmentIntoTeamsTable extends Migration
         Schema::table('teams', function (Blueprint $table) {
             $table->integer('team_lead_id')->after('id')->nullable();
             $table->integer('department_id')->after('team_lead_id');
-            $table->renameColumn('team_company_id', 'company_id');
+            $table->dropColumn('team_company_id');
+            $table->integer('company_id')->after('department_id');
         });
     }
 
@@ -30,7 +31,8 @@ class AddTeamLeadAdnDepartmentIntoTeamsTable extends Migration
         Schema::table('teams', function (Blueprint $table) {
             $table->dropColumn('team_lead_id');
             $table->dropColumn('department_id');
-            $table->renameColumn('company_id', 'team_company_id');
+            $table->integer('team_company_id')->after('id');
+            $table->dropColumn('company_id');
         });
     }
 }
