@@ -237,9 +237,12 @@ Route::get('/get-team/{team_id}',[TeamController::class,'getTeamById']);
 Route::post('/team-has-users',[TeamController::class,'teamHasUsers']);
 
 //team has users
-Route::get('/getUsersByTeamId/{team_id}',[TeamController::class,'getUsersByTeamId']);
+Route::get('/get-user-by-team-id/{team_id}',[TeamController::class,'getUsersByTeamId']);
 
-//team has users
+//get users by role_id
+Route::get('/get-teams-by-department-id/{department_id}',[TeamController::class,'getTeamsByDepartmentId']);
+
+//get users by role_id
 Route::get('/getUsersByRoleId/{role_id}',[UserController::class,'getUsersByRoleId']);
 
 //Get All Country API

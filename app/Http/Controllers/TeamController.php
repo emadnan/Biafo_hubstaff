@@ -90,8 +90,10 @@ class TeamController extends Controller
         return response()->json(['Team_Leads' => $users]);
     }
 
-    function getTeamsByDepartmentId($dipartment_id){
-        $team = Team::where('dipartment_id',$dipartment_id)
+    function getTeamsByDepartmentId($department_id){
+        $team = Team::join('departments', 'teams.department_id', '=', 'departments.id')
+        ->where('departments.id', $department_id)
+        ->select('teams.*','departments.*')
         ->get();
 
         return response()->json(['team' => $team]);
