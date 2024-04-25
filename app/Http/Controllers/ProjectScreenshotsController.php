@@ -556,7 +556,7 @@ class ProjectScreenshotsController extends Controller
     public function getProjectScreenshotsByTeamLead($user_id, $teamleadId)
     {
         $user = DB::table('users')
-        ->where('user_id', $teamleadId)
+        ->where('id', $teamleadId)
         ->first();
 
         print_r($user);
