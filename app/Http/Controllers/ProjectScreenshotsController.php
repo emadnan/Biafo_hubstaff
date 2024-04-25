@@ -557,7 +557,7 @@ class ProjectScreenshotsController extends Controller
     {
         $user = Auth::user();
 
-        if (!in_array($user->role_id, [6, 7])) {
+        if ($user->role_id != 6 && $user->role_id != 7) {
             return response()->json(['error' => 'You are not authorized to access this resource.'], 403);
         }
 
