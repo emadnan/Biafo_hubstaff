@@ -417,7 +417,7 @@ Route::get('/calculateMonthlyActivity/{userId}',[ProjectScreenshotsController::c
 Route::get('/calculateOverAllActivity/{userId}',[ProjectScreenshotsController::class,'calculateOverAllActivity']);
 
 // get screenshorts of a team by team lead
-Route::get('/get-projectScreenshots-by-teamLead/{userId}',[ProjectScreenshotsController::class,'getProjectScreenshotsByTeamLead']);
+Route::get('/get-projectScreenshots-by-teamLead/{userId}/{teamleadId}',[ProjectScreenshotsController::class,'getProjectScreenshotsByTeamLead']);
 
 // devlopment Logic into Fsf Form
 Route::post('/addDevelopmentLogicIntoFsfForm',[FunctionalSpecificationFormController::class,'addDevelopmentLogicIntoFsfForm']);

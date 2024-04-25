@@ -553,9 +553,11 @@ class ProjectScreenshotsController extends Controller
         return response()->json(['data' => $update1, 'message' => 'Add project screenshots successfully']);
     }
 
-    public function getProjectScreenshotsByTeamLead($user_id)
+    public function getProjectScreenshotsByTeamLead($user_id, $teamleadId)
     {
-        $user = Auth::user();
+        $user = DB::table('users')
+        ->where('user_id', $teamleadId)
+        ->first();
 
         print_r($user);
         exit();
