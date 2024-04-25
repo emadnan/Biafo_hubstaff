@@ -416,6 +416,9 @@ Route::get('/calculateMonthlyActivity/{userId}',[ProjectScreenshotsController::c
 // calculating over all worked and time
 Route::get('/calculateOverAllActivity/{userId}',[ProjectScreenshotsController::class,'calculateOverAllActivity']);
 
+// get screenshorts of a team by team lead
+Route::get('/get-projectScreenshots-by-teamLead/{userId}',[ProjectScreenshotsController::class,'getProjectScreenshotsByTeamLead']);
+
 // devlopment Logic into Fsf Form
 Route::post('/addDevelopmentLogicIntoFsfForm',[FunctionalSpecificationFormController::class,'addDevelopmentLogicIntoFsfForm']);
 
@@ -568,7 +571,6 @@ Route::get('/genrateNewPassword/{id}',[UserController::class,'genrateNewPassword
 
 // Add Day End Report
 Route::post('/addDayEndReport',[TaskManagementController::class,'addDayEndReport']);
-
 
 // get Day End Report
 Route::get('/getDayEndReportById/{userId}/{selectedDate}',[TaskManagementController::class,'getDayEndReportById']);
