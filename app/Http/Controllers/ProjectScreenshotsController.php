@@ -553,7 +553,7 @@ class ProjectScreenshotsController extends Controller
         return response()->json(['data' => $update1, 'message' => 'Add project screenshots successfully']);
     }
 
-    public function getProjectScreenshotsByTeamLead($user_id, $teamleadId)
+    public function getProjectScreenshotsByTeamLead($user_id, $teamleadId, $date)
     {
         $user = DB::table('users')
         ->where('id', $teamleadId)
@@ -581,7 +581,7 @@ class ProjectScreenshotsController extends Controller
             ->join('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->join('company', 'company.id', '=', 'users.company_id')
-            ->where('date', date('Y-m-d'))
+            ->where('date', $date)
             ->where('users.id', $user_id)
             ->with('getTimings', 'getTimings.getattechments')
             ->orderBy('project_screenshots.id', 'DESC')
