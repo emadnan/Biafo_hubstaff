@@ -558,9 +558,7 @@ class ProjectScreenshotsController extends Controller
         $user = DB::table('users')
         ->where('id', $teamleadId)
         ->first();
-
-        print_r($user);
-        exit();
+        
         if ($user->role_id != 6 && $user->role_id != 7) {
             return response()->json(['error' => 'You are not authorized to access this resource.'], 403);
         }
