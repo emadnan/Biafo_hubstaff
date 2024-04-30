@@ -572,8 +572,8 @@ class ProjectScreenshotsController extends Controller
             ->pluck('user_id')
             ->toArray();
 
-        print_r($user_ids);
-        exit();
+        // print_r($user_ids);
+        // exit();
 
         if (!in_array($user_id, $user_ids)) {
             return response()->json(['error' => 'The user is not in your team.'], 403);
