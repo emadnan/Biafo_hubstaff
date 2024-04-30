@@ -119,8 +119,6 @@ class TeamController extends Controller
         return response()->json(['team' => $team]);
     }
 
-    //we want to get all projects managers form projects table against team_lead_id
-
     public function getPeojectsByTeamLeadId($team_lead_id)
     {
         $Projects = Project::
@@ -129,5 +127,14 @@ class TeamController extends Controller
 
         return response()->json(['Projects' => $Projects]);
     }
+    // get all team_leads_by_company_id
 
+    public function getTeamLeadsByCompanyId($company_id)
+    {
+        $team_leads = Team::
+            where('company_id', $company_id)
+            ->get();
+
+        return response()->json(['team_leads' => $team_leads]);
+    }
 }

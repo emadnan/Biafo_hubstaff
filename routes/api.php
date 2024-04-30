@@ -245,6 +245,9 @@ Route::get('/get-teams-by-department-id/{department_id}',[TeamController::class,
 //get projects by team lead id
 Route::get('/get-projects-by-team-lead-id/{team_lead_id}',[TeamController::class,'getPeojectsByTeamLeadId']);
 
+//get team lead id by company id
+Route::get('/get-team-leads-by-company-id/{company_id}',[TeamController::class,'getTeamLeadsByCompanyId']);
+
 //get users by role_id
 Route::get('/getUsersByRoleId/{role_id}',[UserController::class,'getUsersByRoleId']);
 
