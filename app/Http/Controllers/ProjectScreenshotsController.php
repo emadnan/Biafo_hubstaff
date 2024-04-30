@@ -563,9 +563,9 @@ class ProjectScreenshotsController extends Controller
             return response()->json(['error' => 'You are not authorized to access this resource.'], 403);
         }
 
-        $team_id = DB::table('team_has_users')
-            ->where('user_id', $user->id)
-            ->value('team_id');
+        $team_id = DB::table('teams')
+            ->where('team_lead_id', $user->id)
+            ->value('id');
 
         $user_ids = DB::table('team_has_users')
             ->where('team_id', $team_id)
