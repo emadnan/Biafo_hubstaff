@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\ProjectScreenshots;
 use App\Models\ProjectScreenshotsAttechments;
 use App\Models\ProjectScreenshotsTiming;
