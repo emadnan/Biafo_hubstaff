@@ -641,12 +641,11 @@ class ProjectScreenshotsController extends Controller
             $totalMinutes = floor(($totalTime % 3600) / 60);
             $totalSeconds = $totalTime % 60;
 
-            $data[] = [
-                'user' => $user,
-                'totalHours' => $totalHours,
-                'totalMinutes' => $totalMinutes,
-                'totalSeconds' => $totalSeconds,
-            ];
+            $user->totalHours = $totalHours;
+            $user->totalMinutes = $totalMinutes;
+            $user->totalSeconds = $totalSeconds;
+
+            $data[] = $user;
         }
 
         return response()->json(['data' => $data]);
