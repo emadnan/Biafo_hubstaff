@@ -675,13 +675,13 @@ class ProjectScreenshotsController extends Controller
     public function getDailyReportBothOfflineOrOnline($team_lead_id, $date)
     {
         $team = Team::where('team_lead_id', $team_lead_id)->first();
-
+    
         if (!$team) {
             return response()->json(['error' => 'Team lead not found'], 404);
         }
-
+    
         $user_ids = TeamHasUser::where('team_id', $team->id)->pluck('user_id')->toArray();
-
+    
         $projectscreenshot = ProjectScreenshots::
             select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
             ->rightJoin('users', 'users.id', '=', 'project_screenshots.user_id')
@@ -692,27 +692,33 @@ class ProjectScreenshotsController extends Controller
             ->with('getTimings')
             ->orderBy('project_screenshots.id', 'DESC')
             ->get();
-
+    
         $totalTimes = $projectscreenshot->groupBy('user_id')->map(function ($group) {
             return $group->sum(function ($item) {
                 return $item->hours * 3600 + $item->minutes * 60 + $item->seconds;
             });
         });
 
-        $users = User::leftJoin('project_screenshots', 'users.id', '=', 'project_screenshots.user_id')
-            ->whereIn('users.id', $user_ids)
-            ->where('project_screenshots.id', null)
-            ->get();
+        $offlineUserIds = User::whereNotIn('id', function ($query) use ($date) {
+            $query->select('user_id')
+                ->from('project_screenshots')
+                ->whereDate('date', $date);
+        })->whereIn('id', $user_ids)->pluck('id')->toArray();
 
-        $data = [];
-        foreach ($users as $user) {
-            $totalTime = $totalTimes[$user->id] ?? 0;
-            $user->totalHours = floor($totalTime / 3600);
-            $user->totalMinutes = floor(($totalTime % 3600) / 60);
-            $user->totalSeconds = $totalTime % 60;
-            $data[] = $user;
+        $offlineUsers = User::whereIn('id', $offlineUserIds)->get();
+    
+        $users = collect([]);
+        foreach ($totalTimes as $userId => $totalTime) {
+            $user = User::find($userId);
+            if ($user) {
+                $user->totalHours = floor($totalTime / 3600);
+                $user->totalMinutes = floor(($totalTime % 3600) / 60);
+                $user->totalSeconds = $totalTime % 60;
+                $users->push($user);
+            }
         }
-
-        return response()->json(['data' => $data]);
+    
+        return response()->json(['data' => $users, 'offlineUsers' => $offlineUsers]);
     }
+
 }
