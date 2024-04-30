@@ -556,9 +556,9 @@ class ProjectScreenshotsController extends Controller
     public function getProjectScreenshotsByTeamLead($user_id, $teamleadId, $date)
     {
         $user = DB::table('users')
-        ->where('id', $teamleadId)
-        ->first();
-        
+            ->where('id', $teamleadId)
+            ->first();
+
         if ($user->role != 6 && $user->role != 7) {
             return response()->json(['error' => 'You are not authorized to access this resource.'], 403);
         }
@@ -572,8 +572,8 @@ class ProjectScreenshotsController extends Controller
             ->pluck('user_id')
             ->toArray();
 
-            print_r($user_ids);
-            exit();
+        print_r($user_ids);
+        exit();
 
         if (!in_array($user_id, $user_ids)) {
             return response()->json(['error' => 'The user is not in your team.'], 403);
@@ -601,6 +601,5 @@ class ProjectScreenshotsController extends Controller
 
         return response()->json($data);
     }
-    
 
 }
