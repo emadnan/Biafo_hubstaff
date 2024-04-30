@@ -605,7 +605,7 @@ class ProjectScreenshotsController extends Controller
         return response()->json($data);
     }
 
-    public function getDailyReportForCompany($team_lead_id, $date)
+    public function getDailyReportOfUsersForTeamLead($team_lead_id, $date)
     {
         $team = Team::where('team_lead_id', $team_lead_id)->first();
 
