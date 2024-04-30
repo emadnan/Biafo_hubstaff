@@ -133,7 +133,7 @@ class TeamController extends Controller
     {
         $team_leads = Team::
             join('users', 'teams.team_lead_id', '=', 'users.id')
-            ->where('company_id', $company_id)
+            ->where('teams.company_id', $company_id)
             ->get();
 
         return response()->json(['team_leads' => $team_leads]);
