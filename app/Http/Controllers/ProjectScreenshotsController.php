@@ -672,7 +672,7 @@ class ProjectScreenshotsController extends Controller
         return response()->json(['data' => $users]);
     }
 
-    public function getDailyReportForCompany($team_lead_id, $date)
+    public function getDailyReportBothOfflineOrOnline($team_lead_id, $date)
     {
         $team = Team::where('team_lead_id', $team_lead_id)->first();
 
