@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TeamHasUser;
-use App\Models\Team;
 use App\Models\ProjectScreenshots;
 use App\Models\ProjectScreenshotsAttechments;
 use App\Models\ProjectScreenshotsTiming;
+use App\Models\Team;
+use App\Models\TeamHasUser;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
@@ -650,6 +650,27 @@ class ProjectScreenshotsController extends Controller
         }
 
         return response()->json(['data' => $data]);
+    }
+
+    public function getDailyReportOfOfflineUsersByTeamLead($team_lead_id, $date)
+    {
+        $team = Team::where('team_lead_id', $team_lead_id)->first();
+
+        if (!$team) {
+            return response()->json(['error' => 'Team lead not found'], 404);
+        }
+
+        $user_ids = TeamHasUser::where('team_id', $team->id)->pluck('user_id')->toArray();
+
+        $offlineUserIds = User::whereNotIn('id', function ($query) use ($date) {
+            $query->select('user_id')
+                ->from('project_screenshots')
+                ->whereDate('date', $date);
+        })->whereIn('id', $user_ids)->pluck('id')->toArray();
+
+        $users = User::whereIn('id', $offlineUserIds)->get();
+
+        return response()->json(['data' => $users]);
     }
 
 }
