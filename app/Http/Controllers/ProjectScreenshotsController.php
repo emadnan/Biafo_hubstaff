@@ -632,20 +632,20 @@ class ProjectScreenshotsController extends Controller
             });
         });
 
-        $totals = $totalTimes->map(function ($totalTime) {
-            $totalHours = floor($totalTime / 3600);
-            $totalMinutes = floor(($totalTime % 3600) / 60);
-            $totalSeconds = $totalTime % 60;
-            return compact('totalHours', 'totalMinutes', 'totalSeconds');
-        });
-
-        $users = User::whereIn('id', $totalTimes->keys())->get();
+        $users = User::whereIn('id', $user_ids)->get();
 
         $data = [];
         foreach ($users as $user) {
+            $totalTime = $totalTimes[$user->id] ?? 0;
+            $totalHours = floor($totalTime / 3600);
+            $totalMinutes = floor(($totalTime % 3600) / 60);
+            $totalSeconds = $totalTime % 60;
+
             $data[] = [
                 'user' => $user,
-                'totals' => $totals[$user->id],
+                'totalHours' => $totalHours,
+                'totalMinutes' => $totalMinutes,
+                'totalSeconds' => $totalSeconds,
             ];
         }
 
