@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\Team;
 use App\Models\TeamHasUser;
 use App\Models\User;
@@ -81,13 +82,13 @@ class TeamController extends Controller
     public function getUsersByTeamLeadId($team_lead_id)
     {
         try {
-            
+
             $team = Team::where('team_lead_id', $team_lead_id)->first();
 
             if (!$team) {
                 return response()->json(['error' => 'Team lead not found'], 404);
             }
-            
+
             $teamUsers = TeamHasUser::where('team_id', $team->id)
                 ->join('users', 'team_has_users.user_id', '=', 'users.id')
                 ->get();
@@ -116,6 +117,17 @@ class TeamController extends Controller
             ->get();
 
         return response()->json(['team' => $team]);
+    }
+
+    //we want to get all projects managers form projects table against team_lead_id
+
+    public function getPeojectsByTeamLeadId($team_lead_id)
+    {
+        $Projects = Project::
+            where('project_manager', $team_lead_id)
+            ->get();
+
+        return response()->json(['Projects' => $Projects]);
     }
 
 }
