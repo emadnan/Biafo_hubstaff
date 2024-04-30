@@ -672,7 +672,7 @@ class ProjectScreenshotsController extends Controller
         return response()->json(['data' => $users]);
     }
 
-    public function getDailyReportBothOfflineOrOnline($team_lead_id, $date)
+    public function getDailyReportForCompany($team_lead_id, $date)
     {
         $team = Team::where('team_lead_id', $team_lead_id)->first();
 
@@ -680,11 +680,14 @@ class ProjectScreenshotsController extends Controller
             return response()->json(['error' => 'Team lead not found'], 404);
         }
 
+        $user_ids = TeamHasUser::where('team_id', $team->id)->pluck('user_id')->toArray();
+
         $projectscreenshot = ProjectScreenshots::
             select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
             ->rightJoin('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->join('company', 'company.id', '=', 'users.company_id')
+            ->whereIn('users.id', $user_ids)
             ->where('date', $date)
             ->with('getTimings')
             ->orderBy('project_screenshots.id', 'DESC')
