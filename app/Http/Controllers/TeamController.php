@@ -85,7 +85,6 @@ class TeamController extends Controller
 
         $teamUsers = TeamHasUser::where('team_has_users.team_id', $team->id)
             ->join('users', 'team_has_users.user_id', '=', 'users.id')
-            ->select('users.name')
             ->get();
 
         return response()->json(['team' => $teamUsers]);
