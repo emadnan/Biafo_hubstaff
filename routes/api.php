@@ -312,7 +312,7 @@ Route::post('/updateTimeAfterOneMinute',[ProjectScreenshotsController::class,'up
 Route::get('/get_Project_Screenshots',[ProjectScreenshotsController::class,'getProjectScreenshots']);
 
 // get daily report for compnay API\
-Route::get('/get-daily-report-for-company/{company_id}',[ProjectScreenshotsController::class,'getDailyReportForCompany']);
+Route::get('/get-daily-report-for-company/{company_id}/{date}',[ProjectScreenshotsController::class,'getDailyReportForCompany']);
 
 // get users by company id API\
 Route::get('/get_company_by_company_id/{id}',[CompanyController::class,'get_company_by_company_id']);

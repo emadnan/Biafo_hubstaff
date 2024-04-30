@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\TeamHasUser;
+use App\Models\Team;
 use App\Models\ProjectScreenshots;
 use App\Models\ProjectScreenshotsAttechments;
 use App\Models\ProjectScreenshotsTiming;
+use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -603,15 +605,23 @@ class ProjectScreenshotsController extends Controller
         return response()->json($data);
     }
 
-    public function getDailyReportForCompany($company_id)
+    public function getDailyReportForCompany($team_lead_id, $date)
     {
+        $team = Team::where('team_lead_id', $team_lead_id)->first();
+
+        if (!$team) {
+            return response()->json(['error' => 'Team lead not found'], 404);
+        }
+
+        $user_ids = TeamHasUser::where('team_id', $team->id)->pluck('user_id')->toArray();
+
         $projectscreenshot = ProjectScreenshots::
             select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
             ->join('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->join('company', 'company.id', '=', 'users.company_id')
-            ->where('date', date('Y-m-d'))
-            ->where('users.company_id', $company_id)
+            ->whereIn('users.id', $user_ids)
+            ->where('date', $date)
             ->with('getTimings')
             ->orderBy('project_screenshots.id', 'DESC')
             ->get();
