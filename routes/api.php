@@ -317,6 +317,9 @@ Route::get('/get-daily-report-of-users-for-teamlead/{team_lead_id}/{date}',[Proj
 // get daily report of Offline users by teamlead API\
 Route::get('/get-daily-report-of-offline-users-by-teamlead/{team_lead_id}/{date}',[ProjectScreenshotsController::class,'getDailyReportOfOfflineUsersByTeamLead']);
 
+// get daily report of Offline users by teamlead API\
+Route::get('/get-daily-report-of-both-offline-or-online/{team_lead_id}/{date}',[ProjectScreenshotsController::class,'getDailyReportBothOfflineOrOnline']);
+
 // get users by company id API\
 Route::get('/get_company_by_company_id/{id}',[CompanyController::class,'get_company_by_company_id']);
 

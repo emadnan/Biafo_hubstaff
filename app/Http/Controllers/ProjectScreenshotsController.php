@@ -672,4 +672,42 @@ class ProjectScreenshotsController extends Controller
         return response()->json(['data' => $users]);
     }
 
+    public function getDailyReportBothOfflineOrOnline($team_lead_id, $date)
+    {
+        $team = Team::where('team_lead_id', $team_lead_id)->first();
+
+        if (!$team) {
+            return response()->json(['error' => 'Team lead not found'], 404);
+        }
+
+        $projectscreenshot = ProjectScreenshots::
+            select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
+            ->rightJoin('users', 'users.id', '=', 'project_screenshots.user_id')
+            ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
+            ->join('company', 'company.id', '=', 'users.company_id')
+            ->where('date', $date)
+            ->with('getTimings')
+            ->orderBy('project_screenshots.id', 'DESC')
+            ->get();
+
+        $totalTimes = $projectscreenshot->groupBy('user_id')->map(function ($group) {
+            return $group->sum(function ($item) {
+                return $item->hours * 3600 + $item->minutes * 60 + $item->seconds;
+            });
+        });
+
+        $users = collect([]);
+        foreach ($totalTimes as $userId => $totalTime) {
+            $user = User::find($userId);
+            if ($user) {
+                $user->totalHours = floor($totalTime / 3600);
+                $user->totalMinutes = floor(($totalTime % 3600) / 60);
+                $user->totalSeconds = $totalTime % 60;
+                $users->push($user);
+            }
+        }
+
+        return response()->json(['data' => $users]);
+    }
+
 }
