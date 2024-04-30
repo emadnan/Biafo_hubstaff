@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\Team;
 use App\Models\TeamHasUser;
 use App\Models\User;
@@ -79,38 +78,23 @@ class TeamController extends Controller
         return response()->json(['message' => 'Users added to the team successfully']);
     }
 
-    public function getUsersByTeamLeadId($team_lead_id, $newUserIds)
+    public function getUsersByTeamLeadId($team_lead_id)
     {
-        // Start a transaction
-        DB::beginTransaction();
-
         try {
-            // Get the team
+            
             $team = Team::where('team_lead_id', $team_lead_id)->first();
 
-            // Delete existing team users
-            TeamHasUser::where('team_id', $team->id)->delete();
-
-            // Add new team users
-            foreach ($newUserIds as $userId) {
-                TeamHasUser::create([
-                    'team_id' => $team->id,
-                    'user_id' => $userId,
-                ]);
+            if (!$team) {
+                return response()->json(['error' => 'Team lead not found'], 404);
             }
-
-            DB::commit();
-
+            
             $teamUsers = TeamHasUser::where('team_id', $team->id)
                 ->join('users', 'team_has_users.user_id', '=', 'users.id')
                 ->get();
 
             return response()->json(['team' => $teamUsers]);
         } catch (\Exception $e) {
-
-            DB::rollBack();
-
-            return response()->json(['error' => 'Failed to update team users'], 500);
+            return response()->json(['error' => 'Failed to fetch team users'], 500);
         }
     }
 
