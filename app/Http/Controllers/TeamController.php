@@ -77,8 +77,11 @@ class TeamController extends Controller
     Function getUsersByTeamLeadId($team_lead_id){
 
         $team = Team::where('team_lead_id',$team_lead_id)->first();
-
-        $teamUsers = TeamHasUser::where('team_id', $team->id)->get();
+        
+        $teamUsers = TeamHasUser::where('team_id', $team->id)
+        ->join('users', 'team_has_users.user_id', '=', 'users.id')
+        ->select('users.name')
+        ->get();
 
         return response()->json(['team' => $teamUsers]);
     }
