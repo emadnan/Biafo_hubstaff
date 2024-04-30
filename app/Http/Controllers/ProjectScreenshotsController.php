@@ -687,8 +687,8 @@ class ProjectScreenshotsController extends Controller
             ->rightJoin('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->join('company', 'company.id', '=', 'users.company_id')
-            ->whereIn('users.id', $user_ids)
             ->where('date', $date)
+            ->whereIn('users.id', $user_ids)
             ->with('getTimings')
             ->orderBy('project_screenshots.id', 'DESC')
             ->get();
@@ -699,18 +699,20 @@ class ProjectScreenshotsController extends Controller
             });
         });
 
-        $users = collect([]);
-        foreach ($totalTimes as $userId => $totalTime) {
-            $user = User::find($userId);
-            if ($user) {
-                $user->totalHours = floor($totalTime / 3600);
-                $user->totalMinutes = floor(($totalTime % 3600) / 60);
-                $user->totalSeconds = $totalTime % 60;
-                $users->push($user);
-            }
+        $users = User::leftJoin('project_screenshots', 'users.id', '=', 'project_screenshots.user_id')
+            ->whereIn('users.id', $user_ids)
+            ->where('project_screenshots.id', null)
+            ->get();
+
+        $data = [];
+        foreach ($users as $user) {
+            $totalTime = $totalTimes[$user->id] ?? 0;
+            $user->totalHours = floor($totalTime / 3600);
+            $user->totalMinutes = floor(($totalTime % 3600) / 60);
+            $user->totalSeconds = $totalTime % 60;
+            $data[] = $user;
         }
 
-        return response()->json(['data' => $users]);
+        return response()->json(['data' => $data]);
     }
-
 }
