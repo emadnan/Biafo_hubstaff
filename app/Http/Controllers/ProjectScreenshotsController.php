@@ -628,7 +628,17 @@ class ProjectScreenshotsController extends Controller
             return compact('totalHours', 'totalMinutes', 'totalSeconds');
         });
 
-        return response()->json(['totals' => $totals]);
+        $users = User::whereIn('id', $totalTimes->keys())->get();
+
+        $data = [];
+        foreach ($users as $user) {
+            $data[] = [
+                'user' => $user,
+                'totals' => $totals[$user->id],
+            ];
+        }
+
+        return response()->json(['data' => $data]);
     }
 
 }
