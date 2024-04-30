@@ -602,4 +602,33 @@ class ProjectScreenshotsController extends Controller
         return response()->json($data);
     }
 
+    public function getDailyReportForCompany($company_id)
+    {
+        $projectscreenshot = ProjectScreenshots::
+            select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
+            ->join('users', 'users.id', '=', 'project_screenshots.user_id')
+            ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
+            ->join('company', 'company.id', '=', 'users.company_id')
+            ->where('date', date('Y-m-d'))
+            ->where('users.company_id', $company_id)
+            ->with('getTimings')
+            ->orderBy('project_screenshots.id', 'DESC')
+            ->get();
+
+        $totalTimes = $projectscreenshot->groupBy('user_id')->map(function ($group) {
+            return $group->sum(function ($item) {
+                return $item->hours * 3600 + $item->minutes * 60 + $item->seconds;
+            });
+        });
+
+        $totals = $totalTimes->map(function ($totalTime) {
+            $totalHours = floor($totalTime / 3600);
+            $totalMinutes = floor(($totalTime % 3600) / 60);
+            $totalSeconds = $totalTime % 60;
+            return compact('totalHours', 'totalMinutes', 'totalSeconds');
+        });
+
+        return response()->json(['totals' => $totals]);
+    }
+
 }
