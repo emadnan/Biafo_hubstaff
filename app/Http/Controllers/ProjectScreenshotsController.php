@@ -622,6 +622,11 @@ class ProjectScreenshotsController extends Controller
             ->join('company', 'company.id', '=', 'users.company_id')
             ->whereIn('users.id', $user_ids)
             ->where('date', $date)
+            ->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('project_screenshots')
+                    ->whereRaw('project_screenshots.user_id = users.id');
+            })
             ->with('getTimings')
             ->orderBy('project_screenshots.id', 'DESC')
             ->get();
@@ -636,16 +641,18 @@ class ProjectScreenshotsController extends Controller
 
         $data = [];
         foreach ($users as $user) {
-            $totalTime = $totalTimes[$user->id] ?? 0;
-            $totalHours = floor($totalTime / 3600);
-            $totalMinutes = floor(($totalTime % 3600) / 60);
-            $totalSeconds = $totalTime % 60;
+            if ($totalTimes->has($user->id)) {
+                $totalTime = $totalTimes[$user->id];
+                $totalHours = floor($totalTime / 3600);
+                $totalMinutes = floor(($totalTime % 3600) / 60);
+                $totalSeconds = $totalTime % 60;
 
-            $user->totalHours = $totalHours;
-            $user->totalMinutes = $totalMinutes;
-            $user->totalSeconds = $totalSeconds;
+                $user->totalHours = $totalHours;
+                $user->totalMinutes = $totalMinutes;
+                $user->totalSeconds = $totalSeconds;
 
-            $data[] = $user;
+                $data[] = $user;
+            }
         }
 
         return response()->json(['data' => $data]);
@@ -675,13 +682,13 @@ class ProjectScreenshotsController extends Controller
     public function getDailyReportBothOfflineOrOnline($team_lead_id, $date)
     {
         $team = Team::where('team_lead_id', $team_lead_id)->first();
-    
+
         if (!$team) {
             return response()->json(['error' => 'Team lead not found'], 404);
         }
-    
+
         $user_ids = TeamHasUser::where('team_id', $team->id)->pluck('user_id')->toArray();
-    
+
         $projectscreenshot = ProjectScreenshots::
             select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
             ->rightJoin('users', 'users.id', '=', 'project_screenshots.user_id')
@@ -692,7 +699,7 @@ class ProjectScreenshotsController extends Controller
             ->with('getTimings')
             ->orderBy('project_screenshots.id', 'DESC')
             ->get();
-    
+
         $totalTimes = $projectscreenshot->groupBy('user_id')->map(function ($group) {
             return $group->sum(function ($item) {
                 return $item->hours * 3600 + $item->minutes * 60 + $item->seconds;
@@ -706,7 +713,7 @@ class ProjectScreenshotsController extends Controller
         })->whereIn('id', $user_ids)->pluck('id')->toArray();
 
         $offlineUsers = User::whereIn('id', $offlineUserIds)->get();
-    
+
         $users = collect([]);
         foreach ($totalTimes as $userId => $totalTime) {
             $user = User::find($userId);
@@ -717,7 +724,7 @@ class ProjectScreenshotsController extends Controller
                 $users->push($user);
             }
         }
-    
+
         return response()->json(['data' => $users, 'offlineUsers' => $offlineUsers]);
     }
 
