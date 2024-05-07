@@ -17,6 +17,7 @@ class StreamsController extends Controller
         $stream->project_id = \Request::input('project_id');
         $stream->start_time = \Request::input('start_time');
         $stream->end_time = \Request::input('end_time');
+        $stream->user_id = \Request::input('user_id');
 
 
         $stream->save();
@@ -33,7 +34,8 @@ class StreamsController extends Controller
             'stream_name' => \Request::input('stream_name'),
             'project_id' => \Request::input('project_id'),
             'start_time' => \Request::input('start_time'),
-            'end_time' => \Request::input('end_time')
+            'end_time' => \Request::input('end_time'),
+            'user_id' => \Request::input('user_id'),
         ]);
 
         return response()->json(['Message' => 'stream Updated']);
