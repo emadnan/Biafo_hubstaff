@@ -315,7 +315,7 @@ class UserController extends Controller
                 ->whereDate('date', $date);
         })->whereIn('id', $user_ids)->pluck('id')->toArray();
 
-        $offlineUsers = User::whereIn('id', $offlineUserIds)->count();
+        $offlineUsers = User::whereIn('id', $offlineUserIds)->where('role', '!=', 3)->count();
 
         $onlineusers = ProjectScreenshots::
             select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
