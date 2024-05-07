@@ -302,7 +302,7 @@ class UserController extends Controller
             return response()->json(['error' => 'Company not found'], 404);
         }
 
-        $user_ids = TeamHasUser::where('team_id', $findCompany->company_id)->pluck('user_id')->toArray();
+        $user_ids = TeamHasUser::where('company_id', $findCompany->company_id)->pluck('user_id')->toArray();
 
         $date = date('Y-m-d');
 
