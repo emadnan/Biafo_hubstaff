@@ -303,7 +303,7 @@ class UserController extends Controller
         }
 
 
-        $user_ids = User::where('company_id', $findCompany->company_id)->pluck('id')->toArray();
+        $user_ids = User::where('company_id', $findCompany->company_id)->pluck('id')->where('role', '!=', 3)->toArray();
 
         print_r($user_ids);
         exit();
