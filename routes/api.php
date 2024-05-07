@@ -594,4 +594,4 @@ Route::get('/getDayEndReportById/{userId}/{selectedDate}',[TaskManagementControl
 Route::get('/get-users-by-company/{company_id}',[UserController::class,'getUsersByCompany']);
 
 // get teamleads by compant id
-Route::get('/get-users-by-company/{company_id}',[UserController::class,'getUsersByCompany']);
+Route::get('/get-team-leads-by-company/{company_id}',[UserController::class,'getTeamLeadsBycompanyId']);
