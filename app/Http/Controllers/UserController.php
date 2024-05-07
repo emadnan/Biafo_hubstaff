@@ -291,7 +291,7 @@ class UserController extends Controller
     public function getUsersByCompany($companyId)
     {
         $user = User::where('company_id', $companyId)
-            ->orderBy('name', 'asc')->get();
+            ->count();
 
         return response()->json(['User' => $user]);
     }
