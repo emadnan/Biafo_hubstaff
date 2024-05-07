@@ -302,6 +302,9 @@ class UserController extends Controller
             return response()->json(['error' => 'Company not found'], 404);
         }
 
+
+        print_r($findCompany);
+        exit();
         $user_ids = User::where('company_id', $findCompany->company_id)->toArray();
 
         $date = date('Y-m-d');
