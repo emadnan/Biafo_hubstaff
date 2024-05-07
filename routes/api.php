@@ -591,4 +591,4 @@ Route::post('/addDayEndReport',[TaskManagementController::class,'addDayEndReport
 Route::get('/getDayEndReportById/{userId}/{selectedDate}',[TaskManagementController::class,'getDayEndReportById']);
 
 // get user by compant id
-Route::get('/get-users-by-company/{company_id}',[CompanyController::class,'getUsersByCompany']);
+Route::get('/get-users-by-company/{company_id}',[UserController::class,'getUsersByCompany']);
