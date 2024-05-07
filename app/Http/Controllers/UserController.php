@@ -8,6 +8,8 @@ use App\Mail\genratePassword;
 use App\Mail\WelcomeEmail;
 use App\Models\Company;
 use App\Models\PermissionsRole;
+use App\Models\ProjectScreenshots;
+use App\Models\TeamHasUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -290,10 +292,53 @@ class UserController extends Controller
 
     public function getUsersByCompany($companyId)
     {
-        $user = User::where('company_id', $companyId)
+        $userteamleads = User::where('company_id', $companyId)
+            ->count();
+        $findCompany = User::where('company_id', $companyId)
+            ->where('role', '3')
+            ->first();
+
+        if (!$companyId) {
+            return response()->json(['error' => 'Company not found'], 404);
+        }
+
+        $user_ids = TeamHasUser::where('team_id', $findCompany->company_id)->pluck('user_id')->toArray();
+
+        $date = date('Y-m-d');
+
+        $offlineUserIds = User::whereNotIn('id', function ($query) use ($date) {
+            $query->select('user_id')
+                ->from('project_screenshots')
+                ->whereDate('date', $date);
+        })->whereIn('id', $user_ids)->pluck('id')->toArray();
+
+        $offlineUsers = User::whereIn('id', $offlineUserIds)->count();
+
+        $onlineusers = ProjectScreenshots::
+            select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
+            ->rightJoin('users', 'users.id', '=', 'project_screenshots.user_id')
+            ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
+            ->join('company', 'company.id', '=', 'users.company_id')
+            ->where('date', $date)
+            ->whereIn('users.id', $user_ids)
+            ->with('getTimings')
+            ->orderBy('project_screenshots.id', 'DESC')
             ->count();
 
-        return response()->json(['User' => $user]);
+
+        return response()->json(['total_users' => $userteamleads
+            , 'offline_users' => $offlineUsers,
+            'online_users' => $onlineusers,
+        ]);
+    }
+
+    public function getTeamLeadsBycompanyId($companyId)
+    {
+        $user = User::where('company_id', $companyId)->
+            where('role', '7')
+            ->count();
+
+        return response()->json(['teamLeads' => $user]);
     }
 
 }
