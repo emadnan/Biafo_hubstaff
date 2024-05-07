@@ -303,10 +303,10 @@ class UserController extends Controller
         }
 
 
-        print_r($findCompany);
-        exit();
         $user_ids = User::where('company_id', $findCompany->company_id)->toArray();
 
+        print_r($user_ids);
+        exit();
         $date = date('Y-m-d');
 
         $offlineUserIds = User::whereNotIn('id', function ($query) use ($date) {
