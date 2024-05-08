@@ -138,4 +138,11 @@ class TeamController extends Controller
 
         return response()->json(['team_leads' => $team_leads]);
     }
+
+    function getTeamsByCompanyId($company_id){
+        $teams = Team:: where('company_id', $company_id)
+            ->count();
+
+        return response()->json(['teams' => $teams]);
+    }
 }
