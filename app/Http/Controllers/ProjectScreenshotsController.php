@@ -765,7 +765,7 @@ class ProjectScreenshotsController extends Controller
 
         $total_non_working_days = $total_days_in_range - $total_working_days - $total_sundays_and_saturdays;
 
-        $data = compact('hours', 'minutes', 'seconds', 'total_working_days', 'total_non_working_days');
+        $data = compact('hours', 'minutes', 'seconds', 'total_working_days', 'total_non_working_days','total_days_in_range');
 
         return response()->json($data);
 
