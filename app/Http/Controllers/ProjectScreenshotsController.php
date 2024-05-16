@@ -758,5 +758,7 @@ class ProjectScreenshotsController extends Controller
 
         $data = compact('hours', 'minutes', 'seconds', 'projects', 'total_days');
 
+        return response()->json($data);
+
     }
 }
