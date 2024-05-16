@@ -751,12 +751,12 @@ class ProjectScreenshotsController extends Controller
         $total_days_without_data = 0;
 
         $total_days_in_range = $startDate->diffInDays($endDate) + 1;
-        $total_days_with_data = ProjectScreenshots::where('user_id', $user_id)
+        $total_days = ProjectScreenshots::where('user_id', $user_id)
             ->whereBetween('date', [$fromdate, $todate])
             ->distinct('date')
             ->count('date');
 
-        $days_without_data = $total_days_in_range - $total_days_with_data;
+        $days_without_data = $total_days_in_range - $total_days;
 
         for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
             if (!$date->isWeekend()) {
