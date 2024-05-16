@@ -728,7 +728,7 @@ class ProjectScreenshotsController extends Controller
         return response()->json(['data' => $users, 'offlineUsers' => $offlineUsers]);
     }
 
-    function getTeamLeadsByCompanyId( $user_id, $fromdate, $todate){
+    function getReportsWithDateRange( $user_id, $fromdate, $todate){
 
         $projectscreenshot = ProjectScreenshots::select('project_screenshots.*', 'projects.project_name as project_name', 'users.name as user_name')
             ->join('users', 'users.id', '=', 'project_screenshots.user_id')
