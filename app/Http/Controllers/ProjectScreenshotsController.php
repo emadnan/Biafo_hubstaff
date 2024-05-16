@@ -11,6 +11,9 @@ use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
+use App\Http\Controllers\DateTime;
+use App\Http\Controllers\DateInterval;
+use App\Http\Controllers\DatePeriod;
 use Illuminate\Support\Facades\Auth;
 use Image;
 
@@ -728,26 +731,35 @@ class ProjectScreenshotsController extends Controller
         return response()->json(['data' => $users, 'offlineUsers' => $offlineUsers]);
     }
 
-    function getReportsWithDateRange( $user_id, $fromdate, $todate){
-
-        $projectscreenshot = ProjectScreenshots::select('project_screenshots.*', 'projects.project_name as project_name', 'users.name as user_name')
-            ->join('users', 'users.id', '=', 'project_screenshots.user_id')
-            ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
-            ->where('user_id', $user_id)
-            ->whereBetween('project_screenshots.date', [$fromdate, $todate])
-            ->with('getTimings', 'getTimings.getattechments')
-            ->orderBy('project_screenshots.id', 'DESC')
+    public function getReportsWithDateRange($user_id, $fromdate, $todate)
+    {
+        $projectScreenshots = ProjectScreenshots::where('user_id', $user_id)
+            ->whereBetween('date', [$fromdate, $todate])
             ->get();
 
-        $totalTime = $projectscreenshot->sum(function ($screenshot) {
-            return $screenshot->hours * 3600 + $screenshot->minutes * 60 + $screenshot->seconds;
-        });
+        $total_seconds = $projectScreenshots->sum('hours') * 3600 +
+        $projectScreenshots->sum('minutes') * 60 +
+        $projectScreenshots->sum('seconds');
 
-        $TotalHours = floor($totalTime / 3600);
-        $TotalMinutes = floor(($totalTime % 3600) / 60);
-        $TotalSeconds = $totalTime % 60;
+        $hours = floor($total_seconds / 3600);
+        $total_seconds %= 3600;
+        $minutes = floor($total_seconds / 60);
+        $seconds = $total_seconds % 60;
 
-        $data = compact('projectscreenshot', 'TotalHours', 'TotalMinutes', 'TotalSeconds');
-        return response()->json($data);
+        $projects = $projectScreenshots->load('project');
+
+        $non_working_days = $projectScreenshots->filter(function ($screenshot) {
+            return in_array($screenshot->date->format('N'), [6, 7]);
+        })->count();
+
+        $dateRange = new DatePeriod(new DateTime($fromdate), new DateInterval('P1D'), new DateTime($todate));
+        $days_with_data = $projectScreenshots->pluck('date')->unique()->map->format('Y-m-d');
+
+        $days_without_data = collect($dateRange)->reject(function ($date) use ($days_with_data) {
+            return in_array($date->format('Y-m-d'), $days_with_data) || in_array($date->format('N'), [6, 7]);
+        })->count();
+
+        return compact('hours', 'minutes', 'seconds', 'projects', 'non_working_days', 'days_without_data');
     }
+
 }
