@@ -748,7 +748,7 @@ class ProjectScreenshotsController extends Controller
         $endDate = Carbon::parse($todate);
         $total_days_in_range = $startDate->diffInDays($endDate) + 1; // Add 1 to include both start and end dates
 
-        $total_days = ProjectScreenshots::where('user_id', $user_id)
+        $total_working_days = ProjectScreenshots::where('user_id', $user_id)
             ->whereBetween('date', [$fromdate, $todate])
             ->distinct('date')
             ->count('date');
@@ -761,7 +761,7 @@ class ProjectScreenshotsController extends Controller
             }
         }
 
-        $non_working_days = $total_days_in_range - $total_days - $total_sundays_and_saturdays;
+        $total_leaves = $total_days_in_range - $total_working_days - $total_sundays_and_saturdays;
 
         // $non_working_days = 0;
         // $startDate = Carbon::parse($fromdate);
@@ -773,9 +773,7 @@ class ProjectScreenshotsController extends Controller
         //     }
         // }
 
-        $total_non_working_days = $non_working_days;
-
-        $data = compact('hours', 'minutes', 'seconds', 'total_days', 'total_non_working_days', 'total_days_in_range');
+        $data = compact('hours', 'minutes', 'seconds', 'total_working_days', 'total_leaves', 'total_days_in_range');
 
         return response()->json($data);
 
