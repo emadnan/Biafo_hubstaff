@@ -744,44 +744,25 @@ class ProjectScreenshotsController extends Controller
             $minutes -= 60;
             $hours += 1;
         }
-
         $startDate = Carbon::parse($fromdate);
         $endDate = Carbon::parse($todate);
+        $total_days_in_range = $startDate->diffInDays($endDate) + 1; // Add 1 to include both start and end dates
 
-        $total_days_without_data = 0;
-
-        $total_days_in_range = $startDate->diffInDays($endDate) + 1;
-        $total_days = ProjectScreenshots::where('user_id', $user_id)
+        $total_days_with_data = ProjectScreenshots::where('user_id', $user_id)
             ->whereBetween('date', [$fromdate, $todate])
             ->distinct('date')
             ->count('date');
 
-        $days_without_data = $total_days_in_range - $total_days;
+        $total_sundays_and_saturdays = 0;
 
         for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
-            if (!$date->isWeekend()) {
-                $formattedDate = $date->toDateString();
-                $hasData = ProjectScreenshots::where('user_id', $user_id)
-                    ->whereDate('date', $formattedDate)
-                    ->exists();
-
-                if (!$hasData) {
-                    $total_days_without_data++;
-                }
+            if ($date->isSaturday() || $date->isSunday()) {
+                $total_sundays_and_saturdays++;
             }
         }
 
-        $non_working_days = 0;
-        $startDate = Carbon::parse($fromdate);
-        $endDate = Carbon::parse($todate);
+        $total_non_working_days = $total_days_in_range - $total_days_with_data - $total_sundays_and_saturdays;
 
-        for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
-            if (!$date->isWeekend()) {
-                $non_working_days++;
-            }
-        }
-
-        $total_non_working_days = $non_working_days;
 
         $data = compact('hours', 'minutes', 'seconds', 'total_days', 'total_non_working_days');
 
