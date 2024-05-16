@@ -746,8 +746,6 @@ class ProjectScreenshotsController extends Controller
         $minutes = floor($total_seconds / 60);
         $seconds = $total_seconds % 60;
 
-        $projects = $projectScreenshots->load('project');
-
         $non_working_days = $projectScreenshots->filter(function ($screenshot) {
             return in_array($screenshot->date->format('N'), [6, 7]);
         })->count();
@@ -759,7 +757,7 @@ class ProjectScreenshotsController extends Controller
             return in_array($date->format('Y-m-d'), $days_with_data) || in_array($date->format('N'), [6, 7]);
         })->count();
 
-        return compact('hours', 'minutes', 'seconds', 'projects', 'non_working_days', 'days_without_data');
+        return compact('hours', 'minutes', 'seconds', 'non_working_days', 'days_without_data');
     }
 
 }
