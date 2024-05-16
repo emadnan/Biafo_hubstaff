@@ -759,7 +759,7 @@ class ProjectScreenshotsController extends Controller
             }
         }
 
-        $total_non_working_days = $non_working_days - $total_days;
+        $total_non_working_days = $non_working_days;
 
         $data = compact('hours', 'minutes', 'seconds', 'total_days','total_non_working_days');
 
