@@ -753,6 +753,12 @@ class ProjectScreenshotsController extends Controller
             ->distinct('date')
             ->count('date');
 
+        $everyDays = ProjectScreenshots::
+            join('projects', 'projects.id', '=', 'project_screenshots.project_id')
+            ->where('user_id', $user_id)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->get();
+
         $total_sundays_and_saturdays = 0;
 
         for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
@@ -762,12 +768,6 @@ class ProjectScreenshotsController extends Controller
         }
 
         $total_leaves = $total_days_in_range - $total_working_days - $total_sundays_and_saturdays;
-
-        $everyDays = ProjectScreenshots::
-            join('projects', 'projects.id', '=', 'project_screenshots.project_id')
-            ->where('user_id', $user_id)
-            ->whereBetween('date', [$startDate, $endDate])
-            ->get();
 
         $data = compact('hours', 'minutes', 'seconds', 'total_working_days', 'total_leaves', 'total_days_in_range', 'everyDays');
 
