@@ -246,7 +246,10 @@ Route::get('/get-teams-by-department-id/{department_id}',[TeamController::class,
 Route::get('/get-projects-by-team-lead-id/{team_lead_id}',[TeamController::class,'getPeojectsByTeamLeadId']);
 
 //get team lead id by company id
-Route::get('/get-team-leads-by-company-id/{company_id}',[TeamController::class,'getTeamLeadsByCompanyId']);
+Route::get('/get-team-leads-by-company-id/{company_id}',[ProjectScreenshotsController::class,'getTeamLeadsByCompanyId']);
+
+//get reporting by datefrom to dateto by user id
+Route::get('/get-reports-with-date-range/{user_id}/{fromSelectedDate}/{toSelectedDate}',[TeamController::class,'getReportsWithDateRange']);
 
 // get numbers of team 
 Route::get('/get-team-by-company-id/{company_id}',[TeamController::class,'getTeamsByCompanyId']);

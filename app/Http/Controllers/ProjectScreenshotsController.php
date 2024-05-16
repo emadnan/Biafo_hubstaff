@@ -728,4 +728,26 @@ class ProjectScreenshotsController extends Controller
         return response()->json(['data' => $users, 'offlineUsers' => $offlineUsers]);
     }
 
+    function getTeamLeadsByCompanyId( $user_id, $fromdate, $todate){
+
+        $projectscreenshot = ProjectScreenshots::select('project_screenshots.*', 'projects.project_name as project_name', 'users.name as user_name')
+            ->join('users', 'users.id', '=', 'project_screenshots.user_id')
+            ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
+            ->where('user_id', $user_id)
+            ->whereBetween('project_screenshots.date', [$fromdate, $todate])
+            ->with('getTimings', 'getTimings.getattechments')
+            ->orderBy('project_screenshots.id', 'DESC')
+            ->get();
+
+        $totalTime = $projectscreenshot->sum(function ($screenshot) {
+            return $screenshot->hours * 3600 + $screenshot->minutes * 60 + $screenshot->seconds;
+        });
+
+        $TotalHours = floor($totalTime / 3600);
+        $TotalMinutes = floor(($totalTime % 3600) / 60);
+        $TotalSeconds = $totalTime % 60;
+
+        $data = compact('projectscreenshot', 'TotalHours', 'TotalMinutes', 'TotalSeconds');
+        return response()->json($data);
+    }
 }
