@@ -753,17 +753,25 @@ class ProjectScreenshotsController extends Controller
             ->distinct('date')
             ->count('date');
 
-        $days_without_data = $total_days_in_range - $total_days;
-
-        $non_working_days = 0;
-        $startDate = Carbon::parse($fromdate);
-        $endDate = Carbon::parse($todate);
+        $total_sundays_and_saturdays = 0;
 
         for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
-            if (!$date->isWeekend()) {
-                $non_working_days++;
+            if ($date->isSaturday() || $date->isSunday()) {
+                $total_sundays_and_saturdays++;
             }
         }
+
+        $non_working_days = $total_days_in_range - $total_days - $total_sundays_and_saturdays;
+
+        // $non_working_days = 0;
+        // $startDate = Carbon::parse($fromdate);
+        // $endDate = Carbon::parse($todate);
+
+        // for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+        //     if (!$date->isWeekend()) {
+        //         $non_working_days++;
+        //     }
+        // }
 
         $total_non_working_days = $non_working_days;
 
