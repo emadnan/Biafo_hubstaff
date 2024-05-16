@@ -774,13 +774,11 @@ class ProjectScreenshotsController extends Controller
         $startDate = Carbon::parse($fromdate);
         $endDate = Carbon::parse($todate);
 
-        for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
-            if (!$date->isWeekend()) {
-                $non_working_days++;
-            }
-        }
+        $total_non_working_days = $startDate->diffInDaysFiltered(function (Carbon $date) {
+            return !$date->isWeekend();
+        }, $endDate);
 
-        $total_non_working_days = $non_working_days;
+        // $total_non_working_days = $non_working_days;
 
         $data = compact('hours', 'minutes', 'seconds', 'total_working_days', 'total_non_working_days');
 
