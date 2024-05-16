@@ -763,17 +763,13 @@ class ProjectScreenshotsController extends Controller
 
         $total_leaves = $total_days_in_range - $total_working_days - $total_sundays_and_saturdays;
 
-        // $non_working_days = 0;
-        // $startDate = Carbon::parse($fromdate);
-        // $endDate = Carbon::parse($todate);
+        $everyDays = ProjectScreenshots::
+            join('projects', 'projects.id', '=', 'project_screenshots.project_id')
+            ->where('user_id', $user_id)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->get();
 
-        // for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
-        //     if (!$date->isWeekend()) {
-        //         $non_working_days++;
-        //     }
-        // }
-
-        $data = compact('hours', 'minutes', 'seconds', 'total_working_days', 'total_leaves', 'total_days_in_range');
+        $data = compact('hours', 'minutes', 'seconds', 'total_working_days', 'total_leaves', 'total_days_in_range', 'everyDays');
 
         return response()->json($data);
 
