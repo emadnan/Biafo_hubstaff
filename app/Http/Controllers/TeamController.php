@@ -134,6 +134,7 @@ class TeamController extends Controller
         $team_leads = Team::
             join('users', 'teams.team_lead_id', '=', 'users.id')
             ->where('teams.company_id', $company_id)
+            ->where('users.role', 7)
             ->get();
 
         return response()->json(['team_leads' => $team_leads]);
