@@ -756,7 +756,7 @@ class ProjectScreenshotsController extends Controller
         $everyDays = ProjectScreenshots::
             join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->where('user_id', $user_id)
-            ->whereBetween('date', [$startDate, $endDate])
+            ->whereBetween('date', [$fromdate, $todate])
             ->get();
 
         $total_sundays_and_saturdays = 0;
