@@ -9,6 +9,6 @@ class TeamGroup extends Model
 {
     use HasFactory;
 
-    protected $table="team_group";
+    protected $table="team_groups";
     protected $primaryKey="id";
 }

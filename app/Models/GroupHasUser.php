@@ -9,6 +9,6 @@ class GroupHasUser extends Model
 {
     use HasFactory;
 
-    protected $table="group_has_user";
+    protected $table="group_has_users";
     protected $primaryKey="id";
 }
