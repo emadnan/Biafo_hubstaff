@@ -17,7 +17,7 @@ class CreateTeamGroupsTable extends Migration
             $table->id();
             $table->integer('team_id');
             $table->integer('group_lead_id');
-            $table->string('name');
+            $table->string('group_name');
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(1);
 
