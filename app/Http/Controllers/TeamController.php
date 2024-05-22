@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\Team;
+use App\Models\TeamGroup;
 use App\Models\TeamHasUser;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -144,5 +145,17 @@ class TeamController extends Controller
             ->count();
 
         return response()->json(['teams' => $teams]);
+    }
+
+    function createGroup(Request $request){
+        
+        $group = new TeamGroup();
+        $group->team_id = \Request::input('team_id');
+        $group->group_name = \Request::input('group_name');
+        $group->description = \Request::input('description');
+        $group->is_active = 1;
+        $group->save();
+
+        return response()->json(['message' => 'Add Group Successfully']);
     }
 }
