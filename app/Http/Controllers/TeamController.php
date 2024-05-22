@@ -148,9 +148,10 @@ class TeamController extends Controller
     }
 
     function createGroup(Request $request){
-        
+
         $group = new TeamGroup();
         $group->team_id = \Request::input('team_id');
+        $group->group_lead_id = \Request::input('group_lead_id');
         $group->group_name = \Request::input('group_name');
         $group->description = \Request::input('description');
         $group->is_active = 1;
