@@ -605,3 +605,7 @@ Route::get('/get-team-leads-by-company/{company_id}',[UserController::class,'get
 
 //ctrate team groups API
 Route::post('/create-group',[TeamController::class,'createGroup']);
+Route::post('/delete-group/{id}',[TeamController::class,'deleteGroup']);
+Route::post('/update-group/{id}',[TeamController::class,'updateGroup']);
+Route::post('/get-group-by-team-id/{id}',[TeamController::class,'getGroupsByTeamId']);
+Route::post('/get-group-by-id/{id}',[TeamController::class,'getGroupById']);

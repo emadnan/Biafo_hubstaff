@@ -159,4 +159,42 @@ class TeamController extends Controller
 
         return response()->json(['message' => 'Add Group Successfully']);
     }
+
+    function updateGroup($id){
+
+        $update = TeamGroup::where('id', $id)
+            ->update([
+                'team_id' => \Request::input('team_id'),
+                'group_lead_id' => \Request::input('group_lead_id'),
+                'group_name' => \Request::input('group_name'),
+                'description' => \Request::input('description'),
+            ]);
+
+        return response()->json(['Message' => 'Group Updated']);
+
+    }
+
+    function deleteGroup($id){
+        $delete = TeamGroup::where('id', $id)->delete();
+
+        return response()->json(['message' => 'Delete Group Successfully']);
+
+    }
+
+    function getGroupsByTeamId($team_id){
+        $groups = TeamGroup::where('team_id', $team_id)
+            ->get();
+
+        return response()->json(['groups' => $groups]);
+
+    }
+
+    function getGroupById($group_id){
+        $group = TeamGroup::where('id', $group_id)
+            ->get();
+
+        return response()->json(['group' => $group]);
+
+    }
+
 }
