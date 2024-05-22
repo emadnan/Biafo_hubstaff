@@ -602,3 +602,6 @@ Route::get('/get-users-by-company/{company_id}',[UserController::class,'getUsers
 
 // get teamleads by compant id
 Route::get('/get-team-leads-by-company/{company_id}',[UserController::class,'getTeamLeadsBycompanyId']);
+
+//ctrate team groups API
+Route::post('/create-group',[TeamController::class,'createGroup']);
