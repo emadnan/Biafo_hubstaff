@@ -126,7 +126,7 @@ class TeamController extends Controller
                 $allTeamUsers = $allTeamUsers->merge($teamUsers);
             }
 
-            return response()->json(['team_users' => $allTeamUsers]);
+            return response()->json(['team' => $allTeamUsers]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to fetch team users'], 500);
         }
