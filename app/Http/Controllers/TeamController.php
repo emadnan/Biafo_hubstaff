@@ -108,13 +108,13 @@ class TeamController extends Controller
     public function getUsersByTeamLeadId($team_lead_id)
     {
         try {
-            
+
             $teams = Team::where('team_lead_id', $team_lead_id)->get();
 
             if ($teams->isEmpty()) {
                 return response()->json(['error' => 'Team lead not found'], 404);
             }
-            
+
             $allTeamUsers = collect();
 
             foreach ($teams as $team) {
@@ -219,11 +219,31 @@ class TeamController extends Controller
 
     public function getGroupsByTeamId($team_id)
     {
-        $groups = TeamGroup::where('team_id', $team_id)
-            ->get();
+        try {
 
-        return response()->json(['groups' => $groups]);
+            $groups = TeamGroup::where('team_id', $team_id)->get();
 
+            if ($groups->isEmpty()) {
+                return response()->json(['error' => 'No groups found for this team'], 404);
+            }
+
+            $groupsWithUsers = [];
+
+            foreach ($groups as $group) {
+                $groupUsers = GroupHasUser::where('group_id', $group->id)
+                    ->join('users', 'group_has_users.user_id', '=', 'users.id')
+                    ->select('users.*') // Select only user columns
+                    ->get();
+                $groupsWithUsers[] = [
+                    'group' => $group,
+                    'users' => $groupUsers,
+                ];
+            }
+
+            return response()->json(['groups' => $groupsWithUsers]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch groups and users'], 500);
+        }
     }
 
     public function getGroupById($group_id)
