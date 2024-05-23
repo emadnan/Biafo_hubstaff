@@ -13,7 +13,6 @@ class TeamController extends Controller
 {
     public function createTeam(Request $request)
     {
-
         $team = new Team();
         $team->company_id = \Request::input('company_id');
         $team->department_id = \Request::input('department_id');
@@ -22,12 +21,27 @@ class TeamController extends Controller
         $team->description = \Request::input('description');
         $team->save();
 
+        // $is_group = \Request::input('is_group');
+
+        // if ($is_group == 1) {
+        //     $teamGroup = new TeamGroup();
+        //     $teamGroup->team_id = $team->id;
+        //     $teamGroup->group_lead_id = \Request::input('group_lead_id');
+        //     $teamGroup->group_name = \Request::input('group_name');
+        //     $teamGroup->description = \Request::input('description');
+        //     $teamGroup->is_active = 1;
+        //     $teamGroup->save();
+
+        //     return response()->json(['message' => 'Add Team and Group successfully']);
+        // }
+
         return response()->json(['message' => 'Add Team successfully']);
     }
 
     public function updateTeam($id)
     {
 
+        // $is_group = \Request::input('is_group');
         $role = Team::where('id', $id)
             ->update([
                 'team_lead_id' => \Request::input('team_lead_id'),
@@ -36,6 +50,16 @@ class TeamController extends Controller
                 'company_id' => \Request::input('company_id'),
                 'description' => \Request::input('description'),
             ]);
+
+        // if ($is_group == 1) {
+
+        //     $teamGroup = TeamGroup::where('team_id', $id)
+        //         ->update([
+        //             'group_lead_id' => \Request::input('group_lead_id'),
+        //             'group_name' => \Request::input('group_name'),
+        //             'description' => \Request::input('description'),
+        //         ]);
+        // }
 
         return response()->json(['Message' => 'team Updated']);
     }
@@ -83,18 +107,25 @@ class TeamController extends Controller
     public function getUsersByTeamLeadId($team_lead_id)
     {
         try {
+            
+            $teams = Team::where('team_lead_id', $team_lead_id)->get();
 
-            $team = Team::where('team_lead_id', $team_lead_id)->first();
-
-            if (!$team) {
+            if ($teams->isEmpty()) {
                 return response()->json(['error' => 'Team lead not found'], 404);
             }
+            
+            $allTeamUsers = collect();
 
-            $teamUsers = TeamHasUser::where('team_id', $team->id)
-                ->join('users', 'team_has_users.user_id', '=', 'users.id')
-                ->get();
+            foreach ($teams as $team) {
+                $teamUsers = TeamHasUser::where('team_id', $team->id)
+                    ->join('users', 'team_has_users.user_id', '=', 'users.id')
+                    ->select('users.*') // Select only user columns
+                    ->get();
 
-            return response()->json(['team' => $teamUsers]);
+                $allTeamUsers = $allTeamUsers->merge($teamUsers);
+            }
+
+            return response()->json(['team_users' => $allTeamUsers]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to fetch team users'], 500);
         }
@@ -140,14 +171,16 @@ class TeamController extends Controller
         return response()->json(['team_leads' => $team_leads]);
     }
 
-    function getTeamsByCompanyId($company_id){
-        $teams = Team:: where('company_id', $company_id)
+    public function getTeamsByCompanyId($company_id)
+    {
+        $teams = Team::where('company_id', $company_id)
             ->count();
 
         return response()->json(['teams' => $teams]);
     }
 
-    function createGroup(Request $request){
+    public function createGroup(Request $request)
+    {
 
         $group = new TeamGroup();
         $group->team_id = \Request::input('team_id');
@@ -160,7 +193,8 @@ class TeamController extends Controller
         return response()->json(['message' => 'Add Group Successfully']);
     }
 
-    function updateGroup($id){
+    public function updateGroup($id)
+    {
 
         $update = TeamGroup::where('id', $id)
             ->update([
@@ -174,14 +208,16 @@ class TeamController extends Controller
 
     }
 
-    function deleteGroup($id){
+    public function deleteGroup($id)
+    {
         $delete = TeamGroup::where('id', $id)->delete();
 
         return response()->json(['message' => 'Delete Group Successfully']);
 
     }
 
-    function getGroupsByTeamId($team_id){
+    public function getGroupsByTeamId($team_id)
+    {
         $groups = TeamGroup::where('team_id', $team_id)
             ->get();
 
@@ -189,12 +225,30 @@ class TeamController extends Controller
 
     }
 
-    function getGroupById($group_id){
+    public function getGroupById($group_id)
+    {
         $group = TeamGroup::where('id', $group_id)
             ->get();
 
         return response()->json(['group' => $group]);
 
     }
+
+    // public function groupHasUsers(Request $request)
+    // {
+    //     $userIds = $request->input('user_ids');
+    //     $group_id = $request->input('group_id');
+
+    //     TeamHasUser::where('group_id', $group_id)->delete();
+
+    //     foreach ($userIds as $userId) {
+    //         $teamUser = new TeamHasUser;
+    //         $teamUser->group_id = $group_id;
+    //         $teamUser->user_id = $userId;
+    //         $teamUser->save();
+    //     }
+
+    //     return response()->json(['message' => 'Users added to the Group Successfully']);
+    // }
 
 }
