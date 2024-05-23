@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GroupHasUser;
 use App\Models\Project;
 use App\Models\Team;
 use App\Models\TeamGroup;
@@ -239,10 +240,10 @@ class TeamController extends Controller
         $userIds = $request->input('user_ids');
         $group_id = $request->input('group_id');
 
-        TeamHasUser::where('group_id', $group_id)->delete();
+        GroupHasUser::where('group_id', $group_id)->delete();
 
         foreach ($userIds as $userId) {
-            $teamUser = new TeamHasUser;
+            $teamUser = new GroupHasUser;
             $teamUser->group_id = $group_id;
             $teamUser->user_id = $userId;
             $teamUser->save();
