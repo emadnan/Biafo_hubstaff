@@ -108,29 +108,32 @@ class TeamController extends Controller
     public function getUsersByTeamLeadId($team_lead_id)
     {
         try {
-
             $teams = Team::where('team_lead_id', $team_lead_id)->get();
-
+    
             if ($teams->isEmpty()) {
                 return response()->json(['error' => 'Team lead not found'], 404);
             }
-
+    
             $allTeamUsers = collect();
-
+    
             foreach ($teams as $team) {
                 $teamUsers = TeamHasUser::where('team_id', $team->id)
                     ->join('users', 'team_has_users.user_id', '=', 'users.id')
                     ->select('users.*') // Select only user columns
                     ->get();
-
+    
                 $allTeamUsers = $allTeamUsers->merge($teamUsers);
             }
-
-            return response()->json(['team' => $allTeamUsers]);
+    
+            // Ensure each user appears only once in the list
+            $uniqueUsers = $allTeamUsers->unique('id');
+    
+            return response()->json(['team' => $uniqueUsers->values()]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to fetch team users'], 500);
         }
     }
+    
 
     public function getTeamLeadByCompanyId($company_id)
     {
