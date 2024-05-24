@@ -681,15 +681,15 @@ class ProjectScreenshotsController extends Controller
 
     public function getDailyReportBothOfflineOrOnline($team_lead_id, $date)
     {
-        $team = Team::where('team_lead_id', $team_lead_id)->first();
+        $teams = Team::where('team_lead_id', $team_lead_id)->get();
 
-        if (!$team) {
+        if ($teams->isEmpty()) {
             return response()->json(['error' => 'Team lead not found'], 404);
         }
 
-        $user_ids = TeamHasUser::where('team_id', $team->id)->pluck('user_id')->toArray();
+        $user_ids = TeamHasUser::whereIn('team_id', $teams->pluck('id'))->pluck('user_id')->toArray();
 
-        $projectscreenshot = ProjectScreenshots::
+        $projectScreenshots = ProjectScreenshots::
             select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
             ->rightJoin('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
@@ -700,7 +700,7 @@ class ProjectScreenshotsController extends Controller
             ->orderBy('project_screenshots.id', 'DESC')
             ->get();
 
-        $totalTimes = $projectscreenshot->groupBy('user_id')->map(function ($group) {
+        $totalTimes = $projectScreenshots->groupBy('user_id')->map(function ($group) {
             return $group->sum(function ($item) {
                 return $item->hours * 3600 + $item->minutes * 60 + $item->seconds;
             });
