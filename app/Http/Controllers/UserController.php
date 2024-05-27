@@ -143,7 +143,6 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->role = $request->input('role');
         $user->company_id = $request->input('company_id');
-        $user->team_id = $request->input('team_id');
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
@@ -171,7 +170,6 @@ class UserController extends Controller
         $user = User::where('id', $id)
             ->update([
                 'company_id' => \Request::input('company_id'),
-                'team_id' => \Request::input('team_id'),
                 'name' => \Request::input('name'),
                 'email' => \Request::input('email'),
                 'role' => \Request::input('role'),
