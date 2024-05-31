@@ -777,12 +777,16 @@ class ProjectScreenshotsController extends Controller
 
     public function getAllUsersByCompanyId($companyID, $date)
     {
+        if (!$companyID || !$date) {
+            return response()->json(['error' => 'companyID and date are required'], 400);
+        }
+        
         $users = User::where('company_id', $companyID)
         ->where('role', '!=', 3)
         ->get();
 
         if ($users->isEmpty()) {
-            return response()->json(['error' => 'Team lead not found'], 404);
+            return response()->json(['error' => 'company not found'], 404);
         }
 
         $userIds = $users->pluck('id');
