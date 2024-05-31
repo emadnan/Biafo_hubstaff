@@ -777,9 +777,11 @@ class ProjectScreenshotsController extends Controller
 
     public function getAllUsersByCompanyId($companyID, $date)
     {
-        if ($companyID === null || $date === null) {
-            return response()->json(['error' => 'companyID and date are required'], 400);
+        if (is_null($companyID) || $companyID == 0 || empty($date)) {
+            return response()->json(['error' => 'companyID and date are required and must be valid'], 400);
         }
+    
+    
 
         $users = User::where('company_id', $companyID)
         ->where('role', '!=', 3)
