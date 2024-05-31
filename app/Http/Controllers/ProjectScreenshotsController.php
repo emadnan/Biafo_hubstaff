@@ -774,4 +774,55 @@ class ProjectScreenshotsController extends Controller
         return response()->json($data);
 
     }
+
+    public function getAllUsersByCompanyId($companyID, $date)
+    {
+        $users = User::where('company_id', $companyID)->get();
+
+        if ($users->isEmpty()) {
+            return response()->json(['error' => 'Team lead not found'], 404);
+        }
+
+        $userIds = $users->pluck('id');
+
+        $projectScreenshots = ProjectScreenshots::
+            select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
+            ->join('users', 'users.id', '=', 'project_screenshots.user_id')
+            ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
+            ->join('company', 'company.id', '=', 'users.company_id')
+            ->whereIn('users.id', $userIds)
+            ->where('project_screenshots.date', $date)
+            ->with('getTimings')
+            ->orderBy('project_screenshots.id', 'DESC')
+            ->get();
+
+        $totalTimes = $projectScreenshots->groupBy('user_id')->map(function ($group) {
+            return $group->sum(function ($item) {
+                return $item->hours * 3600 + $item->minutes * 60 + $item->seconds;
+            });
+        });
+
+        $data = [];
+        foreach ($users as $user) {
+            if ($totalTimes->has($user->id)) {
+                $totalTime = $totalTimes[$user->id];
+                $totalHours = floor($totalTime / 3600);
+                $totalMinutes = floor(($totalTime % 3600) / 60);
+                $totalSeconds = $totalTime % 60;
+
+                $user->totalHours = $totalHours;
+                $user->totalMinutes = $totalMinutes;
+                $user->totalSeconds = $totalSeconds;
+                $user->status = 'online';
+            } else {
+                $user->status = 'offline';
+            }
+
+            $data[] = $user;
+        }
+
+        return response()->json(['data' => $data]);
+    }
+
+
 }
