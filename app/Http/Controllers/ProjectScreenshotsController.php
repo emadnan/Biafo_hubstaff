@@ -846,6 +846,23 @@ class ProjectScreenshotsController extends Controller
 
         $userIds = $users->pluck('id');
 
+        $data = [];
+        $currentDate = $date1;
+        while ($currentDate <= $date2) {
+            foreach ($users as $user) {
+                $data[$currentDate][$user->id] = [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'company_id' => $user->company_id,
+                    'totalHours' => 0,
+                    'totalMinutes' => 0,
+                    'totalSeconds' => 0,
+                    'status' => 'offline',
+                ];
+            }
+            $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
+        }
+
         $projectScreenshots = ProjectScreenshots::
             select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
             ->join('users', 'users.id', '=', 'project_screenshots.user_id')
@@ -857,41 +874,24 @@ class ProjectScreenshotsController extends Controller
             ->orderBy('project_screenshots.date', 'ASC')
             ->get();
 
-        $data = [];
-        foreach ($users as $user) {
-            $data[$user->id] = [
-                'id' => $user->id,
-                'name' => $user->name,
-                'company_id' => $user->company_id,
-                'totalHours' => 0,
-                'totalMinutes' => 0,
-                'totalSeconds' => 0,
-                'status' => 'offline',
-            ];
-        }
-
         foreach ($projectScreenshots as $screenshot) {
             $date = $screenshot->date->format('Y-m-d'); // Format the date as needed
-
-            if (!isset($data[$screenshot->user_id][$date])) {
-                $data[$screenshot->user_id][$date] = [];
-            }
 
             $totalTime = $screenshot->hours * 3600 + $screenshot->minutes * 60 + $screenshot->seconds;
             $totalHours = floor($totalTime / 3600);
             $totalMinutes = floor(($totalTime % 3600) / 60);
             $totalSeconds = $totalTime % 60;
 
-            $data[$screenshot->user_id][$date]['id'] = $screenshot->user_id;
-            $data[$screenshot->user_id][$date]['name'] = $screenshot->name;
-            $data[$screenshot->user_id][$date]['company_id'] = $screenshot->company_id;
-            $data[$screenshot->user_id][$date]['totalHours'] = $totalHours;
-            $data[$screenshot->user_id][$date]['totalMinutes'] = $totalMinutes;
-            $data[$screenshot->user_id][$date]['totalSeconds'] = $totalSeconds;
-            $data[$screenshot->user_id][$date]['status'] = 'online';
+            $data[$date][$screenshot->user_id]['id'] = $screenshot->user_id;
+            $data[$date][$screenshot->user_id]['name'] = $screenshot->name;
+            $data[$date][$screenshot->user_id]['company_id'] = $screenshot->company_id;
+            $data[$date][$screenshot->user_id]['totalHours'] = $totalHours;
+            $data[$date][$screenshot->user_id]['totalMinutes'] = $totalMinutes;
+            $data[$date][$screenshot->user_id]['totalSeconds'] = $totalSeconds;
+            $data[$date][$screenshot->user_id]['status'] = 'online';
         }
 
-        return response()->json(['data' => array_values($data)]);
+        return response()->json(['data' => $data]);
     }
 
 }
