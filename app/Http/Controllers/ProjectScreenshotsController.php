@@ -858,17 +858,6 @@ class ProjectScreenshotsController extends Controller
             ->get();
 
         $data = [];
-        foreach ($users as $user) {
-            $userExists = $projectScreenshots->contains('user_id', $user->id);
-            if (!$userExists) {
-                $user->totalHours = 0;
-                $user->totalMinutes = 0;
-                $user->totalSeconds = 0;
-                $user->status = 'offline';
-                $data[$user->id] = $user;
-            }
-        }
-
         foreach ($projectScreenshots as $screenshot) {
             $date = $screenshot->date->format('Y-m-d'); // Format the date as needed
 
@@ -890,7 +879,7 @@ class ProjectScreenshotsController extends Controller
             $data[$date][] = $user;
         }
 
-        return response()->json(['data' => array_values($data)]);
+        return response()->json(['data' => $data]);
     }
 
 }
