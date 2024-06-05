@@ -775,9 +775,9 @@ class ProjectScreenshotsController extends Controller
 
     }
 
-    public function getAllUsersByCompanyId($companyID, $date)
+    public function getAllUsersByCompanyId($companyID, $date1, $date2)
     {
-        if (is_null($companyID) || $companyID === 0 || is_null($date)) {
+        if (is_null($companyID) || $companyID === 0 || is_null($date1) || is_null($date2)) {
             return response()->json(['error' => 'companyID and date are required and must be valid'], 400);
         }
     
@@ -798,8 +798,9 @@ class ProjectScreenshotsController extends Controller
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->join('company', 'company.id', '=', 'users.company_id')
             ->whereIn('users.id', $userIds)
-            ->where('project_screenshots.date', $date)
+            ->whereBetween('project_screenshots.date', [$date1, $date2])
             ->with('getTimings')
+            ->groupBy('date')
             ->orderBy('project_screenshots.id', 'DESC')
             ->get();
 
