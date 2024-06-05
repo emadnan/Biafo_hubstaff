@@ -330,6 +330,9 @@ Route::get('/get-daily-report-of-users-for-teamlead/{team_lead_id}/{date}',[Proj
 // get all users for compnay API\
 Route::get('/get-all-users-report-by-company-id/{companyId}/{date}',[ProjectScreenshotsController::class,'getAllUsersByCompanyId']);
 
+// get all users for compnay and date1 and date2 API\
+Route::get('/get-all-users-report-by-company-id-and-dates/{companyId}/{date}/{date2}',[ProjectScreenshotsController::class,'getAllUsersByCompanyIdAndDates']);
+
 // get daily report of Offline users by teamlead API\
 Route::get('/get-daily-report-of-offline-users-by-teamlead/{team_lead_id}/{date}',[ProjectScreenshotsController::class,'getDailyReportOfOfflineUsersByTeamLead']);
 
