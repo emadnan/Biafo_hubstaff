@@ -850,7 +850,7 @@ class ProjectScreenshotsController extends Controller
         $currentDate = $date1;
         while ($currentDate <= $date2) {
             foreach ($users as $user) {
-                $data[$currentDate][$user->id] = [
+                $data[$currentDate] = [
                     'id' => $user->id,
                     'name' => $user->name,
                     'company_id' => $user->company_id,
