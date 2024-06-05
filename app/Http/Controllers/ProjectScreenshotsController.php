@@ -851,17 +851,15 @@ class ProjectScreenshotsController extends Controller
         while ($currentDate <= $date2) {
             foreach ($users as $user) {
                 $data[] = [
-                    'date' => $currentDate,
-                    'user' => [
-                        'id' => $user->id,
-                        'name' => $user->name,
-                        'company_id' => $user->company_id,
-                        'totalHours' => 0,
-                        'totalMinutes' => 0,
-                        'totalSeconds' => 0,
-                        'status' => 'offline',
-                    ]
-
+                    
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'company_id' => $user->company_id,
+                    'totalHours' => 0,
+                    'totalMinutes' => 0,
+                    'totalSeconds' => 0,
+                    'status' => 'offline',
+                    'date' => $currentDate
                 ];
             }
             $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
