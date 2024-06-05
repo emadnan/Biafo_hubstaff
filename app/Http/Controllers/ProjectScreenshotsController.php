@@ -797,7 +797,7 @@ class ProjectScreenshotsController extends Controller
             DB::raw('SUM(project_screenshots.hours * 3600 + project_screenshots.minutes * 60 + project_screenshots.seconds) as total_time'),
             DB::raw('GROUP_CONCAT(users.name) as user_names'),
             'company.company_name',
-            'projects.name as project_name'
+            DB::raw('GROUP_CONCAT(projects.name) as project_names') // Use GROUP_CONCAT for project names
         )
             ->join('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
@@ -812,6 +812,7 @@ class ProjectScreenshotsController extends Controller
         foreach ($projectScreenshots as $screenshot) {
             $userIds = explode(',', $screenshot->user_ids);
             $userNames = explode(',', $screenshot->user_names);
+            $projectNames = explode(',', $screenshot->project_names);
 
             foreach ($userIds as $index => $userId) {
                 $user = $users->firstWhere('id', $userId);
@@ -830,7 +831,7 @@ class ProjectScreenshotsController extends Controller
                         'date' => $screenshot->date,
                         'user' => $user,
                         'company_name' => $screenshot->company_name,
-                        'project_name' => $screenshot->project_name,
+                        'project_names' => $projectNames, // Use project names array
                     ];
                 }
             }
