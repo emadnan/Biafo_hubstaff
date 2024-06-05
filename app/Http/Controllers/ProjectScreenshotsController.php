@@ -850,7 +850,7 @@ class ProjectScreenshotsController extends Controller
             'project_screenshots.date',
             'users.id as user_id',
             'users.name as user_name',
-            'projects.name as project_name',
+            DB::raw('GROUP_CONCAT(DISTINCT projects.name) as project_names'),
             'company.company_name',
             'project_screenshots.hours',
             'project_screenshots.minutes',
@@ -862,31 +862,29 @@ class ProjectScreenshotsController extends Controller
             ->whereIn('users.id', $userIds)
             ->whereBetween('project_screenshots.date', [$date1, $date2])
             ->orderBy('project_screenshots.date')
-            ->get()
-            ->groupBy('date');
+            ->groupBy('project_screenshots.date', 'user_id')
+            ->get();
 
         $data = [];
-        foreach ($projectScreenshots as $date => $screenshots) {
-            $usersData = $screenshots->groupBy('user_id')->map(function ($userScreenshots) {
-                $totalTime = $userScreenshots->sum(function ($item) {
-                    return $item->hours * 3600 + $item->minutes * 60 + $item->seconds;
-                });
+        foreach ($projectScreenshots as $screenshot) {
+            $totalTime = $screenshot->hours * 3600 + $screenshot->minutes * 60 + $screenshot->seconds;
+            $totalHours = floor($totalTime / 3600);
+            $totalMinutes = floor(($totalTime % 3600) / 60);
+            $totalSeconds = $totalTime % 60;
 
-                return [
-                    'user_id' => $userScreenshots[0]->user_id,
-                    'user_name' => $userScreenshots[0]->user_name,
-                    'total_hours' => floor($totalTime / 3600),
-                    'total_minutes' => floor(($totalTime % 3600) / 60),
-                    'total_seconds' => $totalTime % 60,
-                    'status' => 'online',
-                ];
-            });
+            $userData = [
+                'user_id' => $screenshot->user_id,
+                'user_name' => $screenshot->user_name,
+                'total_hours' => $totalHours,
+                'total_minutes' => $totalMinutes,
+                'total_seconds' => $totalSeconds,
+                'status' => 'online',
+            ];
 
-            $data[] = [
-                'date' => $date,
-                'company_name' => $screenshots[0]->company_name,
-                'project_name' => $screenshots[0]->project_name,
-                'users' => $usersData->values(),
+            $data[$screenshot->date][] = [
+                'company_name' => $screenshot->company_name,
+                'project_names' => $screenshot->project_names,
+                'user' => $userData,
             ];
         }
 
