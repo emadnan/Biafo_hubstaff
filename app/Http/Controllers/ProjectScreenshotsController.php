@@ -846,46 +846,37 @@ class ProjectScreenshotsController extends Controller
 
         $userIds = $users->pluck('id');
 
-        $projectScreenshots = ProjectScreenshots::select(
-            'project_screenshots.date',
-            'users.id as user_id',
-            'users.name as user_name',
-            DB::raw('GROUP_CONCAT(DISTINCT projects.name) as project_names'),
-            'company.company_name',
-            'project_screenshots.hours',
-            'project_screenshots.minutes',
-            'project_screenshots.seconds'
-        )
+        $projectScreenshots = ProjectScreenshots::
+            select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
             ->join('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->join('company', 'company.id', '=', 'users.company_id')
             ->whereIn('users.id', $userIds)
             ->whereBetween('project_screenshots.date', [$date1, $date2])
-            ->orderBy('project_screenshots.date')
-            ->groupBy('project_screenshots.date', 'user_id')
+            ->with('getTimings')
+            ->orderBy('project_screenshots.date', 'ASC')
             ->get();
 
         $data = [];
         foreach ($projectScreenshots as $screenshot) {
+            $date = $screenshot->date->format('Y-m-d'); // Format the date as needed
+
+            if (!isset($data[$date])) {
+                $data[$date] = [];
+            }
+
             $totalTime = $screenshot->hours * 3600 + $screenshot->minutes * 60 + $screenshot->seconds;
             $totalHours = floor($totalTime / 3600);
             $totalMinutes = floor(($totalTime % 3600) / 60);
             $totalSeconds = $totalTime % 60;
 
-            $userData = [
-                'user_id' => $screenshot->user_id,
-                'user_name' => $screenshot->user_name,
-                'total_hours' => $totalHours,
-                'total_minutes' => $totalMinutes,
-                'total_seconds' => $totalSeconds,
-                'status' => 'online',
-            ];
+            $user = $screenshot->only(['id', 'name', 'company_id']); // Adjust this as per your User model attributes
+            $user['totalHours'] = $totalHours;
+            $user['totalMinutes'] = $totalMinutes;
+            $user['totalSeconds'] = $totalSeconds;
+            $user['status'] = 'online'; // Assuming this is the default status
 
-            $data[$screenshot->date][] = [
-                'company_name' => $screenshot->company_name,
-                'project_names' => $screenshot->project_names,
-                'user' => $userData,
-            ];
+            $data[$date][] = $user;
         }
 
         return response()->json(['data' => $data]);
