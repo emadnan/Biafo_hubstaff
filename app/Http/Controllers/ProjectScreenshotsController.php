@@ -856,7 +856,7 @@ class ProjectScreenshotsController extends Controller
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->join('company', 'company.id', '=', 'users.company_id')
             ->whereIn('users.id', $userIds)
-            ->whereBetween('project_screenshots.date', [$date1, $date2])
+            ->whereBetween('project_screenshots.date', [$date2, $date1])
             ->with('getTimings')
             ->orderBy('project_screenshots.id', 'DESC')
             ->get();
