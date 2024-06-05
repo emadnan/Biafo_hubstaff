@@ -858,11 +858,23 @@ class ProjectScreenshotsController extends Controller
             ->get();
 
         $data = [];
+        foreach ($users as $user) {
+            $data[$user->id] = [
+                'id' => $user->id,
+                'name' => $user->name,
+                'company_id' => $user->company_id,
+                'totalHours' => 0,
+                'totalMinutes' => 0,
+                'totalSeconds' => 0,
+                'status' => 'offline',
+            ];
+        }
+
         foreach ($projectScreenshots as $screenshot) {
             $date = $screenshot->date->format('Y-m-d'); // Format the date as needed
 
-            if (!isset($data[$date])) {
-                $data[$date] = [];
+            if (!isset($data[$screenshot->user_id][$date])) {
+                $data[$screenshot->user_id][$date] = [];
             }
 
             $totalTime = $screenshot->hours * 3600 + $screenshot->minutes * 60 + $screenshot->seconds;
@@ -870,16 +882,16 @@ class ProjectScreenshotsController extends Controller
             $totalMinutes = floor(($totalTime % 3600) / 60);
             $totalSeconds = $totalTime % 60;
 
-            $user = $screenshot->only(['id', 'name', 'company_id']); // Adjust this as per your User model attributes
-            $user['totalHours'] = $totalHours;
-            $user['totalMinutes'] = $totalMinutes;
-            $user['totalSeconds'] = $totalSeconds;
-            $user['status'] = 'online'; // Assuming this is the default status
-
-            $data[$date][] = $user;
+            $data[$screenshot->user_id][$date]['id'] = $screenshot->user_id;
+            $data[$screenshot->user_id][$date]['name'] = $screenshot->name;
+            $data[$screenshot->user_id][$date]['company_id'] = $screenshot->company_id;
+            $data[$screenshot->user_id][$date]['totalHours'] = $totalHours;
+            $data[$screenshot->user_id][$date]['totalMinutes'] = $totalMinutes;
+            $data[$screenshot->user_id][$date]['totalSeconds'] = $totalSeconds;
+            $data[$screenshot->user_id][$date]['status'] = 'online';
         }
 
-        return response()->json(['data' => $data]);
+        return response()->json(['data' => array_values($data)]);
     }
 
 }
