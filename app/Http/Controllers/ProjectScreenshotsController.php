@@ -850,7 +850,7 @@ class ProjectScreenshotsController extends Controller
         $currentDate = $date1;
         while ($currentDate <= $date2) {
             foreach ($users as $user) {
-                $data[$currentDate][] = [
+                $data[] = [
                     'id' => $user->id,
                     'name' => $user->name,
                     'company_id' => $user->company_id,
@@ -858,6 +858,7 @@ class ProjectScreenshotsController extends Controller
                     'totalMinutes' => 0,
                     'totalSeconds' => 0,
                     'status' => 'offline',
+                    'date' => $currentDate
                 ];
             }
             $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
@@ -882,12 +883,13 @@ class ProjectScreenshotsController extends Controller
             $totalMinutes = floor(($totalTime % 3600) / 60);
             $totalSeconds = $totalTime % 60;
 
-            foreach ($data[$date] as &$userData) {
+            foreach ($data as &$userData) {
                 if ($userData['id'] == $screenshot->user_id) {
                     $userData['totalHours'] = $totalHours;
                     $userData['totalMinutes'] = $totalMinutes;
                     $userData['totalSeconds'] = $totalSeconds;
                     $userData['status'] = 'online';
+                    $userData['date'] = $date;
                 }
             }
         }
