@@ -847,43 +847,47 @@ class ProjectScreenshotsController extends Controller
         $userIds = $users->pluck('id');
 
         $projectScreenshots = ProjectScreenshots::select(
-            'users.*',
-            'projects.*',
+            'project_screenshots.date',
+            'users.id as user_id',
+            'users.name as user_name',
+            'projects.name as project_name',
             'company.company_name',
-            'project_screenshots.*'
+            'project_screenshots.hours',
+            'project_screenshots.minutes',
+            'project_screenshots.seconds'
         )
             ->join('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->join('company', 'company.id', '=', 'users.company_id')
             ->whereIn('users.id', $userIds)
-            ->whereBetween('project_screenshots.date', [$date2, $date1])
-            ->with('getTimings')
-            ->orderBy('project_screenshots.id', 'DESC')
-            ->get();
-
-        $totalTimes = $projectScreenshots->groupBy('user_id')->map(function ($group) {
-            return $group->sum(function ($item) {
-                return $item->hours * 3600 + $item->minutes * 60 + $item->seconds;
-            });
-        });
+            ->whereBetween('project_screenshots.date', [$date1, $date2])
+            ->orderBy('project_screenshots.date')
+            ->get()
+            ->groupBy('date');
 
         $data = [];
-        foreach ($users as $user) {
-            if ($totalTimes->has($user->id)) {
-                $totalTime = $totalTimes[$user->id];
-                $totalHours = floor($totalTime / 3600);
-                $totalMinutes = floor(($totalTime % 3600) / 60);
-                $totalSeconds = $totalTime % 60;
+        foreach ($projectScreenshots as $date => $screenshots) {
+            $usersData = $screenshots->groupBy('user_id')->map(function ($userScreenshots) {
+                $totalTime = $userScreenshots->sum(function ($item) {
+                    return $item->hours * 3600 + $item->minutes * 60 + $item->seconds;
+                });
 
-                $user->totalHours = $totalHours;
-                $user->totalMinutes = $totalMinutes;
-                $user->totalSeconds = $totalSeconds;
-                $user->status = 'online';
-            } else {
-                $user->status = 'offline';
-            }
+                return [
+                    'user_id' => $userScreenshots[0]->user_id,
+                    'user_name' => $userScreenshots[0]->user_name,
+                    'total_hours' => floor($totalTime / 3600),
+                    'total_minutes' => floor(($totalTime % 3600) / 60),
+                    'total_seconds' => $totalTime % 60,
+                    'status' => 'online',
+                ];
+            });
 
-            $data[] = $user;
+            $data[] = [
+                'date' => $date,
+                'company_name' => $screenshots[0]->company_name,
+                'project_name' => $screenshots[0]->project_name,
+                'users' => $usersData->values(),
+            ];
         }
 
         return response()->json(['data' => $data]);
