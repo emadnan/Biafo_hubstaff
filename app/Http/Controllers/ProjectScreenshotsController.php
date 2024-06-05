@@ -780,11 +780,10 @@ class ProjectScreenshotsController extends Controller
         if (is_null($companyID) || $companyID === 0 || is_null($date1) || is_null($date2)) {
             return response()->json(['error' => 'companyID and date are required and must be valid'], 400);
         }
-    
 
         $users = User::where('company_id', $companyID)
-        ->where('role', '!=', 3)
-        ->get();
+            ->where('role', '!=', 3)
+            ->get();
 
         if ($users->isEmpty()) {
             return response()->json(['error' => 'company not found'], 404);
@@ -800,7 +799,6 @@ class ProjectScreenshotsController extends Controller
             ->whereIn('users.id', $userIds)
             ->whereBetween('project_screenshots.date', [$date1, $date2])
             ->with('getTimings')
-            ->groupBy('project_screenshots.date')
             ->orderBy('project_screenshots.id', 'DESC')
             ->get();
 
@@ -831,6 +829,5 @@ class ProjectScreenshotsController extends Controller
 
         return response()->json(['data' => $data]);
     }
-
 
 }
