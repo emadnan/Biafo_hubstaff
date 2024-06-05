@@ -800,7 +800,7 @@ class ProjectScreenshotsController extends Controller
             ->whereIn('users.id', $userIds)
             ->whereBetween('project_screenshots.date', [$date1, $date2])
             ->with('getTimings')
-            ->groupBy('date')
+            ->groupBy('project_screenshots.date')
             ->orderBy('project_screenshots.id', 'DESC')
             ->get();
 
