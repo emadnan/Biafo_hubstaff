@@ -775,15 +775,16 @@ class ProjectScreenshotsController extends Controller
 
     }
 
-    public function getAllUsersByCompanyId($companyID, $date1, $date2)
+    public function getAllUsersByCompanyId($companyID, $date)
     {
-        if (is_null($companyID) || $companyID === 0 || is_null($date1) || is_null($date2)) {
+        if (is_null($companyID) || $companyID === 0 || is_null($date)) {
             return response()->json(['error' => 'companyID and date are required and must be valid'], 400);
         }
+    
 
         $users = User::where('company_id', $companyID)
-            ->where('role', '!=', 3)
-            ->get();
+        ->where('role', '!=', 3)
+        ->get();
 
         if ($users->isEmpty()) {
             return response()->json(['error' => 'company not found'], 404);
@@ -791,50 +792,44 @@ class ProjectScreenshotsController extends Controller
 
         $userIds = $users->pluck('id');
 
-        $projectScreenshots = ProjectScreenshots::select(
-            'project_screenshots.date',
-            DB::raw('GROUP_CONCAT(users.id) as user_ids'),
-            DB::raw('SUM(project_screenshots.hours * 3600 + project_screenshots.minutes * 60 + project_screenshots.seconds) as total_time'),
-            DB::raw('GROUP_CONCAT(users.name) as user_names'),
-            'company.company_name'
-        )
+        $projectScreenshots = ProjectScreenshots::
+            select('users.*', 'projects.*', 'company.company_name', 'project_screenshots.*')
             ->join('users', 'users.id', '=', 'project_screenshots.user_id')
             ->join('projects', 'projects.id', '=', 'project_screenshots.project_id')
             ->join('company', 'company.id', '=', 'users.company_id')
             ->whereIn('users.id', $userIds)
-            ->whereBetween('project_screenshots.date', [$date1, $date2])
-            ->groupBy('project_screenshots.date')
-            ->orderBy('project_screenshots.date', 'DESC')
+            ->where('project_screenshots.date', $date)
+            ->with('getTimings')
+            ->orderBy('project_screenshots.id', 'DESC')
             ->get();
 
+        $totalTimes = $projectScreenshots->groupBy('user_id')->map(function ($group) {
+            return $group->sum(function ($item) {
+                return $item->hours * 3600 + $item->minutes * 60 + $item->seconds;
+            });
+        });
+
         $data = [];
-        foreach ($projectScreenshots as $screenshot) {
-            $userIds = explode(',', $screenshot->user_ids);
-            $userNames = explode(',', $screenshot->user_names);
+        foreach ($users as $user) {
+            if ($totalTimes->has($user->id)) {
+                $totalTime = $totalTimes[$user->id];
+                $totalHours = floor($totalTime / 3600);
+                $totalMinutes = floor(($totalTime % 3600) / 60);
+                $totalSeconds = $totalTime % 60;
 
-            foreach ($userIds as $index => $userId) {
-                $user = $users->firstWhere('id', $userId);
-                if ($user) {
-                    $totalTime = $screenshot->total_time;
-                    $totalHours = floor($totalTime / 3600);
-                    $totalMinutes = floor(($totalTime % 3600) / 60);
-                    $totalSeconds = $totalTime % 60;
-
-                    $user->totalHours = $totalHours;
-                    $user->totalMinutes = $totalMinutes;
-                    $user->totalSeconds = $totalSeconds;
-                    $user->status = 'online';
-
-                    $data[] = [
-                        'date' => $screenshot->date,
-                        'user' => $user,
-                        'company_name' => $screenshot->company_name,
-                    ];
-                }
+                $user->totalHours = $totalHours;
+                $user->totalMinutes = $totalMinutes;
+                $user->totalSeconds = $totalSeconds;
+                $user->status = 'online';
+            } else {
+                $user->status = 'offline';
             }
+
+            $data[] = $user;
         }
 
         return response()->json(['data' => $data]);
     }
+
 
 }
