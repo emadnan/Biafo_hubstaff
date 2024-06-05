@@ -882,13 +882,13 @@ class ProjectScreenshotsController extends Controller
             $totalMinutes = floor(($totalTime % 3600) / 60);
             $totalSeconds = $totalTime % 60;
 
-            $data[$date][$screenshot->user_id]['id'] = $screenshot->user_id;
-            $data[$date][$screenshot->user_id]['name'] = $screenshot->name;
-            $data[$date][$screenshot->user_id]['company_id'] = $screenshot->company_id;
-            $data[$date][$screenshot->user_id]['totalHours'] = $totalHours;
-            $data[$date][$screenshot->user_id]['totalMinutes'] = $totalMinutes;
-            $data[$date][$screenshot->user_id]['totalSeconds'] = $totalSeconds;
-            $data[$date][$screenshot->user_id]['status'] = 'online';
+            $data[$date]['id'] = $screenshot->user_id;
+            $data[$date]['name'] = $screenshot->name;
+            $data[$date]['company_id'] = $screenshot->company_id;
+            $data[$date]['totalHours'] = $totalHours;
+            $data[$date]['totalMinutes'] = $totalMinutes;
+            $data[$date]['totalSeconds'] = $totalSeconds;
+            $data[$date]['status'] = 'online';
         }
 
         return response()->json(['data' => $data]);
