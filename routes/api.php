@@ -239,6 +239,9 @@ Route::post('/team-has-users',[TeamController::class,'teamHasUsers']);
 //team has users
 Route::get('/get-user-by-team-lead-id/{team_lead_id}',[TeamController::class,'getUsersByTeamLeadId']);
 
+Route::get('/get-user-by-team-id/{team_id}',[TeamController::class,'getUsersByTeamId']);
+
+
 //get users by role_id
 Route::get('/get-teams-by-department-id/{department_id}',[TeamController::class,'getTeamsByDepartmentId']);
 
