@@ -618,4 +618,5 @@ Route::post('/delete-group/{id}',[TeamController::class,'deleteGroup']);
 Route::post('/update-group/{id}',[TeamController::class,'updateGroup']);
 Route::get('/get-group-by-team-id/{id}',[TeamController::class,'getGroupsByTeamId']);
 Route::get('/get-group-by-id/{id}',[TeamController::class,'getGroupById']);
+Route::get('/get-user-by-group-id/{id}',[TeamController::class,'getUsersByGroupId']);
 Route::post('/group-has-users',[TeamController::class,'groupHasUsers']);
