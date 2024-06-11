@@ -239,6 +239,9 @@ Route::post('/team-has-users',[TeamController::class,'teamHasUsers']);
 //team has users
 Route::get('/get-user-by-team-lead-id/{team_lead_id}',[TeamController::class,'getUsersByTeamLeadId']);
 
+Route::get('/get-user-by-team-id/{team_id}',[TeamController::class,'getUsersByTeamId']);
+
+
 //get users by role_id
 Route::get('/get-teams-by-department-id/{department_id}',[TeamController::class,'getTeamsByDepartmentId']);
 
@@ -615,4 +618,5 @@ Route::post('/delete-group/{id}',[TeamController::class,'deleteGroup']);
 Route::post('/update-group/{id}',[TeamController::class,'updateGroup']);
 Route::get('/get-group-by-team-id/{id}',[TeamController::class,'getGroupsByTeamId']);
 Route::get('/get-group-by-id/{id}',[TeamController::class,'getGroupById']);
+Route::get('/get-user-by-group-id/{id}',[TeamController::class,'getUsersByGroupId']);
 Route::post('/group-has-users',[TeamController::class,'groupHasUsers']);

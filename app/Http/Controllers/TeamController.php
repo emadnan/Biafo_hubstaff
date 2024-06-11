@@ -133,6 +133,23 @@ class TeamController extends Controller
             return response()->json(['error' => 'Failed to fetch team users'], 500);
         }
     }
+
+    public function getUsersByTeamId($team_id)
+    {
+        try {
+
+            $team = Team::where('id', $team_id)->first();
+
+            $teamUsers = TeamHasUser::where('team_id', $team->id)
+                ->join('users', 'team_has_users.user_id', '=', 'users.id')
+                ->select('users.*') // Select only user columns
+                ->get();
+    
+            return response()->json(['users' => $teamUsers]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch team users'], 500);
+        }
+    }
     
 
     public function getTeamLeadByCompanyId($company_id)
@@ -256,6 +273,23 @@ class TeamController extends Controller
 
         return response()->json(['group' => $group]);
 
+    }
+
+    public function getUsersByGroupId($id)
+    {
+        try {
+
+            $group = TeamGroup::where('id', $id)->first();
+
+            $groupUsers = GroupHasUser::where('group_id', $group->id)
+                ->join('users', 'group_has_users.user_id', '=', 'users.id')
+                ->select('users.*') // Select only user columns
+                ->get();
+    
+            return response()->json(['users' => $groupUsers]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch group users'], 500);
+        }
     }
 
     public function groupHasUsers(Request $request)
