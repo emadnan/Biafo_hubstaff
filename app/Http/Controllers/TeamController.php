@@ -119,6 +119,7 @@ class TeamController extends Controller
             foreach ($teams as $team) {
                 $teamUsers = TeamHasUser::where('team_id', $team->id)
                     ->join('users', 'team_has_users.user_id', '=', 'users.id')
+                    ->whereNull('users.deleted_at')
                     ->select('users.*') // Select only user columns
                     ->get();
     
